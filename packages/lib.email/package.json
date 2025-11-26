@@ -1,0 +1,33 @@
+{
+  "name": "@_/lib.email",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "email dev -p 3001 -d src/templates",
+    "typecheck": "tsc --noEmit"
+  },
+  "exports": {
+    ".": "./src/index.ts",
+    "./templates": "./src/templates/index.ts",
+    "./components": "./src/components/index.ts"
+  },
+  "dependencies": {
+    "@_/cfg.env": "workspace:*",
+    "@react-email/components": "^1.0.1",
+    "@react-email/render": "catalog:",
+    "resend": "catalog:"
+  },
+  "devDependencies": {
+    "@_/cfg.eslint": "workspace:*",
+    "@_/cfg.ts": "workspace:*",
+    "react-email": "^5.0.5",
+    "typescript": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:"
+  },
+  "peerDependencies": {
+    "react": "catalog:",
+    "react-dom": "catalog:"
+  }
+}

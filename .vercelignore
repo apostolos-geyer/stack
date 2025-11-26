@@ -1,0 +1,4 @@
+# Vercel ignore patterns
+.env.local
+.DS_Store
+*.log

@@ -1,0 +1,25 @@
+{
+  "name": "@_/features.server",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "lint": "eslint . --max-warnings 0",
+    "typecheck": "tsc --noEmit"
+  },
+  "exports": {
+    ".": "./src/index.ts",
+    "./context": "./src/context.ts",
+    "./services": "./src/services/index.ts"
+  },
+  "dependencies": {
+    "@_/infra.auth": "workspace:*",
+    "@_/infra.db": "workspace:*"
+  },
+  "devDependencies": {
+    "@_/cfg.eslint": "workspace:*",
+    "@_/cfg.ts": "workspace:*",
+    "@types/node": "catalog:",
+    "typescript": "catalog:"
+  }
+}

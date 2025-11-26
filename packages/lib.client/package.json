@@ -1,0 +1,42 @@
+{
+  "name": "@_/lib.client",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "lint": "eslint . --max-warnings 0",
+    "typecheck": "tsc --noEmit"
+  },
+  "exports": {
+    ".": "./src/index.tsx",
+    "./ssr": "./src/ssr.tsx",
+    "./form": "./src/form.tsx",
+    "./controllers/auth/sign-in": "./src/controllers/auth/sign-in.ts",
+    "./controllers/auth/sign-up": "./src/controllers/auth/sign-up.ts",
+    "./react-query": "./src/react-query.ts",
+    "./react-form": "./src/react-form.ts"
+  },
+  "dependencies": {
+    "@_/api.trpc": "workspace:*",
+    "@_/infra.auth": "workspace:*",
+    "@tanstack/react-form": "catalog:",
+    "@tanstack/react-query": "catalog:",
+    "@trpc/client": "catalog:",
+    "@trpc/tanstack-react-query": "catalog:",
+    "server-only": "catalog:",
+    "superjson": "catalog:",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@_/cfg.eslint": "workspace:*",
+    "@_/cfg.ts": "workspace:*",
+    "@types/node": "catalog:",
+    "typescript": "catalog:"
+  },
+  "peerDependencies": {
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  }
+}

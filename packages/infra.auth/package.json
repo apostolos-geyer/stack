@@ -1,0 +1,47 @@
+{
+  "name": "@_/infra.auth",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./client": {
+      "react-native": "./src/client.native.ts",
+      "import": "./src/client.ts",
+      "default": "./src/client.ts"
+    },
+    "./client.native": "./src/client.native.ts",
+    "./auth": "./src/auth.ts",
+    "./handler": "./src/handler.ts"
+  },
+  "typesVersions": {
+    "*": {
+      "client": [
+        "./src/client.ts"
+      ],
+      "auth": [
+        "./src/auth.ts"
+      ],
+      "handler": [
+        "./src/handler.ts"
+      ]
+    }
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "generate": "pnpx @better-auth/cli generate --config ./src/auth.ts --output ../infra.db/prisma/schema.prisma -y && pnpx tsx ../infra.db/scripts/patch-schema.ts"
+  },
+  "dependencies": {
+    "@_/cfg.env": "workspace:*",
+    "@_/lib.email": "workspace:*",
+    "@_/infra.db": "workspace:*",
+    "@better-auth/expo": "^1.4.1",
+    "@better-auth/stripe": "^1.4.0",
+    "better-auth": "^1.4.0",
+    "expo-secure-store": "^15.0.7",
+    "stripe": "^20.0.0"
+  },
+  "devDependencies": {
+    "typescript": "catalog:"
+  }
+}

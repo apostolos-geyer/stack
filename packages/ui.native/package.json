@@ -1,0 +1,59 @@
+{
+  "name": "@_/ui.native",
+  "version": "0.0.0",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "reusables": "pnpm dlx @react-native-reusables/cli@latest",
+    "lint": "eslint . --max-warnings 0",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@_/lib.client": "workspace:*",
+    "@_/ui.style": "workspace:*",
+    "@_/ui.utils": "workspace:*",
+    "@rn-primitives/checkbox": "^1.2.0",
+    "@rn-primitives/label": "^1.2.0",
+    "@rn-primitives/radio-group": "^1.2.0",
+    "@rn-primitives/select": "^1.2.0",
+    "@rn-primitives/slot": "^1.2.0",
+    "@rn-primitives/switch": "^1.2.0",
+    "class-variance-authority": "catalog:",
+    "clsx": "catalog:",
+    "lightningcss": "catalog:native",
+    "lucide-react-native": "^0.548.0",
+    "nativewind": "catalog:native",
+    "react-native-reanimated": "catalog:native",
+    "react-native-safe-area-context": "catalog:native",
+    "tailwind-merge": "catalog:",
+    "tailwindcss-animate": "catalog:native"
+  },
+  "devDependencies": {
+    "@_/cfg.eslint": "workspace:*",
+    "@_/cfg.ts": "workspace:*",
+    "@turbo/gen": "^2.5.5",
+    "@types/node": "catalog:",
+    "react-native": "catalog:native",
+    "eslint": "catalog:",
+    "expo": "catalog:native",
+    "tailwindcss": "catalog:",
+    "typescript": "catalog:"
+  },
+  "peerDependencies": {
+    "@types/react": "catalog:native",
+    "@types/react-dom": "catalog:native",
+    "expo": "catalog:native",
+    "react": "catalog:native",
+    "react-dom": "catalog:native",
+    "react-native": "catalog:native"
+  },
+  "exports": {
+    "./lib/*": "./src/lib/*.ts",
+    "./components/*": "./src/components/*.tsx",
+    "./hooks/*": "./src/hooks/*.ts",
+    "./form": "./src/form.ts",
+    "./withNativewind": "./src/withNativewind.ts",
+    "./styles.css": "./styles.css"
+  },
+  "pnpm": {}
+}

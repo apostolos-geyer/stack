@@ -1,0 +1,9 @@
+@import "@_/ui.style";
+@import "nativewind/theme";
+
+/* Map CSS font variables to React Native font families */
+:root {
+  --font-sans: LibreBaskerville_400Regular;
+  --font-serif: Lora_400Regular;
+  --font-mono: IBMPlexMono_400Regular;
+}
