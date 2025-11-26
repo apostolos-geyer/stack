@@ -17,8 +17,8 @@
     "init": "turbo gen init"
   },
   "devDependencies": {
-    "@_/tools.settings": "workspace:",
     "@_/cfg.ts": "workspace:",
+    "@_/tools.settings": "workspace:",
     "@trpc/server": "catalog:",
     "@turbo/gen": "^2.5.0",
     "@types/react": "catalog:",
@@ -37,9 +37,9 @@
       "@types/react-dom": "catalog:native"
     },
     "onlyBuiltDependencies": [
-      "esbuild",
       "@prisma/engines",
       "core-js-pure",
+      "esbuild",
       "prisma",
       "sharp",
       "unrs-resolver"
