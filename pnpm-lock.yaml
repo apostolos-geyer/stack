@@ -419,25 +419,6 @@ importers:
         specifier: 'catalog:'
         version: 5.9.3
 
-  packages/platform:
-    dependencies:
-      '@t3-oss/env-nextjs':
-        specifier: ^0.13.8
-        version: 0.13.8(typescript@5.9.3)(valibot@1.1.0(typescript@5.9.3))(zod@4.1.12)
-      zod:
-        specifier: 'catalog:'
-        version: 4.1.12
-    devDependencies:
-      '@_/cfg.ts':
-        specifier: workspace:*
-        version: link:../cfg.ts
-      '@types/node':
-        specifier: 'catalog:'
-        version: 20.19.25
-      typescript:
-        specifier: 'catalog:'
-        version: 5.9.3
-
   packages/cfg.eslint:
     dependencies:
       eslint-config-next:
@@ -519,12 +500,12 @@ importers:
 
   packages/features.server:
     dependencies:
-      '@_/infra.auth':
-        specifier: workspace:*
-        version: link:../infra.auth
       '@_/infra.db':
         specifier: workspace:*
         version: link:../infra.db
+      '@_/lib.server':
+        specifier: workspace:*
+        version: link:../lib.server
     devDependencies:
       '@_/cfg.eslint':
         specifier: workspace:*
@@ -541,15 +522,15 @@ importers:
 
   packages/infra.auth:
     dependencies:
-      '@_/platform':
-        specifier: workspace:*
-        version: link:../platform
       '@_/infra.db':
         specifier: workspace:*
         version: link:../infra.db
       '@_/lib.email':
         specifier: workspace:*
         version: link:../lib.email
+      '@_/platform':
+        specifier: workspace:*
+        version: link:../platform
       '@better-auth/expo':
         specifier: ^1.4.1
         version: 1.4.1(@better-auth/core@1.4.1(@better-auth/utils@0.3.0)(@better-fetch/fetch@1.1.18)(better-call@1.1.0)(jose@6.1.2)(kysely@0.28.8)(nanostores@1.1.0))(expo-constants@18.0.10)(expo-linking@8.0.9)(expo-network@8.0.7(expo@54.0.25)(react@19.2.0))(expo-web-browser@15.0.9(expo@54.0.25)(react-native@0.81.5(@babel/core@7.28.5)(@types/react@19.1.17)(react@19.2.0)))
@@ -680,9 +661,6 @@ importers:
 
   packages/lib.server:
     dependencies:
-      '@_/features.server':
-        specifier: workspace:*
-        version: link:../features.server
       '@_/infra.auth':
         specifier: workspace:*
         version: link:../infra.auth
@@ -693,6 +671,25 @@ importers:
       '@_/cfg.eslint':
         specifier: workspace:*
         version: link:../cfg.eslint
+      '@_/cfg.ts':
+        specifier: workspace:*
+        version: link:../cfg.ts
+      '@types/node':
+        specifier: 'catalog:'
+        version: 20.19.25
+      typescript:
+        specifier: 'catalog:'
+        version: 5.9.3
+
+  packages/platform:
+    dependencies:
+      '@t3-oss/env-nextjs':
+        specifier: ^0.13.8
+        version: 0.13.8(typescript@5.9.3)(valibot@1.1.0(typescript@5.9.3))(zod@4.1.12)
+      zod:
+        specifier: 'catalog:'
+        version: 4.1.12
+    devDependencies:
       '@_/cfg.ts':
         specifier: workspace:*
         version: link:../cfg.ts
@@ -9565,7 +9562,7 @@ snapshots:
       postcss: 8.4.49
       resolve-from: 5.0.0
     optionalDependencies:
-      expo: 54.0.25(@babel/core@7.28.5)(@expo/metro-runtime@6.1.2)(expo-router@6.0.15)(react-native@0.81.5(@babel/core@7.28.5)(@types/react@19.1.17)(react@19.2.0))(react@19.2.0)
+      expo: 54.0.25(@babel/core@7.28.5)(@expo/metro-runtime@6.1.2)(expo-router@6.0.15)(react-native@0.81.5(@babel/core@7.28.5)(@types/react@19.1.17)(react@19.1.0))(react@19.1.0)
     transitivePeerDependencies:
       - bufferutil
       - supports-color
@@ -9644,7 +9641,7 @@ snapshots:
       '@expo/json-file': 10.0.7
       '@react-native/normalize-colors': 0.81.5
       debug: 4.4.3
-      expo: 54.0.25(@babel/core@7.28.5)(@expo/metro-runtime@6.1.2)(expo-router@6.0.15)(react-native@0.81.5(@babel/core@7.28.5)(@types/react@19.1.17)(react@19.2.0))(react@19.2.0)
+      expo: 54.0.25(@babel/core@7.28.5)(@expo/metro-runtime@6.1.2)(expo-router@6.0.15)(react-native@0.81.5(@babel/core@7.28.5)(@types/react@19.1.17)(react@19.1.0))(react@19.1.0)
       resolve-from: 5.0.0
       semver: 7.7.3
       xml2js: 0.6.0
@@ -12433,7 +12430,7 @@ snapshots:
       resolve-from: 5.0.0
     optionalDependencies:
       '@babel/runtime': 7.28.4
-      expo: 54.0.25(@babel/core@7.28.5)(@expo/metro-runtime@6.1.2)(expo-router@6.0.15)(react-native@0.81.5(@babel/core@7.28.5)(@types/react@19.1.17)(react@19.2.0))(react@19.2.0)
+      expo: 54.0.25(@babel/core@7.28.5)(@expo/metro-runtime@6.1.2)(expo-router@6.0.15)(react-native@0.81.5(@babel/core@7.28.5)(@types/react@19.1.17)(react@19.1.0))(react@19.1.0)
     transitivePeerDependencies:
       - '@babel/core'
       - supports-color

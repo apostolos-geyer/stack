@@ -1,5 +1,5 @@
 import type { User } from "@_/infra.db";
-import type { InnerContext, AuthenticatedContext } from "../context";
+import type { InnerContext, AuthenticatedContext } from "@_/lib.server";
 
 /**
  * User service - all user-related business logic

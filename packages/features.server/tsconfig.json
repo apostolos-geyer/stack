@@ -1,7 +1,9 @@
 {
-  "extends": "@_/cfg.ts/react-library.json",
+  "extends": "@_/cfg.ts/server-library.json",
   "compilerOptions": {
-    "outDir": "dist"
+    "outDir": "dist",
+    "rootDir": "src"
   },
-  "include": ["src"]
+  "include": ["src"],
+  "exclude": ["node_modules", "dist"]
 }
