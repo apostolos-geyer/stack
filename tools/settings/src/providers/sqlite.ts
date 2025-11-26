@@ -1,6 +1,6 @@
 import type { ProviderConfig, LocalDevOption, SetupContext, SetupResult } from './index.ts'
 import { getLocalSqlitePath } from '../utils/paths.ts'
-import { PRISMA_CONFIG_TS } from './templates.ts'
+import { PRISMA_CONFIG_TS, NOOP_SCRIPT } from './templates.ts'
 
 export const sqlite: ProviderConfig = {
   id: 'sqlite',
@@ -14,6 +14,9 @@ export const sqlite: ProviderConfig = {
     },
     remove: ['@prisma/adapter-pg', '@prisma/adapter-neon', 'pg'],
   },
+  scripts: {
+    'db:migrate:deploy': 'prisma migrate deploy',
+  },
   localDevOptions: [
     {
       type: 'xdg-file',
@@ -23,8 +26,10 @@ export const sqlite: ProviderConfig = {
         // DATABASE_URL is auto-populated by db-switch.ts
       },
       packageJsonScripts: {
+        // SQLite has no server to start/stop
         dev: 'prisma studio',
-        'db:studio': 'prisma studio',
+        'db:start': NOOP_SCRIPT,
+        'db:stop': NOOP_SCRIPT,
       },
     },
   ],

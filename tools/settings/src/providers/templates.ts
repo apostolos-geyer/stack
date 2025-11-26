@@ -1,7 +1,13 @@
 /**
- * Shared templates for database providers
+ * Shared templates and constants for database providers
  * Reduces duplication across provider configurations
  */
+
+/**
+ * No-op command for providers without a database server to manage.
+ * Using 'true' is the standard Unix no-op (exits 0, does nothing).
+ */
+export const NOOP_SCRIPT = "true";
 
 /**
  * Standard prisma.config.ts template
@@ -17,7 +23,7 @@ export default defineConfig({
     path: path.join(import.meta.dirname, 'prisma', 'migrations'),
   },
   datasource: {
-    url: process.env.DIRECT_URL,
+    url: process.env.DIRECT_URL!,
   },
 })`;
 

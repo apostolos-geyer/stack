@@ -1,5 +1,5 @@
 import type { ProviderConfig, LocalDevOption, SetupContext, SetupResult } from './index.ts'
-import { PRISMA_CONFIG_TS } from './templates.ts'
+import { PRISMA_CONFIG_TS, NOOP_SCRIPT } from './templates.ts'
 import { input } from '@inquirer/prompts'
 
 /**
@@ -20,6 +20,9 @@ export const neon: ProviderConfig = {
     },
     remove: ['@prisma/adapter-libsql', '@prisma/adapter-pg', 'pg'],
   },
+  scripts: {
+    'db:migrate:deploy': 'prisma migrate deploy',
+  },
   localDevOptions: [
     {
       type: 'remote',
@@ -30,8 +33,10 @@ export const neon: ProviderConfig = {
         DIRECT_URL: '# Get from Neon dashboard (direct connection)',
       },
       packageJsonScripts: {
+        // Neon is remote-only, no server to start/stop
         dev: 'prisma studio',
-        'db:studio': 'prisma studio',
+        'db:start': NOOP_SCRIPT,
+        'db:stop': NOOP_SCRIPT,
       },
     },
   ],

@@ -35,7 +35,7 @@ export {
   generateEnvContent,
   parseEnvContent,
   mergeEnvContent,
-} from './generator.ts';
+} from "./generator.ts";
 
 // platform - Zod schema management
 export {
@@ -47,7 +47,7 @@ export {
   ALL_DB_ENV_VARS,
   PROVIDER_ENV_VARS,
   type EnvVarDefinition,
-} from './platform.ts';
+} from "./cfg-env.ts";
 
 // turbo.json - globalEnv synchronization
 export {
@@ -55,7 +55,7 @@ export {
   syncTurboEnv,
   setGlobalEnv,
   type SyncResult,
-} from './turbo-json.ts';
+} from "./turbo-json.ts";
 
 // Symlinks - .env symlink management
 export {
@@ -66,7 +66,7 @@ export {
   removeSymlinks,
   type SymlinkResult,
   type SymlinkStatus,
-} from './symlinks.ts';
+} from "./symlinks.ts";
 
 // Env templates - Generate complete .env files from schema
 export {
@@ -76,4 +76,4 @@ export {
   generateSecret,
   ENV_VAR_DEFAULTS,
   type ParsedEnvVar,
-} from './env-template.ts';
+} from "./env-template.ts";

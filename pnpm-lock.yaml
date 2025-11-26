@@ -12,9 +12,6 @@ catalogs:
     '@next/eslint-plugin-next':
       specifier: ^15.4.2
       version: 15.5.6
-    '@prisma/adapter-pg':
-      specifier: ^7.0.1
-      version: 7.0.1
     '@react-email/render':
       specifier: ^1.4.0
       version: 1.4.0
@@ -78,9 +75,6 @@ catalogs:
     next-themes:
       specifier: ^0.4.6
       version: 0.4.6
-    pg:
-      specifier: ^8.16.3
-      version: 8.16.3
     postcss:
       specifier: ^8.5.3
       version: 8.5.6
@@ -557,13 +551,13 @@ importers:
         specifier: workspace:*
         version: link:../platform
       '@prisma/adapter-pg':
-        specifier: 'catalog:'
+        specifier: ^7.0.1
         version: 7.0.1
       '@prisma/client':
         specifier: ^7.0.0
         version: 7.0.0(prisma@7.0.0(@types/react@19.1.17)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(typescript@5.9.3))(typescript@5.9.3)
       pg:
-        specifier: 'catalog:'
+        specifier: ^8.16.3
         version: 8.16.3
     devDependencies:
       prisma:
@@ -9562,7 +9556,7 @@ snapshots:
       postcss: 8.4.49
       resolve-from: 5.0.0
     optionalDependencies:
-      expo: 54.0.25(@babel/core@7.28.5)(@expo/metro-runtime@6.1.2)(expo-router@6.0.15)(react-native@0.81.5(@babel/core@7.28.5)(@types/react@19.1.17)(react@19.1.0))(react@19.1.0)
+      expo: 54.0.25(@babel/core@7.28.5)(@expo/metro-runtime@6.1.2)(expo-router@6.0.15)(react-native@0.81.5(@babel/core@7.28.5)(@types/react@19.1.17)(react@19.2.0))(react@19.2.0)
     transitivePeerDependencies:
       - bufferutil
       - supports-color
@@ -9641,7 +9635,7 @@ snapshots:
       '@expo/json-file': 10.0.7
       '@react-native/normalize-colors': 0.81.5
       debug: 4.4.3
-      expo: 54.0.25(@babel/core@7.28.5)(@expo/metro-runtime@6.1.2)(expo-router@6.0.15)(react-native@0.81.5(@babel/core@7.28.5)(@types/react@19.1.17)(react@19.1.0))(react@19.1.0)
+      expo: 54.0.25(@babel/core@7.28.5)(@expo/metro-runtime@6.1.2)(expo-router@6.0.15)(react-native@0.81.5(@babel/core@7.28.5)(@types/react@19.1.17)(react@19.2.0))(react@19.2.0)
       resolve-from: 5.0.0
       semver: 7.7.3
       xml2js: 0.6.0
@@ -12430,7 +12424,7 @@ snapshots:
       resolve-from: 5.0.0
     optionalDependencies:
       '@babel/runtime': 7.28.4
-      expo: 54.0.25(@babel/core@7.28.5)(@expo/metro-runtime@6.1.2)(expo-router@6.0.15)(react-native@0.81.5(@babel/core@7.28.5)(@types/react@19.1.17)(react@19.1.0))(react@19.1.0)
+      expo: 54.0.25(@babel/core@7.28.5)(@expo/metro-runtime@6.1.2)(expo-router@6.0.15)(react-native@0.81.5(@babel/core@7.28.5)(@types/react@19.1.17)(react@19.2.0))(react@19.2.0)
     transitivePeerDependencies:
       - '@babel/core'
       - supports-color

@@ -3,9 +3,9 @@
  * Functions for managing the globalEnv array in turbo.json
  */
 
-import fs from 'node:fs/promises';
-import { PATHS } from '../utils/paths.ts';
-import { extractEnvVarNames } from './platform.ts';
+import fs from "node:fs/promises";
+import { PATHS } from "../utils/paths.ts";
+import { extractEnvVarNames } from "./cfg-env.ts";
 
 /**
  * Result of syncing turbo.json globalEnv
@@ -30,7 +30,7 @@ export interface SyncResult {
  */
 export async function getGlobalEnv(): Promise<string[]> {
   try {
-    const content = await fs.readFile(PATHS.TURBO_JSON, 'utf-8');
+    const content = await fs.readFile(PATHS.TURBO_JSON, "utf-8");
     const turboConfig = JSON.parse(content);
 
     if (!turboConfig.globalEnv || !Array.isArray(turboConfig.globalEnv)) {
@@ -61,11 +61,11 @@ export async function getGlobalEnv(): Promise<string[]> {
 export async function syncTurboEnv(): Promise<SyncResult> {
   try {
     // Read platform schema to get the source of truth
-    const cfgEnvContent = await fs.readFile(PATHS.CFG_ENV_SERVER, 'utf-8');
+    const cfgEnvContent = await fs.readFile(PATHS.CFG_ENV_SERVER, "utf-8");
     const schemaVars = extractEnvVarNames(cfgEnvContent);
 
     // Read current turbo.json
-    const turboContent = await fs.readFile(PATHS.TURBO_JSON, 'utf-8');
+    const turboContent = await fs.readFile(PATHS.TURBO_JSON, "utf-8");
     const turboConfig = JSON.parse(turboContent);
 
     // Get current globalEnv
@@ -74,15 +74,15 @@ export async function syncTurboEnv(): Promise<SyncResult> {
     const schemaSet = new Set(schemaVars);
 
     // Calculate differences
-    const added = schemaVars.filter(v => !currentSet.has(v));
+    const added = schemaVars.filter((v) => !currentSet.has(v));
     const removed = currentGlobalEnv.filter((v: string) => !schemaSet.has(v));
 
     // Update globalEnv with sorted schema vars
     turboConfig.globalEnv = schemaVars;
 
     // Write back to turbo.json with proper formatting
-    const updatedContent = JSON.stringify(turboConfig, null, 2) + '\n';
-    await fs.writeFile(PATHS.TURBO_JSON, updatedContent, 'utf-8');
+    const updatedContent = JSON.stringify(turboConfig, null, 2) + "\n";
+    await fs.writeFile(PATHS.TURBO_JSON, updatedContent, "utf-8");
 
     return { added, removed };
   } catch (error) {
@@ -106,15 +106,15 @@ export async function syncTurboEnv(): Promise<SyncResult> {
  */
 export async function setGlobalEnv(vars: string[]): Promise<void> {
   try {
-    const content = await fs.readFile(PATHS.TURBO_JSON, 'utf-8');
+    const content = await fs.readFile(PATHS.TURBO_JSON, "utf-8");
     const turboConfig = JSON.parse(content);
 
     // Sort alphabetically
     turboConfig.globalEnv = [...vars].sort();
 
     // Write back with proper formatting
-    const updatedContent = JSON.stringify(turboConfig, null, 2) + '\n';
-    await fs.writeFile(PATHS.TURBO_JSON, updatedContent, 'utf-8');
+    const updatedContent = JSON.stringify(turboConfig, null, 2) + "\n";
+    await fs.writeFile(PATHS.TURBO_JSON, updatedContent, "utf-8");
   } catch (error) {
     if (error instanceof Error) {
       throw new Error(`Failed to update turbo.json: ${error.message}`);

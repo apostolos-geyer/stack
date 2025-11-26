@@ -6,7 +6,14 @@
 import { select, confirm } from '@inquirer/prompts'
 import { readFile, writeFile, rm } from 'node:fs/promises'
 import { existsSync } from 'node:fs'
-import { getProvider, getProviderChoices, type ProviderConfig, type LocalDevOption } from '../providers/index.ts'
+import {
+  getProvider,
+  getProviderChoices,
+  FIXED_SCRIPTS,
+  MANAGED_SCRIPT_KEYS,
+  type ProviderConfig,
+  type LocalDevOption,
+} from '../providers/index.ts'
 import { ensureDirectoriesCommitted, createBackups, restoreBackups, type Backup } from '../safety/index.ts'
 import { generateFileDiff, displayMultipleDiffs } from '../diff/index.ts'
 import { updateDatasourceProvider, ensurePrisma7Generator, removeDatasourceUrl } from '../schema/index.ts'
@@ -173,7 +180,7 @@ export async function dbSwitch(options: DbSwitchOptions): Promise<void> {
 
     // Generate diff for package.json scripts
     const currentPackageJson = await readFile(PATHS.DB_PACKAGE_JSON, 'utf-8')
-    const patchedPackageJson = patchPackageJsonScripts(currentPackageJson, localDevOption)
+    const patchedPackageJson = patchPackageJsonScripts(currentPackageJson, provider, localDevOption)
     const packageJsonDiff = await generateFileDiff(PATHS.DB_PACKAGE_JSON, patchedPackageJson)
     if (packageJsonDiff) {
       diffs.push({ filePath: PATHS.DB_PACKAGE_JSON, diff: packageJsonDiff })
@@ -311,7 +318,7 @@ export async function dbSwitch(options: DbSwitchOptions): Promise<void> {
 
     // Update package.json scripts
     const currentPackageJson = await readFile(PATHS.DB_PACKAGE_JSON, 'utf-8')
-    const patchedPackageJson = patchPackageJsonScripts(currentPackageJson, localDevOption)
+    const patchedPackageJson = patchPackageJsonScripts(currentPackageJson, provider, localDevOption)
     await writeFile(PATHS.DB_PACKAGE_JSON, patchedPackageJson, 'utf-8')
     log.success('Updated package.json scripts')
 
@@ -570,26 +577,43 @@ function patchAuthContent(currentContent: string, provider: ProviderConfig): str
 }
 
 /**
- * Patches package.json to include provider-specific scripts
+ * Patches package.json to include provider-specific scripts.
+ *
+ * Script merge strategy:
+ * 1. User scripts (any key not in MANAGED_SCRIPT_KEYS) are preserved
+ * 2. Fixed scripts (FIXED_SCRIPTS) are always clobbered with standard values
+ * 3. Provider scripts (provider.scripts) are clobbered with provider-specific values
+ * 4. LocalDevOption scripts (dev, db:start, db:stop) are clobbered - omitted if undefined
+ *
  * @param currentContent - Current package.json content
+ * @param provider - Provider configuration
  * @param localDevOption - Selected local development option
  * @returns Patched package.json content
  */
-function patchPackageJsonScripts(currentContent: string, localDevOption: LocalDevOption): string {
+function patchPackageJsonScripts(
+  currentContent: string,
+  provider: ProviderConfig,
+  localDevOption: LocalDevOption
+): string {
   const pkg = JSON.parse(currentContent)
+  const existingScripts = (pkg.scripts || {}) as Record<string, string>
 
-  // Merge the new scripts, preserving existing ones that aren't overridden
-  pkg.scripts = {
-    ...pkg.scripts,
-    ...localDevOption.packageJsonScripts,
-    // Always keep these standard scripts
-    'db:generate': 'prisma generate',
-    'db:migrate:dev': 'prisma migrate dev',
-    'db:migrate:deploy': 'prisma migrate deploy',
-    'db:push': 'prisma db push',
-    typecheck: 'tsc --noEmit',
+  // Extract user scripts (anything not in MANAGED_SCRIPT_KEYS)
+  const userScripts: Record<string, string> = {}
+  for (const [key, value] of Object.entries(existingScripts)) {
+    if (!MANAGED_SCRIPT_KEYS.has(key)) {
+      userScripts[key] = value
+    }
   }
 
+  // Build final scripts object
+  // Order: user scripts, fixed scripts, provider scripts, localDevOption scripts
+  pkg.scripts = {
+    ...userScripts, // User scripts preserved
+    ...FIXED_SCRIPTS, // Fixed scripts clobbered
+    ...provider.scripts, // Provider-level scripts (db:migrate:deploy)
+    ...localDevOption.packageJsonScripts, // LocalDevOption scripts (dev, db:start, db:stop)
+  }
   return JSON.stringify(pkg, null, 2) + '\n'
 }
 

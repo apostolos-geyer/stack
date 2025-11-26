@@ -13,8 +13,45 @@
 import type { SystemDependency } from '../utils/system-deps.ts'
 import type { log as logType } from '../utils/logger.ts'
 
+/**
+ * Fixed scripts that are always the same regardless of provider.
+ * These are clobbered on every db:switch operation.
+ */
+export const FIXED_SCRIPTS = {
+  'db:generate': 'prisma generate',
+  'db:migrate:dev': 'prisma migrate dev',
+  'db:studio': 'prisma studio',
+  'db:push': 'prisma db push',
+  typecheck: 'tsc --noEmit',
+} as const
+
+/**
+ * All script keys that are managed by the settings tool.
+ * Any script not in this set is considered a user script and preserved.
+ */
+export const MANAGED_SCRIPT_KEYS = new Set([
+  ...Object.keys(FIXED_SCRIPTS),
+  'db:migrate:deploy',
+  'dev',
+  'db:start',
+  'db:stop',
+])
+
 /** Local development option type */
 export type LocalDevType = 'xdg-file' | 'prisma-dev' | 'docker' | 'supabase-local' | 'remote'
+
+/**
+ * Scripts that vary by local development option.
+ * All scripts are required to ensure consistent script set across providers.
+ */
+export interface LocalDevScripts {
+  /** Foreground dev command (e.g., 'prisma dev --name template', or 'prisma studio' for no-server providers) */
+  dev: string
+  /** Background start command (use 'true' no-op for providers without a server) */
+  'db:start': string
+  /** Background stop command (use 'true' no-op for providers without a server) */
+  'db:stop': string
+}
 
 /** Local development option configuration */
 export interface LocalDevOption {
@@ -26,8 +63,8 @@ export interface LocalDevOption {
   description: string
   /** Base environment variables (placeholders) for this option */
   envVars: Record<string, string>
-  /** Scripts to add to packages/infra.db/package.json */
-  packageJsonScripts: Record<string, string>
+  /** Scripts for local development (dev, db:start, db:stop) */
+  packageJsonScripts: LocalDevScripts
   /** Required system dependencies (e.g., docker, supabase CLI) */
   systemDeps?: SystemDependency[]
 }
@@ -68,6 +105,15 @@ export interface ProviderConfig {
     add: Record<string, string>
     /** Packages to remove */
     remove: string[]
+  }
+
+  /**
+   * Provider-level scripts (not dependent on localDevOption).
+   * Currently only db:migrate:deploy varies by provider (turso has special handling).
+   */
+  scripts: {
+    /** Deploy migrations command - usually 'prisma migrate deploy', turso uses CLI */
+    'db:migrate:deploy': string
   }
 
   /** Local development environment options with env vars and scripts */

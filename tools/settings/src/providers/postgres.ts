@@ -21,6 +21,9 @@ export const postgres: ProviderConfig = {
     },
     remove: ["@prisma/adapter-libsql", "@prisma/adapter-neon"],
   },
+  scripts: {
+    "db:migrate:deploy": "prisma migrate deploy",
+  },
   localDevOptions: [
     {
       type: "docker",
@@ -31,7 +34,6 @@ export const postgres: ProviderConfig = {
       },
       packageJsonScripts: {
         dev: "docker compose up -d && prisma studio",
-        "db:studio": "prisma studio",
         "db:start": "docker compose up -d",
         "db:stop": "docker compose down",
       },

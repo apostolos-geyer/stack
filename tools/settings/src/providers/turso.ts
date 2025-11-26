@@ -1,6 +1,6 @@
 import type { ProviderConfig, LocalDevOption, SetupContext, SetupResult } from './index.ts'
 import { getLocalSqlitePath } from '../utils/paths.ts'
-import { PRISMA_CONFIG_TS } from './templates.ts'
+import { PRISMA_CONFIG_TS, NOOP_SCRIPT } from './templates.ts'
 import { input } from '@inquirer/prompts'
 
 /**
@@ -25,6 +25,11 @@ export const turso: ProviderConfig = {
     },
     remove: ['@prisma/adapter-pg', '@prisma/adapter-neon', 'pg'],
   },
+  scripts: {
+    // Turso requires applying migrations via CLI shell instead of prisma migrate deploy
+    'db:migrate:deploy':
+      'for f in prisma/migrations/*/migration.sql; do echo "Applying $f..." && turso db shell $TURSO_DB_NAME < "$f"; done',
+  },
   localDevOptions: [
     {
       type: 'xdg-file',
@@ -37,9 +42,10 @@ export const turso: ProviderConfig = {
         TURSO_DB_NAME: '# Your Turso database name (for CLI migrations)',
       },
       packageJsonScripts: {
+        // Turso uses local SQLite for dev, no server to start/stop
         dev: 'prisma studio',
-        'db:studio': 'prisma studio',
-        'db:migrate:deploy': 'for f in prisma/migrations/*/migration.sql; do echo "Applying $f..." && turso db shell $TURSO_DB_NAME < "$f"; done',
+        'db:start': NOOP_SCRIPT,
+        'db:stop': NOOP_SCRIPT,
       },
     },
   ],

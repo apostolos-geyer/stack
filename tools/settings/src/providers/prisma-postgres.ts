@@ -26,6 +26,9 @@ export const prismaPostgres: ProviderConfig = {
     },
     remove: ["@prisma/adapter-libsql", "@prisma/adapter-neon"],
   },
+  scripts: {
+    "db:migrate:deploy": "prisma migrate deploy",
+  },
   localDevOptions: [
     {
       type: "prisma-dev",
@@ -35,9 +38,9 @@ export const prismaPostgres: ProviderConfig = {
         // DATABASE_URL is auto-captured from Prisma Dev by db-switch.ts
       },
       packageJsonScripts: {
+        // prisma dev runs in foreground, db:start/stop for background mode
         dev: "prisma dev --name template",
-        "db:studio": "prisma studio",
-        "db:start": "prisma dev --name template",
+        "db:start": "prisma dev start template",
         "db:stop": "prisma dev stop template",
       },
     },

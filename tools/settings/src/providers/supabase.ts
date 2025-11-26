@@ -22,6 +22,9 @@ export const supabase: ProviderConfig = {
     },
     remove: ['@prisma/adapter-libsql', '@prisma/adapter-neon'],
   },
+  scripts: {
+    'db:migrate:deploy': 'prisma migrate deploy',
+  },
   localDevOptions: [
     {
       type: 'supabase-local',
@@ -32,7 +35,6 @@ export const supabase: ProviderConfig = {
       },
       packageJsonScripts: {
         dev: 'supabase start && prisma studio',
-        'db:studio': 'prisma studio',
         'db:start': 'supabase start',
         'db:stop': 'supabase stop',
       },
