@@ -29,19 +29,20 @@
   },
   "scripts": {
     "typecheck": "tsc --noEmit",
-    "generate": "pnpx @better-auth/cli generate --config ./src/auth.ts --output ../infra.db/prisma/schema.prisma -y && pnpx tsx ../infra.db/scripts/patch-schema.ts"
+    "generate": "pnpx @better-auth/cli generate --config ./src/auth.ts --output ../infra.db/prisma/schema.prisma -y"
   },
   "dependencies": {
-    "@_/platform": "workspace:*",
-    "@_/lib.email": "workspace:*",
     "@_/infra.db": "workspace:*",
-    "@better-auth/expo": "^1.4.1",
-    "@better-auth/stripe": "^1.4.0",
-    "better-auth": "^1.4.0",
+    "@_/lib.email": "workspace:*",
+    "@_/platform": "workspace:*",
+    "@better-auth/expo": "^1.4.3",
+    "@better-auth/stripe": "^1.4.3",
+    "better-auth": "^1.4.3",
     "expo-secure-store": "^15.0.7",
     "stripe": "^20.0.0"
   },
   "devDependencies": {
+    "@better-auth/cli": "^1.4.3",
     "typescript": "catalog:"
   }
 }

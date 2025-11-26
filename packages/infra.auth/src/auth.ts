@@ -1,19 +1,33 @@
-import { serverEnv } from "@_/platform/server";
 import { betterAuth } from "better-auth";
-import { nextCookies } from "better-auth/next-js";
-import { expo } from "@better-auth/expo";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { prisma } from "@_/infra.db";
+
+/* PLUGIN CONFIG */
+import Stripe from "stripe";
+import { expo } from "@better-auth/expo";
+import { nextCookies } from "better-auth/next-js";
+import { username, admin } from "better-auth/plugins";
+import { stripe } from "@better-auth/stripe";
+import { serverEnv } from "@_/platform";
+
+const plugins = [
+  expo(),
+  username(),
+  nextCookies(),
+  stripe({
+    stripeClient: new Stripe(serverEnv.STRIPE_SECRET_KEY ?? ""),
+    stripeWebhookSecret: serverEnv.STRIPE_WEBHOOK_SECRET!,
+    createCustomerOnSignUp: true,
+  }),
+  admin(),
+];
+
 import {
   sendEmail,
   render,
   ResetPasswordEmail,
   VerificationEmail,
 } from "@_/lib.email";
-import { stripe } from "@better-auth/stripe";
-import Stripe from "stripe";
-
-const stripeClient = new Stripe(serverEnv.STRIPE_SECRET_KEY!);
 
 export const auth = betterAuth({
   database: prismaAdapter(prisma, {
@@ -52,15 +66,7 @@ export const auth = betterAuth({
       });
     },
   },
-  plugins: [
-    stripe({
-      stripeClient,
-      stripeWebhookSecret: serverEnv.STRIPE_WEBHOOK_SECRET!,
-      createCustomerOnSignUp: true,
-    }),
-    expo(),
-    nextCookies(),
-  ],
+  plugins,
   trustedOrigins: [
     ...(serverEnv.NODE_ENV === "development"
       ? [

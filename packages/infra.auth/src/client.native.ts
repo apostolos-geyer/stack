@@ -1,12 +1,12 @@
 import { createAuthClient } from "better-auth/react";
-import { stripeClient } from "@better-auth/stripe/client";
 import { expoClient } from "@better-auth/expo/client";
 import * as SecureStore from "expo-secure-store";
+import plugins from "./plugins.client";
 
 export const authClient = createAuthClient({
   baseURL: "http://localhost:3000",
   plugins: [
-    stripeClient({ subscription: true }),
+    ...plugins,
     expoClient({ scheme: "exp", storage: SecureStore, storagePrefix: "exp" }),
   ],
 });
