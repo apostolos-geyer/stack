@@ -4,7 +4,7 @@ import {
   extractEnvVarNames,
   getProviderEnvVarNames,
   PROVIDER_ENV_VARS,
-} from '../env/cfg-env.ts'
+} from '../env/platform.ts'
 
 const SAMPLE_SERVER_TS = `import { createEnv } from "@t3-oss/env-nextjs";
 import { z } from "zod";
@@ -27,7 +27,7 @@ export const serverEnv = createEnv({
 });
 `
 
-describe('cfg-env utilities', () => {
+describe('platform utilities', () => {
   describe('extractEnvVarNames', () => {
     it('extracts all env var names from server.ts', () => {
       const varNames = extractEnvVarNames(SAMPLE_SERVER_TS)

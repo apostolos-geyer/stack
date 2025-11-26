@@ -34,7 +34,7 @@ packages/
   ui.utils/             # Shared utilities (cn, etc.)
 
   # Config
-  cfg.env/              # Zod-validated env vars (@t3-oss/env-nextjs)
+  platform/              # Zod-validated env vars (@t3-oss/env-nextjs)
   cfg.eslint/           # ESLint config
   cfg.ts/               # TypeScript base configs
 ```
@@ -201,7 +201,7 @@ export const EMAIL_FONTS = { sans: 'system-ui, ...' }
 export const EMAIL_WIDTH = 600
 ```
 
-### cfg.env
+### platform
 
 Environment variable validation using @t3-oss/env-nextjs and Zod.
 

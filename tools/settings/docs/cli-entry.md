@@ -165,7 +165,7 @@ await dbSwitch({
 **Features**:
 - Add environment variables
 - Remove environment variables
-- Update cfg.env Zod schema
+- Update platform Zod schema
 - Sync turbo.json globalEnv
 
 **Interactive Flow**:
@@ -182,7 +182,7 @@ await dbSwitch({
 1. Prompt for variable name (validates uppercase format)
 2. Prompt for description
 3. Prompt if required
-4. Add to cfg.env schema
+4. Add to platform schema
 5. Sync turbo.json
 
 ### Environment Symlink Management (env:links)
@@ -416,7 +416,7 @@ Environment Configuration
 ? Select an action:
 > Configure Variables    Add/remove environment variables
   Manage Symlinks       Create/remove .env symlinks
-  Sync turbo.json       Sync globalEnv with cfg.env schema
+  Sync turbo.json       Sync globalEnv with platform schema
   Back to Main Menu     Return to main menu
 ```
 
@@ -543,7 +543,7 @@ DEBUG=1 pnpm settings db:switch
 
 6. **Remove Environment Variable**
    - Implement `removeEnvVar()`
-   - Update cfg.env schema
+   - Update platform schema
    - Sync turbo.json
 
 ### Potential Improvements

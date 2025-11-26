@@ -18,7 +18,7 @@
     "db:stop": "prisma dev stop template"
   },
   "dependencies": {
-    "@_/cfg.env": "workspace:*",
+    "@_/platform": "workspace:*",
     "@prisma/adapter-pg": "catalog:",
     "@prisma/client": "^7.0.0",
     "pg": "catalog:"

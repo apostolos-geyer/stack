@@ -47,7 +47,7 @@ Turborepo monorepo with pnpm workspaces. All internal packages use `@_/` prefix.
 ### Config Packages
 - `@_/cfg.ts` - Base TypeScript config
 - `@_/cfg.eslint` - ESLint config
-- `@_/cfg.env` - Zod-validated environment variables via @t3-oss/env-nextjs
+- `@_/platform` - Zod-validated environment variables via @t3-oss/env-nextjs
 
 ## Key Patterns
 
@@ -186,7 +186,7 @@ Auth configured in `@_/infra.auth/auth.ts`. Dual client pattern:
 - Native: Auto-resolves to `client.native.ts` with expo-secure-store
 
 ### Environment Variables
-Server env via `@_/cfg.env/server`, client env via `@_/cfg.env/client`. Validated with Zod. Required: `DATABASE_URL`, `BETTER_AUTH_SECRET`, `BETTER_AUTH_URL`.
+Server env via `@_/platform/server`, client env via `@_/platform/client`. Validated with Zod. Required: `DATABASE_URL`, `BETTER_AUTH_SECRET`, `BETTER_AUTH_URL`.
 
 ## Package Purpose Guide
 
@@ -204,7 +204,7 @@ Server env via `@_/cfg.env/server`, client env via `@_/cfg.env/client`. Validate
 | `ui.web` | Web components | Adding shadcn components |
 | `ui.native` | Native components | Adding RN components |
 | `ui.style` | Tailwind theme | Changing design tokens |
-| `cfg.env` | Env validation | Adding new env vars |
+| `platform` | Env validation | Adding new env vars |
 
 ## Package Catalog
 

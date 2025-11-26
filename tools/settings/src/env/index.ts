@@ -3,7 +3,7 @@
  * @description Comprehensive environment variable and configuration management for the monorepo.
  * Provides utilities for:
  * - Generating and parsing .env files
- * - Managing Zod schema in cfg.env package
+ * - Managing Zod schema in platform package
  * - Syncing turbo.json globalEnv configuration
  * - Creating and managing .env symlinks across packages
  *
@@ -21,7 +21,7 @@
  *   DATABASE_URL: "postgresql://localhost:5432/db"
  * });
  *
- * // Sync turbo.json with cfg.env
+ * // Sync turbo.json with platform
  * const result = await syncTurboEnv();
  * console.log(`Added ${result.added.length} vars`);
  *
@@ -37,7 +37,7 @@ export {
   mergeEnvContent,
 } from './generator.ts';
 
-// cfg.env - Zod schema management
+// platform - Zod schema management
 export {
   addEnvVarsToSchema,
   removeEnvVarsFromSchema,
@@ -47,7 +47,7 @@ export {
   ALL_DB_ENV_VARS,
   PROVIDER_ENV_VARS,
   type EnvVarDefinition,
-} from './cfg-env.ts';
+} from './platform.ts';
 
 // turbo.json - globalEnv synchronization
 export {

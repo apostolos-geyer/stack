@@ -64,7 +64,7 @@ Providers:
   ENV_CONFIG: `
 Usage: pnpm settings env:config [options]
 
-Configure environment variables in the cfg.env schema.
+Configure environment variables in the platform schema.
 
 This command provides an interactive interface to:
   - View all current environment variables
@@ -91,7 +91,7 @@ Workflow:
   1. View current variables
   2. Add/remove variables as needed
   3. Preview changes with diff
-  4. Apply changes (writes to cfg.env/src/server.ts)
+  4. Apply changes (writes to platform/src/server.ts)
   5. turbo.json is automatically synced
 
 Supported Zod Types:
@@ -168,7 +168,7 @@ Settings CLI - Database and Environment Configuration Tool
 
 Available Commands:
   db:switch     Switch database provider (sqlite, supabase, neon, etc.)
-  env:config    Configure environment variables in cfg.env schema
+  env:config    Configure environment variables in platform schema
   env:links     Manage .env symlinks across packages
 
 Usage:

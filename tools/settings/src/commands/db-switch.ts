@@ -217,7 +217,7 @@ export async function dbSwitch(options: DbSwitchOptions): Promise<void> {
       }
     }
 
-    // Generate diff for cfg.env server.ts (provider-specific env vars)
+    // Generate diff for platform server.ts (provider-specific env vars)
     const currentCfgEnvContent = await readFile(PATHS.CFG_ENV_SERVER, 'utf-8')
     const patchedCfgEnvContent = updateCfgEnvForProvider(currentCfgEnvContent, provider.id)
     const cfgEnvDiff = await generateFileDiff(PATHS.CFG_ENV_SERVER, patchedCfgEnvContent)
@@ -360,13 +360,13 @@ export async function dbSwitch(options: DbSwitchOptions): Promise<void> {
     await writeFile(PATHS.DB_SCHEMA_PRISMA, patchedSchemaContent, 'utf-8')
     log.success('Updated schema.prisma')
 
-    // Update cfg.env server.ts (provider-specific env vars)
+    // Update platform server.ts (provider-specific env vars)
     const currentCfgEnvContent = await readFile(PATHS.CFG_ENV_SERVER, 'utf-8')
     const patchedCfgEnvContent = updateCfgEnvForProvider(currentCfgEnvContent, provider.id)
     await writeFile(PATHS.CFG_ENV_SERVER, patchedCfgEnvContent, 'utf-8')
-    log.success('Updated cfg.env/server.ts')
+    log.success('Updated platform/server.ts')
 
-    // Sync turbo.json globalEnv with cfg.env schema
+    // Sync turbo.json globalEnv with platform schema
     const syncResult = await syncTurboEnv()
     if (syncResult.added.length > 0 || syncResult.removed.length > 0) {
       log.success(`Synced turbo.json (added: ${syncResult.added.length}, removed: ${syncResult.removed.length})`)

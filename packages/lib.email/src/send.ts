@@ -1,4 +1,4 @@
-import { serverEnv } from "@_/cfg.env/server";
+import { serverEnv } from "@_/platform/server";
 import { Resend } from "resend";
 
 export type SendEmailOptions = {

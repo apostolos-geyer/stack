@@ -13,7 +13,7 @@
     "./components": "./src/components/index.ts"
   },
   "dependencies": {
-    "@_/cfg.env": "workspace:*",
+    "@_/platform": "workspace:*",
     "@react-email/components": "^1.0.1",
     "@react-email/render": "catalog:",
     "resend": "catalog:"

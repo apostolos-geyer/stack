@@ -54,7 +54,7 @@ export const neon: ProviderConfig = {
     provider: 'https://neon.tech/docs/introduction',
   },
   templates: {
-    clientTs: `import { serverEnv } from '@_/cfg.env/server'
+    clientTs: `import { serverEnv } from '@_/platform/server'
 import { PrismaNeon } from '@prisma/adapter-neon'
 import { PrismaClient } from './generated/prisma/client'
 

@@ -33,8 +33,8 @@ export const PATHS = {
   // infra.auth package
   AUTH_TS: path.join(REPO_ROOT, 'packages/infra.auth/src/auth.ts'),
 
-  // cfg.env package
-  CFG_ENV_SERVER: path.join(REPO_ROOT, 'packages/cfg.env/src/server.ts'),
+  // platform package
+  CFG_ENV_SERVER: path.join(REPO_ROOT, 'packages/platform/src/server.ts'),
 
   // Root files
   TURBO_JSON: path.join(REPO_ROOT, 'turbo.json'),
@@ -57,7 +57,7 @@ export const GIT_PROTECTED_FILES = [
 export const GIT_PROTECTED_PACKAGES = [
   path.join(REPO_ROOT, 'packages/infra.db'),
   path.join(REPO_ROOT, 'packages/infra.auth'),
-  path.join(REPO_ROOT, 'packages/cfg.env'),
+  path.join(REPO_ROOT, 'packages/platform'),
 ] as const
 
 // Default symlink targets

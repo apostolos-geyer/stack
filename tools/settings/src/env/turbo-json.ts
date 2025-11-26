@@ -5,7 +5,7 @@
 
 import fs from 'node:fs/promises';
 import { PATHS } from '../utils/paths.ts';
-import { extractEnvVarNames } from './cfg-env.ts';
+import { extractEnvVarNames } from './platform.ts';
 
 /**
  * Result of syncing turbo.json globalEnv
@@ -47,8 +47,8 @@ export async function getGlobalEnv(): Promise<string[]> {
 }
 
 /**
- * Updates turbo.json globalEnv to match cfg.env schema
- * @description Reads environment variables from cfg.env/src/server.ts and updates
+ * Updates turbo.json globalEnv to match platform schema
+ * @description Reads environment variables from platform/src/server.ts and updates
  * turbo.json's globalEnv array to match, maintaining alphabetical order
  * @returns Promise resolving to sync result with added and removed variables
  * @throws Error if files cannot be read/written or parsed
@@ -60,7 +60,7 @@ export async function getGlobalEnv(): Promise<string[]> {
  */
 export async function syncTurboEnv(): Promise<SyncResult> {
   try {
-    // Read cfg.env schema to get the source of truth
+    // Read platform schema to get the source of truth
     const cfgEnvContent = await fs.readFile(PATHS.CFG_ENV_SERVER, 'utf-8');
     const schemaVars = extractEnvVarNames(cfgEnvContent);
 

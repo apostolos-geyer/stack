@@ -1,4 +1,4 @@
-import { serverEnv } from '@_/cfg.env/server'
+import { serverEnv } from '@_/platform/server'
 import { PrismaPg } from '@prisma/adapter-pg'
 import { PrismaClient } from './generated/prisma/client'
 

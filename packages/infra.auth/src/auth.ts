@@ -1,4 +1,4 @@
-import { serverEnv } from "@_/cfg.env/server";
+import { serverEnv } from "@_/platform/server";
 import { betterAuth } from "better-auth";
 import { nextCookies } from "better-auth/next-js";
 import { expo } from "@better-auth/expo";

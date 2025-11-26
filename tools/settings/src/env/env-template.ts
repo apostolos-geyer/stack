@@ -1,6 +1,6 @@
 /**
  * @fileoverview Environment file template generation
- * Generates .env based on cfg.env schema
+ * Generates .env based on platform schema
  */
 
 import { readFile } from 'node:fs/promises'
@@ -16,7 +16,7 @@ export function generateSecret(length: number = 32): string {
 }
 
 /**
- * Parsed environment variable from cfg.env schema
+ * Parsed environment variable from platform schema
  */
 export interface ParsedEnvVar {
   name: string
@@ -129,7 +129,7 @@ export const ENV_VAR_DEFAULTS: Record<string, { example: string; comment: string
 }
 
 /**
- * Parses the cfg.env/src/server.ts file to extract all env var definitions
+ * Parses the platform/src/server.ts file to extract all env var definitions
  */
 export async function parseEnvSchema(): Promise<ParsedEnvVar[]> {
   const content = await readFile(PATHS.CFG_ENV_SERVER, 'utf-8')
@@ -138,7 +138,7 @@ export async function parseEnvSchema(): Promise<ParsedEnvVar[]> {
   // Match the server object content
   const serverMatch = content.match(/server:\s*\{([^}]*(?:\{[^}]*\}[^}]*)*)\}/s)
   if (!serverMatch) {
-    throw new Error('Could not find server object in cfg.env schema')
+    throw new Error('Could not find server object in platform schema')
   }
 
   const serverContent = serverMatch[1]

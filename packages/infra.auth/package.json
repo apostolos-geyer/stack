@@ -32,7 +32,7 @@
     "generate": "pnpx @better-auth/cli generate --config ./src/auth.ts --output ../infra.db/prisma/schema.prisma -y && pnpx tsx ../infra.db/scripts/patch-schema.ts"
   },
   "dependencies": {
-    "@_/cfg.env": "workspace:*",
+    "@_/platform": "workspace:*",
     "@_/lib.email": "workspace:*",
     "@_/infra.db": "workspace:*",
     "@better-auth/expo": "^1.4.1",

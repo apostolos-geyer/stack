@@ -261,7 +261,7 @@ Each provider defines its required environment variables:
 
 All templates follow the same pattern from the existing codebase:
 ```typescript
-import { serverEnv } from '@_/cfg.env/server'
+import { serverEnv } from '@_/platform/server'
 import { PrismaClient } from './generated/prisma/client'
 
 const globalForPrisma = globalThis as unknown as { prisma: PrismaClient | undefined }
@@ -380,7 +380,7 @@ This prevents conflicts when developers might have multiple database configurati
 
 **Solution:** All templates:
 - Use ES module imports (`.js` extensions)
-- Import from `@_/cfg.env/server` for environment variables
+- Import from `@_/platform/server` for environment variables
 - Follow the exact pattern from the existing codebase
 - Include proper TypeScript types
 

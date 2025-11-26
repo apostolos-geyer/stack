@@ -43,7 +43,7 @@ describe('providers', () => {
       const template = provider.templates.clientTs
 
       // Should import from correct paths
-      expect(template).toContain("import { serverEnv } from '@_/cfg.env/server'")
+      expect(template).toContain("import { serverEnv } from '@_/platform/server'")
       expect(template).toContain("import { PrismaClient } from './generated/prisma/client'")
 
       // Should export prisma

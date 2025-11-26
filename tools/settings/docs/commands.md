@@ -17,7 +17,7 @@ Comprehensive documentation for all Settings CLI commands.
 The Settings CLI provides three main commands for managing database providers and environment configuration across the monorepo:
 
 1. **db:switch** - Switch database providers with automatic migration
-2. **env:config** - Manage environment variables in the cfg.env schema
+2. **env:config** - Manage environment variables in the platform schema
 3. **env:links** - Create and manage .env symlinks across packages
 
 All commands support both interactive and non-interactive modes, with comprehensive help text available via `--help`.
@@ -135,7 +135,7 @@ All errors are logged with clear messages and the operation is aborted safely.
 
 ### env:config
 
-Configure environment variables in the cfg.env Zod schema with interactive UI.
+Configure environment variables in the platform Zod schema with interactive UI.
 
 #### Usage
 
@@ -161,12 +161,12 @@ pnpm settings env:config [options]
 
 #### Workflow
 
-1. **View Current Variables** - Displays all variables from cfg.env schema
+1. **View Current Variables** - Displays all variables from platform schema
 2. **Interactive Menu** - Choose action: add, remove, view, apply, or cancel
 3. **Add Variable** - Prompts for name, type, optional flag, comment
 4. **Remove Variable** - Select variable to remove with confirmation
 5. **View Changes** - Shows unified diff of changes
-6. **Apply Changes** - Writes to cfg.env/src/server.ts and syncs turbo.json
+6. **Apply Changes** - Writes to platform/src/server.ts and syncs turbo.json
 
 #### Supported Zod Types
 
@@ -188,7 +188,7 @@ Built-in type templates:
 
 #### Files Modified
 
-- `/packages/cfg.env/src/server.ts` - Zod schema definition
+- `/packages/platform/src/server.ts` - Zod schema definition
 - `/turbo.json` - globalEnv array (auto-synced)
 
 #### Examples
@@ -231,8 +231,8 @@ What would you like to do?
 > View changes
 
 Preview Changes
---- packages/cfg.env/src/server.ts
-+++ packages/cfg.env/src/server.ts
+--- packages/platform/src/server.ts
++++ packages/platform/src/server.ts
 @@ -10,6 +10,9 @@
      BETTER_AUTH_URL: z.string().url(),
      NODE_ENV: z.enum(['development', 'production', 'test']),
@@ -247,7 +247,7 @@ What would you like to do?
 
 Apply these changes? Yes
 
-Updated cfg.env/src/server.ts
+Updated platform/src/server.ts
 Syncing turbo.json...
 Added 1 vars to turbo.json
   + STRIPE_SECRET_KEY
@@ -365,7 +365,7 @@ Current symlink status:
   packages/api.trpc: no .env file
   packages/api.http: no .env file
   packages/lib.server: no .env file
-  packages/cfg.env: no .env file
+  packages/platform: no .env file
 
 Select packages for symlink creation:
   [x] apps/web
@@ -375,7 +375,7 @@ Select packages for symlink creation:
   [ ] packages/api.trpc
   [ ] packages/api.http
   [ ] packages/lib.server
-  [ ] packages/cfg.env
+  [ ] packages/platform
 
 [4/4] Creating symlinks...
 
@@ -456,7 +456,7 @@ Commands use the following modules:
 - **providers/** - Database provider configurations
 - **safety/** - Git safety checks and backups
 - **diff/** - Diff generation and display
-- **env/** - Environment management (symlinks, cfg.env, turbo.json)
+- **env/** - Environment management (symlinks, platform, turbo.json)
 - **schema/** - Prisma schema patching
 - **utils/** - Logging, exec, paths
 

@@ -1,6 +1,6 @@
 /**
  * @fileoverview Configuration environment schema management
- * Functions for updating the cfg.env Zod schema for server environment variables
+ * Functions for updating the platform Zod schema for server environment variables
  */
 
 /**
@@ -29,7 +29,7 @@ export const ALL_DB_ENV_VARS = [
 ];
 
 /**
- * Provider-specific env var requirements for cfg.env schema
+ * Provider-specific env var requirements for platform schema
  */
 export const PROVIDER_ENV_VARS: Record<string, EnvVarDefinition[]> = {
   sqlite: [
@@ -60,9 +60,9 @@ export const PROVIDER_ENV_VARS: Record<string, EnvVarDefinition[]> = {
 };
 
 /**
- * Adds new environment variables to cfg.env/src/server.ts schema
+ * Adds new environment variables to platform/src/server.ts schema
  * @description Inserts new variables into the server object of the Zod schema while maintaining formatting
- * @param currentContent - Current content of cfg.env/src/server.ts
+ * @param currentContent - Current content of platform/src/server.ts
  * @param vars - Array of environment variable definitions to add
  * @returns Modified server.ts content with new variables added
  * @throws Error if the server object cannot be found in the content
@@ -84,7 +84,7 @@ export function addEnvVarsToSchema(
   const serverMatch = currentContent.match(/server:\s*\{([^}]*(?:\{[^}]*\}[^}]*)*)\}/s);
 
   if (!serverMatch) {
-    throw new Error('Could not find server object in cfg.env schema');
+    throw new Error('Could not find server object in platform schema');
   }
 
   const serverContent = serverMatch[1];
@@ -138,9 +138,9 @@ export function addEnvVarsToSchema(
 }
 
 /**
- * Removes environment variables from cfg.env/src/server.ts schema
+ * Removes environment variables from platform/src/server.ts schema
  * @description Removes specified variables and their comments from the Zod schema
- * @param currentContent - Current content of cfg.env/src/server.ts
+ * @param currentContent - Current content of platform/src/server.ts
  * @param vars - Array of variable names to remove
  * @returns Modified server.ts content with variables removed
  * @throws Error if the server object cannot be found in the content
@@ -177,9 +177,9 @@ export function removeEnvVarsFromSchema(
 }
 
 /**
- * Extracts all environment variable names from cfg.env/src/server.ts
+ * Extracts all environment variable names from platform/src/server.ts
  * @description Parses the Zod schema to extract all defined variable names
- * @param content - Content of cfg.env/src/server.ts
+ * @param content - Content of platform/src/server.ts
  * @returns Array of environment variable names defined in the schema
  * @throws Error if the server object cannot be found in the content
  * @example
@@ -192,7 +192,7 @@ export function extractEnvVarNames(content: string): string[] {
   const serverMatch = content.match(/server:\s*\{([^}]*(?:\{[^}]*\}[^}]*)*)\}/s);
 
   if (!serverMatch) {
-    throw new Error('Could not find server object in cfg.env schema');
+    throw new Error('Could not find server object in platform schema');
   }
 
   const serverContent = serverMatch[1];
@@ -210,9 +210,9 @@ export function extractEnvVarNames(content: string): string[] {
 }
 
 /**
- * Updates cfg.env schema for a specific database provider
+ * Updates platform schema for a specific database provider
  * @description Removes all database-related env vars and adds provider-specific ones
- * @param content - Current content of cfg.env/src/server.ts
+ * @param content - Current content of platform/src/server.ts
  * @param providerId - Provider ID (sqlite, turso, supabase, neon, prisma-postgres)
  * @returns Modified server.ts content with updated env vars
  * @throws Error if provider is unknown or server object not found

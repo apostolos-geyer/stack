@@ -108,15 +108,15 @@ describe('git safety utilities', () => {
         modified: [],
         not_added: [],
         created: [],
-        deleted: ['packages/cfg.env/src/old.ts'],
+        deleted: ['packages/platform/src/old.ts'],
         renamed: [],
         conflicted: [],
       })
 
-      const result = await checkGitStatus(['packages/cfg.env/src/old.ts'])
+      const result = await checkGitStatus(['packages/platform/src/old.ts'])
 
       expect(result.allCommitted).toBe(false)
-      expect(result.uncommittedFiles).toContain('packages/cfg.env/src/old.ts')
+      expect(result.uncommittedFiles).toContain('packages/platform/src/old.ts')
     })
 
     it('detects renamed files', async () => {
@@ -161,7 +161,7 @@ describe('git safety utilities', () => {
       const result = await checkGitStatusForDirectories([
         'packages/infra.db',
         'packages/infra.auth',
-        'packages/cfg.env',
+        'packages/platform',
       ])
 
       expect(result.isGitRepo).toBe(true)
@@ -183,7 +183,7 @@ describe('git safety utilities', () => {
       const result = await checkGitStatusForDirectories([
         'packages/infra.db',
         'packages/infra.auth',
-        'packages/cfg.env',
+        'packages/platform',
       ])
 
       expect(result.allCommitted).toBe(false)
@@ -204,17 +204,17 @@ describe('git safety utilities', () => {
       const result = await checkGitStatusForDirectories([
         'packages/infra.db',
         'packages/infra.auth',
-        'packages/cfg.env',
+        'packages/platform',
       ])
 
       expect(result.allCommitted).toBe(false)
       expect(result.uncommittedFiles).toContain('packages/infra.auth/src/auth.ts')
     })
 
-    it('detects changes in cfg.env package', async () => {
+    it('detects changes in platform package', async () => {
       mockGit.checkIsRepo.mockResolvedValue(true)
       mockGit.status.mockResolvedValue({
-        modified: ['packages/cfg.env/src/server.ts'],
+        modified: ['packages/platform/src/server.ts'],
         not_added: [],
         created: [],
         deleted: [],
@@ -225,11 +225,11 @@ describe('git safety utilities', () => {
       const result = await checkGitStatusForDirectories([
         'packages/infra.db',
         'packages/infra.auth',
-        'packages/cfg.env',
+        'packages/platform',
       ])
 
       expect(result.allCommitted).toBe(false)
-      expect(result.uncommittedFiles).toContain('packages/cfg.env/src/server.ts')
+      expect(result.uncommittedFiles).toContain('packages/platform/src/server.ts')
     })
 
     it('detects changes in multiple packages at once', async () => {
@@ -237,7 +237,7 @@ describe('git safety utilities', () => {
       mockGit.status.mockResolvedValue({
         modified: [
           'packages/infra.db/src/client.ts',
-          'packages/cfg.env/src/server.ts',
+          'packages/platform/src/server.ts',
         ],
         not_added: ['packages/infra.auth/src/new-file.ts'],
         created: [],
@@ -249,13 +249,13 @@ describe('git safety utilities', () => {
       const result = await checkGitStatusForDirectories([
         'packages/infra.db',
         'packages/infra.auth',
-        'packages/cfg.env',
+        'packages/platform',
       ])
 
       expect(result.allCommitted).toBe(false)
       expect(result.uncommittedFiles).toHaveLength(3)
       expect(result.uncommittedFiles).toContain('packages/infra.db/src/client.ts')
-      expect(result.uncommittedFiles).toContain('packages/cfg.env/src/server.ts')
+      expect(result.uncommittedFiles).toContain('packages/platform/src/server.ts')
       expect(result.uncommittedFiles).toContain('packages/infra.auth/src/new-file.ts')
     })
 
@@ -277,7 +277,7 @@ describe('git safety utilities', () => {
       const result = await checkGitStatusForDirectories([
         'packages/infra.db',
         'packages/infra.auth',
-        'packages/cfg.env',
+        'packages/platform',
       ])
 
       expect(result.allCommitted).toBe(true)
@@ -363,7 +363,7 @@ describe('git safety utilities', () => {
         ensureDirectoriesCommitted([
           'packages/infra.db',
           'packages/infra.auth',
-          'packages/cfg.env',
+          'packages/platform',
         ])
       ).resolves.not.toThrow()
     })
@@ -383,7 +383,7 @@ describe('git safety utilities', () => {
         ensureDirectoriesCommitted([
           'packages/infra.db',
           'packages/infra.auth',
-          'packages/cfg.env',
+          'packages/platform',
         ])
       ).rejects.toThrow('uncommitted changes')
     })
@@ -403,15 +403,15 @@ describe('git safety utilities', () => {
         ensureDirectoriesCommitted([
           'packages/infra.db',
           'packages/infra.auth',
-          'packages/cfg.env',
+          'packages/platform',
         ])
       ).rejects.toThrow('uncommitted changes')
     })
 
-    it('throws when cfg.env has uncommitted changes', async () => {
+    it('throws when platform has uncommitted changes', async () => {
       mockGit.checkIsRepo.mockResolvedValue(true)
       mockGit.status.mockResolvedValue({
-        modified: ['packages/cfg.env/src/server.ts'],
+        modified: ['packages/platform/src/server.ts'],
         not_added: [],
         created: [],
         deleted: [],
@@ -423,7 +423,7 @@ describe('git safety utilities', () => {
         ensureDirectoriesCommitted([
           'packages/infra.db',
           'packages/infra.auth',
-          'packages/cfg.env',
+          'packages/platform',
         ])
       ).rejects.toThrow('uncommitted changes')
     })
@@ -433,7 +433,7 @@ describe('git safety utilities', () => {
       mockGit.status.mockResolvedValue({
         modified: [
           'packages/infra.db/src/client.ts',
-          'packages/cfg.env/src/server.ts',
+          'packages/platform/src/server.ts',
         ],
         not_added: [],
         created: [],
@@ -446,12 +446,12 @@ describe('git safety utilities', () => {
         await ensureDirectoriesCommitted([
           'packages/infra.db',
           'packages/infra.auth',
-          'packages/cfg.env',
+          'packages/platform',
         ])
         expect.fail('Should have thrown')
       } catch (error) {
         expect((error as Error).message).toContain('packages/infra.db/src/client.ts')
-        expect((error as Error).message).toContain('packages/cfg.env/src/server.ts')
+        expect((error as Error).message).toContain('packages/platform/src/server.ts')
       }
     })
 
@@ -463,7 +463,7 @@ describe('git safety utilities', () => {
         ensureDirectoriesCommitted([
           'packages/infra.db',
           'packages/infra.auth',
-          'packages/cfg.env',
+          'packages/platform',
         ])
       ).resolves.not.toThrow()
     })
@@ -489,13 +489,13 @@ describe('git safety utilities', () => {
       expect(packageNames).toContain('infra.auth')
     })
 
-    it('GIT_PROTECTED_PACKAGES includes cfg.env', async () => {
+    it('GIT_PROTECTED_PACKAGES includes platform', async () => {
       const { GIT_PROTECTED_PACKAGES } = await import('../utils/paths.ts')
 
       const packageNames = GIT_PROTECTED_PACKAGES.map((p) =>
         p.split('/').pop()
       )
-      expect(packageNames).toContain('cfg.env')
+      expect(packageNames).toContain('platform')
     })
   })
 })

@@ -7,8 +7,8 @@ Comprehensive utilities for managing environment variables, configuration files,
 The environment modules provide four main areas of functionality:
 
 1. **Generator** - Creating and parsing .env file content
-2. **cfg.env** - Managing the Zod schema in `packages/cfg.env/src/server.ts`
-3. **turbo.json** - Syncing the `globalEnv` array with cfg.env schema
+2. **platform** - Managing the Zod schema in `packages/platform/src/server.ts`
+3. **turbo.json** - Syncing the `globalEnv` array with platform schema
 4. **Symlinks** - Managing .env symlinks across packages
 
 ## Module: generator.ts
@@ -125,9 +125,9 @@ const merged = mergeEnvContent(existing, {
 
 ---
 
-## Module: cfg-env.ts
+## Module: platform.ts
 
-Functions for managing the Zod schema in `packages/cfg.env/src/server.ts`.
+Functions for managing the Zod schema in `packages/platform/src/server.ts`.
 
 ### Types
 
@@ -146,10 +146,10 @@ interface EnvVarDefinition {
 
 #### `addEnvVarsToSchema(currentContent, vars)`
 
-Adds new environment variables to the cfg.env Zod schema.
+Adds new environment variables to the platform Zod schema.
 
 **Parameters:**
-- `currentContent: string` - Current content of cfg.env/src/server.ts
+- `currentContent: string` - Current content of platform/src/server.ts
 - `vars: EnvVarDefinition[]` - Variables to add
 
 **Returns:** `string` - Modified server.ts content
@@ -161,7 +161,7 @@ Adds new environment variables to the cfg.env Zod schema.
 import fs from 'node:fs/promises';
 import { addEnvVarsToSchema } from './env/index.js';
 
-const content = await fs.readFile('packages/cfg.env/src/server.ts', 'utf-8');
+const content = await fs.readFile('packages/platform/src/server.ts', 'utf-8');
 
 const updated = addEnvVarsToSchema(content, [
   {
@@ -178,7 +178,7 @@ const updated = addEnvVarsToSchema(content, [
   }
 ]);
 
-await fs.writeFile('packages/cfg.env/src/server.ts', updated);
+await fs.writeFile('packages/platform/src/server.ts', updated);
 ```
 
 **Features:**
@@ -191,10 +191,10 @@ await fs.writeFile('packages/cfg.env/src/server.ts', updated);
 
 #### `removeEnvVarsFromSchema(currentContent, vars)`
 
-Removes environment variables from the cfg.env Zod schema.
+Removes environment variables from the platform Zod schema.
 
 **Parameters:**
-- `currentContent: string` - Current content of cfg.env/src/server.ts
+- `currentContent: string` - Current content of platform/src/server.ts
 - `vars: string[]` - Variable names to remove
 
 **Returns:** `string` - Modified server.ts content
@@ -220,10 +220,10 @@ const updated = removeEnvVarsFromSchema(content, [
 
 #### `extractEnvVarNames(content)`
 
-Extracts all environment variable names from the cfg.env schema.
+Extracts all environment variable names from the platform schema.
 
 **Parameters:**
-- `content: string` - Content of cfg.env/src/server.ts
+- `content: string` - Content of platform/src/server.ts
 
 **Returns:** `string[]` - Sorted array of variable names
 
@@ -242,7 +242,7 @@ console.log(varNames);
 
 ## Module: turbo-json.ts
 
-Functions for syncing the `globalEnv` array in turbo.json with the cfg.env schema.
+Functions for syncing the `globalEnv` array in turbo.json with the platform schema.
 
 ### Types
 
@@ -278,7 +278,7 @@ console.log(envVars);
 
 #### `syncTurboEnv()`
 
-Updates turbo.json's globalEnv to match the cfg.env schema.
+Updates turbo.json's globalEnv to match the platform schema.
 
 **Returns:** `Promise<SyncResult>` - Added and removed variables
 
@@ -294,14 +294,14 @@ console.log(`Removed: ${result.removed.join(', ')}`);
 ```
 
 **Workflow:**
-1. Reads cfg.env/src/server.ts to extract all variable names
+1. Reads platform/src/server.ts to extract all variable names
 2. Compares with current turbo.json globalEnv
-3. Updates turbo.json with the full list from cfg.env
+3. Updates turbo.json with the full list from platform
 4. Maintains alphabetical order
 5. Returns added and removed variables
 
 **Use Case:**
-Run this after adding/removing variables in cfg.env to keep turbo.json in sync.
+Run this after adding/removing variables in platform to keep turbo.json in sync.
 
 ---
 
@@ -324,7 +324,7 @@ await setGlobalEnv(["DATABASE_URL", "NODE_ENV", "API_KEY"]);
 ```
 
 **Use Case:**
-For custom globalEnv configurations that differ from cfg.env schema.
+For custom globalEnv configurations that differ from platform schema.
 
 ---
 
@@ -510,7 +510,7 @@ import {
 } from './env/index.js';
 import { PATHS } from './utils/paths.js';
 
-// 1. Update cfg.env schema
+// 1. Update platform schema
 const cfgEnvContent = await fs.readFile(PATHS.CFG_ENV_SERVER, 'utf-8');
 const updated = addEnvVarsToSchema(cfgEnvContent, [
   {
@@ -578,10 +578,10 @@ import {
 import fs from 'node:fs/promises';
 import { PATHS } from './utils/paths.js';
 
-// 1. Check cfg.env schema
+// 1. Check platform schema
 const cfgEnvContent = await fs.readFile(PATHS.CFG_ENV_SERVER, 'utf-8');
 const schemaVars = extractEnvVarNames(cfgEnvContent);
-console.log('Variables in cfg.env:', schemaVars);
+console.log('Variables in platform:', schemaVars);
 
 // 2. Check turbo.json
 const turboVars = await getGlobalEnv();
@@ -629,7 +629,7 @@ await createSymlinks(".env.production", packages);
 
 All referenced paths are relative to the repository root:
 
-- **cfg.env schema**: `packages/cfg.env/src/server.ts`
+- **platform schema**: `packages/platform/src/server.ts`
 - **turbo.json**: `turbo.json`
 - **Environment files**: `.env`, `.env.local`, `.env.production`, etc.
 - **Packages**: `apps/*`, `packages/*`
@@ -679,7 +679,7 @@ Example test structure:
 test/
   env/
     generator.test.ts
-    cfg-env.test.ts
+    platform.test.ts
     turbo-json.test.ts
     symlinks.test.ts
 ```

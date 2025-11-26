@@ -25,7 +25,7 @@ export default defineConfig({
  * PostgreSQL client template using @prisma/adapter-pg
  * Used by: postgres, prisma-postgres, supabase
  */
-export const PG_CLIENT_TS = `import { serverEnv } from '@_/cfg.env/server'
+export const PG_CLIENT_TS = `import { serverEnv } from '@_/platform/server'
 import { PrismaPg } from '@prisma/adapter-pg'
 import { PrismaClient } from './generated/prisma/client'
 

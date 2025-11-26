@@ -68,7 +68,7 @@ export const turso: ProviderConfig = {
     provider: 'https://docs.turso.tech',
   },
   templates: {
-    clientTs: `import { serverEnv } from '@_/cfg.env/server'
+    clientTs: `import { serverEnv } from '@_/platform/server'
 import { PrismaLibSql } from '@prisma/adapter-libsql'
 import { PrismaClient } from './generated/prisma/client'
 

@@ -33,13 +33,13 @@ export interface EnvConfigOptions {
 
 /**
  * Environment configuration command
- * @description Interactive prompt to view/edit environment variables in cfg.env schema
+ * @description Interactive prompt to view/edit environment variables in platform schema
  *
  * This command allows you to:
  * - View current environment variables
  * - Add new environment variables
  * - Remove existing environment variables
- * - Sync turbo.json with cfg.env schema
+ * - Sync turbo.json with platform schema
  *
  * @param options - Command options
  *
@@ -59,7 +59,7 @@ export async function envConfig(options: EnvConfigOptions): Promise<void> {
   log.header('Environment Variable Configuration')
 
   try {
-    // Read current cfg.env schema
+    // Read current platform schema
     const currentContent = await readFile(PATHS.CFG_ENV_SERVER, 'utf-8')
     const currentVars = extractEnvVarNames(currentContent)
 
@@ -309,7 +309,7 @@ async function handleSetValues(): Promise<void> {
 
 /**
  * Handles adding a new environment variable
- * @param currentContent - Current cfg.env/src/server.ts content
+ * @param currentContent - Current platform/src/server.ts content
  * @returns Modified content with new variable added
  */
 async function handleAddVariable(currentContent: string): Promise<string> {
@@ -426,7 +426,7 @@ async function handleAddVariable(currentContent: string): Promise<string> {
 
 /**
  * Handles removing an environment variable
- * @param currentContent - Current cfg.env/src/server.ts content
+ * @param currentContent - Current platform/src/server.ts content
  * @returns Modified content with variable removed
  */
 async function handleRemoveVariable(currentContent: string): Promise<string> {
@@ -469,7 +469,7 @@ async function handleRemoveVariable(currentContent: string): Promise<string> {
 
 /**
  * Handles viewing changes
- * @param originalContent - Original cfg.env/src/server.ts content
+ * @param originalContent - Original platform/src/server.ts content
  * @param modifiedContent - Modified content
  */
 async function handleViewChanges(
@@ -492,7 +492,7 @@ async function handleViewChanges(
 
 /**
  * Handles applying changes
- * @param originalContent - Original cfg.env/src/server.ts content
+ * @param originalContent - Original platform/src/server.ts content
  * @param modifiedContent - Modified content
  */
 async function handleApplyChanges(
@@ -527,9 +527,9 @@ async function handleApplyChanges(
   }
 
   try {
-    // Write changes to cfg.env/src/server.ts
+    // Write changes to platform/src/server.ts
     await writeFile(PATHS.CFG_ENV_SERVER, modifiedContent, 'utf-8')
-    log.success('Updated cfg.env/src/server.ts')
+    log.success('Updated platform/src/server.ts')
 
     // Sync turbo.json
     log.info('Syncing turbo.json...')
@@ -572,7 +572,7 @@ function showHelp(): void {
   console.log(`
 Usage: pnpm settings env:config [options]
 
-Configure environment variables in the cfg.env schema.
+Configure environment variables in the platform schema.
 
 Options:
   --help              Show this help message

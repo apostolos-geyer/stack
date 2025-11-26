@@ -37,7 +37,12 @@
       "@types/react-dom": "catalog:native"
     },
     "onlyBuiltDependencies": [
-      "esbuild"
+      "esbuild",
+      "@prisma/engines",
+      "core-js-pure",
+      "prisma",
+      "sharp",
+      "unrs-resolver"
     ]
   }
 }
