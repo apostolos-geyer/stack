@@ -10,24 +10,26 @@
     "schema": "./prisma/schema.prisma"
   },
   "scripts": {
+    "db:migrate": "prisma migrate dev --skip-generate",
     "db:generate": "prisma generate",
     "db:migrate:dev": "prisma migrate dev",
-    "db:migrate": "prisma migrate dev --skip-generate",
     "db:studio": "prisma studio",
     "db:push": "prisma db push",
+    "db:seed": "prisma db seed",
     "typecheck": "tsc --noEmit",
     "db:migrate:deploy": "prisma migrate deploy",
-    "dev": "prisma dev --name template",
-    "db:start": "prisma dev start template",
-    "db:stop": "prisma dev stop template"
+    "dev": "docker compose up -d && prisma studio",
+    "db:start": "docker compose up -d",
+    "db:stop": "docker compose down"
   },
   "dependencies": {
     "@_/platform": "workspace:*",
-    "@prisma/adapter-pg": "^7.0.1",
+    "@prisma/adapter-pg": "catalog:",
     "@prisma/client": "^7.0.0",
-    "pg": "^8.16.3"
+    "pg": "catalog:"
   },
   "devDependencies": {
-    "prisma": "^7.0.0"
+    "prisma": "^7.0.0",
+    "tsx": "^4.20.6"
   }
 }

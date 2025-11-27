@@ -1,13 +1,13 @@
-import { createAuthClient } from "better-auth/react";
-import { expoClient } from "@better-auth/expo/client";
-import * as SecureStore from "expo-secure-store";
-import plugins from "./plugins.client";
+import { expoClient } from '@better-auth/expo/client';
+import { createAuthClient } from 'better-auth/react';
+import * as SecureStore from 'expo-secure-store';
+import plugins from './plugins.client';
 
 export const authClient = createAuthClient({
-  baseURL: "http://localhost:3000",
+  baseURL: 'http://localhost:3000',
   plugins: [
     ...plugins,
-    expoClient({ scheme: "exp", storage: SecureStore, storagePrefix: "exp" }),
+    expoClient({ scheme: 'exp', storage: SecureStore, storagePrefix: 'exp' }),
   ],
 });
 

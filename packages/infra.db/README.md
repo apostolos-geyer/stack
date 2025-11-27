@@ -1,15 +1,31 @@
 # Database Package (@_/infra.db)
 
-This package uses **Prisma Postgres** with Prisma 7.
+This package uses **PostgreSQL (Unmanaged)** with Prisma 7.
 
 ## Quick Start
 
-1. Start Prisma Dev: `pnpm dev` (or `pnpm db:start`)
-2. The DATABASE_URL is automatically configured in `.env`
-3. Run migrations: `pnpm db:migrate:dev --name init`
-4. Open Prisma Studio: `pnpm db:studio`
+### Prerequisites
+- Docker Desktop must be running
 
-Prisma Dev uses PgLite - a lightweight PostgreSQL that runs locally without Docker.
+### Local Development
+1. Start PostgreSQL: `pnpm db:start`
+2. Run migrations: `pnpm db:migrate:dev --name init`
+3. Open Prisma Studio: `pnpm db:studio`
+
+### Database Viewer (Adminer)
+Access Adminer at http://localhost:8080 to browse, create, and edit database entries.
+- System: PostgreSQL
+- Server: postgres
+- Username: postgres
+- Password: postgres
+- Database: dev
+
+### Stopping the Database
+```bash
+pnpm db:stop
+```
+
+The database data is persisted in a Docker volume.
 
 ## Environment Variables
 
@@ -19,9 +35,9 @@ Prisma Dev uses PgLite - a lightweight PostgreSQL that runs locally without Dock
 
 ## Local Development
 
-**Selected method:** Prisma Dev (PgLite)
+**Selected method:** Docker Compose
 
-Local PostgreSQL without Docker (auto-configured)
+Run PostgreSQL in Docker container (auto-configured)
 
 ## Commands
 
@@ -33,17 +49,30 @@ pnpm db:studio      # Open Prisma Studio
 
 ## Official Documentation
 
-- [Prisma + Prisma Postgres](https://www.prisma.io/docs/orm/overview/databases/postgresql)
-- [Prisma Postgres Docs](https://www.prisma.io/docs/orm/overview/databases/postgresql)
+- [Prisma + PostgreSQL (Unmanaged)](https://www.prisma.io/docs/orm/overview/databases/postgresql)
+- [PostgreSQL (Unmanaged) Docs](https://www.postgresql.org/docs/)
 
 ## Troubleshooting
 
-**"prisma dev" command not found**
-- Ensure @prisma/dev is installed: `pnpm add -D @prisma/dev`
+**"docker: command not found"**
+- Install Docker Desktop from https://docker.com
+
+**Port 5432 already in use**
+- Stop other PostgreSQL instances
+- Or change the port in docker-compose.yml
+
+**Port 8080 already in use (Adminer)**
+- Stop other services using port 8080
+- Or change the Adminer port in docker-compose.yml
 
 **Connection refused**
-- Start Prisma Dev first: `pnpm db:start`
-- Check if running: `npx prisma dev ls`
+- Ensure Docker Desktop is running
+- Start the container: `pnpm db:start`
+- Check container status: `docker compose ps`
 
-**Port already in use**
-- Stop existing instance: `npx prisma dev stop template`
+**Reset database**
+```bash
+pnpm db:stop
+docker volume rm infra.db_postgres_data
+pnpm db:start
+```

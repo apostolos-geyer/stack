@@ -51,7 +51,7 @@ console.log('[TRACE] @_/infra.auth/auth - after lib.email import', Date.now());
 
 export const auth = betterAuth({
   database: prismaAdapter(prisma, {
-    provider: 'postgresql',
+    provider: "postgresql",
   }),
   emailAndPassword: {
     enabled: true,
