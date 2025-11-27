@@ -4,16 +4,11 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "tsc",
-    "dev": "tsc --watch",
     "lint": "eslint . --max-warnings 0",
     "typecheck": "tsc --noEmit"
   },
   "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
-    }
+    ".": "./src/index.ts"
   },
   "dependencies": {
     "@_/infra.auth": "workspace:*",

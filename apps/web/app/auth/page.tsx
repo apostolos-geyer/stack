@@ -1,21 +1,30 @@
-"use client"
+'use client';
 
-import { useRouter, useSearchParams } from "next/navigation"
-import { toast } from "sonner"
-import { Suspense } from "react"
+import { createAuthFeatures } from '@_/features.client/auth';
+import {
+  createLoginFeatures,
+  useLoginFeatures,
+} from '@_/features.client/auth/login';
+import { authClient } from '@_/infra.auth/client';
 
-import { Provide } from "@_/lib.client"
-import { createAuthFeatures } from "@_/features.client/auth"
-import { createLoginFeatures, useLoginFeatures } from "@_/features.client/auth/login"
-import { authClient } from "@_/infra.auth/client"
-import { useAppForm } from "@_/ui.web/form"
-import { FieldGroup } from "@_/ui.web/components/field"
-import { Card } from "@_/ui.web/components/card"
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@_/ui.web/components/tabs"
+import { Provide } from '@_/lib.client';
+import { Card } from '@_/ui.web/components/card';
+import { FieldGroup } from '@_/ui.web/components/field';
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from '@_/ui.web/components/tabs';
+import { useAppForm } from '@_/ui.web/form';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { Suspense } from 'react';
+import { toast } from 'sonner';
 
 function SignInForm() {
-  const router = useRouter()
-  const { signInDefaultValues, signInSchema, signInMutation } = useLoginFeatures()
+  const router = useRouter();
+  const { signInDefaultValues, signInSchema, signInMutation } =
+    useLoginFeatures();
 
   const form = useAppForm({
     defaultValues: signInDefaultValues,
@@ -25,20 +34,20 @@ function SignInForm() {
     },
     onSubmit: async ({ value }) => {
       try {
-        await signInMutation.mutateAsync(value)
-        router.push("/")
+        await signInMutation.mutateAsync(value);
+        router.push('/');
       } catch (e) {
-        toast.error((e as Error).message)
+        toast.error((e as Error).message);
       }
     },
-  })
+  });
 
   return (
     <form.AppForm>
       <form
         onSubmit={(e) => {
-          e.preventDefault()
-          form.handleSubmit()
+          e.preventDefault();
+          form.handleSubmit();
         }}
       >
         <FieldGroup>
@@ -60,18 +69,22 @@ function SignInForm() {
         </FieldGroup>
 
         <div className="mt-6">
-          <form.SubmitButton className="w-full" disabled={signInMutation.isPending}>
-            {signInMutation.isPending ? "Signing in..." : "Sign In"}
+          <form.SubmitButton
+            className="w-full"
+            disabled={signInMutation.isPending}
+          >
+            {signInMutation.isPending ? 'Signing in...' : 'Sign In'}
           </form.SubmitButton>
         </div>
       </form>
     </form.AppForm>
-  )
+  );
 }
 
 function SignUpForm() {
-  const router = useRouter()
-  const { signUpDefaultValues, signUpSchema, signUpMutation } = useLoginFeatures()
+  const router = useRouter();
+  const { signUpDefaultValues, signUpSchema, signUpMutation } =
+    useLoginFeatures();
 
   const form = useAppForm({
     defaultValues: signUpDefaultValues,
@@ -81,27 +94,25 @@ function SignUpForm() {
     },
     onSubmit: async ({ value }) => {
       try {
-        await signUpMutation.mutateAsync(value)
-        router.push("/")
+        await signUpMutation.mutateAsync(value);
+        router.push('/');
       } catch (e) {
-        toast.error((e as Error).message)
+        toast.error((e as Error).message);
       }
     },
-  })
+  });
 
   return (
     <form.AppForm>
       <form
         onSubmit={(e) => {
-          e.preventDefault()
-          form.handleSubmit()
+          e.preventDefault();
+          form.handleSubmit();
         }}
       >
         <FieldGroup>
           <form.AppField name="name">
-            {(field) => (
-              <field.TextField label="Name" placeholder="John Doe" />
-            )}
+            {(field) => <field.TextField label="Name" placeholder="John Doe" />}
           </form.AppField>
 
           <form.AppField name="email">
@@ -118,29 +129,35 @@ function SignUpForm() {
 
           <form.AppField name="passwordConfirm">
             {(field) => (
-              <field.PasswordField label="Confirm Password" placeholder="••••••••" />
+              <field.PasswordField
+                label="Confirm Password"
+                placeholder="••••••••"
+              />
             )}
           </form.AppField>
         </FieldGroup>
 
         <div className="mt-6">
-          <form.SubmitButton className="w-full" disabled={signUpMutation.isPending}>
-            {signUpMutation.isPending ? "Creating account..." : "Sign Up"}
+          <form.SubmitButton
+            className="w-full"
+            disabled={signUpMutation.isPending}
+          >
+            {signUpMutation.isPending ? 'Creating account...' : 'Sign Up'}
           </form.SubmitButton>
         </div>
       </form>
     </form.AppForm>
-  )
+  );
 }
 
 function AuthPageContent() {
-  const router = useRouter()
-  const searchParams = useSearchParams()
-  const tab = searchParams.get("tab") ?? "sign-in"
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const tab = searchParams.get('tab') ?? 'sign-in';
 
   const handleTabChange = (value: string) => {
-    router.push(`?tab=${value}`)
-  }
+    router.push(`?tab=${value}`);
+  };
 
   return (
     <div className="flex min-h-screen items-center justify-center">
@@ -177,18 +194,24 @@ function AuthPageContent() {
         </Tabs>
       </Card>
     </div>
-  )
+  );
 }
 
 const AuthPage = Provide(
   [createAuthFeatures(authClient), createLoginFeatures()],
   function AuthPage() {
     return (
-      <Suspense fallback={<div className="flex min-h-screen items-center justify-center">Loading...</div>}>
+      <Suspense
+        fallback={
+          <div className="flex min-h-screen items-center justify-center">
+            Loading...
+          </div>
+        }
+      >
         <AuthPageContent />
       </Suspense>
-    )
-  }
-)
+    );
+  },
+);
 
-export default AuthPage
+export default AuthPage;

@@ -1,10 +1,23 @@
+console.log('[TRACE] @_/lib.server/context - START', Date.now());
+
 import {
-  auth,
+  type Auth,
   type AuthSession,
   type AuthUser,
-  type Auth,
-} from "@_/infra.auth";
-import { prisma as db, type PrismaClient } from "@_/infra.db";
+  auth,
+} from '@_/infra.auth';
+
+console.log(
+  '[TRACE] @_/lib.server/context - after infra.auth import',
+  Date.now(),
+);
+
+import { prisma as db, type PrismaClient } from '@_/infra.db';
+
+console.log(
+  '[TRACE] @_/lib.server/context - after infra.db import',
+  Date.now(),
+);
 
 export type ConstContext = {
   db: PrismaClient;

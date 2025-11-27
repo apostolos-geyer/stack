@@ -1,3 +1,4 @@
+console.log("[TRACE] @_/ui.web/button - START", Date.now());
 import * as React from "react"
 import { Slot } from "@radix-ui/react-slot"
 import { cva, type VariantProps } from "class-variance-authority"

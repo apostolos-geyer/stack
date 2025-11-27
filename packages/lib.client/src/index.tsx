@@ -1,5 +1,7 @@
 "use client";
 
+console.log("[TRACE] @_/lib.client - START", Date.now());
+
 import React from 'react'
 import { useState } from "react";
 import superjson from "superjson";
@@ -7,7 +9,9 @@ import { QueryClientProvider, type QueryClient } from "@tanstack/react-query";
 import { createTRPCClient, httpBatchLink, type HTTPHeaders } from "@trpc/client";
 import { createTRPCContext } from '@trpc/tanstack-react-query'
 
+console.log("[TRACE] @_/lib.client - before api.trpc import", Date.now());
 import type { AppRouter } from "@_/api.trpc";
+console.log("[TRACE] @_/lib.client - after api.trpc import", Date.now());
 import { makeQueryClient } from './query-client'
 
 export { Provide } from './provide'

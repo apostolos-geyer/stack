@@ -1,6 +1,9 @@
+console.log("[TRACE] @_/infra.auth/auth - START", Date.now());
 import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
+console.log("[TRACE] @_/infra.auth/auth - before infra.db import", Date.now());
 import { prisma } from "@_/infra.db";
+console.log("[TRACE] @_/infra.auth/auth - after infra.db import", Date.now());
 
 /* PLUGIN CONFIG */
 import Stripe from "stripe";
@@ -8,7 +11,9 @@ import { expo } from "@better-auth/expo";
 import { nextCookies } from "better-auth/next-js";
 import { username, admin } from "better-auth/plugins";
 import { stripe } from "@better-auth/stripe";
+console.log("[TRACE] @_/infra.auth/auth - before platform import", Date.now());
 import { serverEnv } from "@_/platform";
+console.log("[TRACE] @_/infra.auth/auth - after platform import", Date.now());
 
 const plugins = [
   expo(),
@@ -22,12 +27,14 @@ const plugins = [
   admin(),
 ];
 
+console.log("[TRACE] @_/infra.auth/auth - before lib.email import", Date.now());
 import {
   sendEmail,
   render,
   ResetPasswordEmail,
   VerificationEmail,
 } from "@_/lib.email";
+console.log("[TRACE] @_/infra.auth/auth - after lib.email import", Date.now());
 
 export const auth = betterAuth({
   database: prismaAdapter(prisma, {

@@ -1,7 +1,8 @@
-import { cache } from "react";
-import { createInnerContext, ContextFactory } from "@_/lib.server";
+'use server';
+import { type ContextFactory, createInnerContext } from '@_/lib.server';
+import { cache } from 'react';
 
-import { getSession } from "./dal";
+import { getSession } from './dal';
 
 /**
  * Creates the tRPC context for HTTP requests

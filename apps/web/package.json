@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "dotenv -e ../../.env -- next dev --turbopack",
+    "dev": "dotenv -e ../../.env -- next dev",
     "build": "dotenv -e ../../.env -- next build",
     "start": "next start",
     "lint": "eslint",
@@ -16,8 +16,10 @@
     "@_/infra.db": "workspace:*",
     "@_/lib.client": "workspace:*",
     "@_/lib.server": "workspace:*",
+    "@_/platform": "workspace:*",
     "@_/ui.style": "workspace:*",
     "@_/ui.web": "workspace:*",
+    "@prisma/client": "catalog:",
     "next": "catalog:next16",
     "react": "catalog:next16",
     "react-dom": "catalog:next16",
@@ -25,7 +27,6 @@
     "tw-animate-css": "^1.4.0"
   },
   "devDependencies": {
-    "dotenv-cli": "^8.0.0",
     "@_/cfg.eslint": "workspace:*",
     "@_/cfg.ts": "workspace:*",
     "@next/eslint-plugin-next": "catalog:next16",
@@ -34,6 +35,7 @@
     "@types/react": "catalog:next16",
     "@types/react-dom": "catalog:next16",
     "babel-plugin-react-compiler": "catalog:next16",
+    "dotenv-cli": "^8.0.0",
     "eslint": "catalog:",
     "tailwindcss": "^4.1.11",
     "typescript": "^5"

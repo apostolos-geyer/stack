@@ -1,4 +1,8 @@
-import { Button } from "@_/ui.web/components/button";
+console.log('[TRACE] app/page.tsx - START', Date.now());
+
+import { Button } from '@_/ui.web/components/button';
+
+console.log('[TRACE] app/page.tsx - after button import', Date.now());
 
 export default function Home() {
   return (

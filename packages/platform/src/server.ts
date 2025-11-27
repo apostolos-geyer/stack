@@ -1,5 +1,7 @@
+console.log("[TRACE] @_/platform/server - START", Date.now());
 import { createEnv } from "@t3-oss/env-nextjs";
 import { z } from "zod";
+console.log("[TRACE] @_/platform/server - after imports", Date.now());
 
 export const serverEnv = createEnv({
   server: {
@@ -40,5 +42,7 @@ export const serverEnv = createEnv({
   },
   experimental__runtimeEnv: process.env,
 });
+
+console.log("[TRACE] @_/platform/server - END", Date.now());
 
 export type ServerEnv = typeof serverEnv;
