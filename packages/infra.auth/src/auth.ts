@@ -1,44 +1,57 @@
-console.log("[TRACE] @_/infra.auth/auth - START", Date.now());
-import { betterAuth } from "better-auth";
-import { prismaAdapter } from "better-auth/adapters/prisma";
-console.log("[TRACE] @_/infra.auth/auth - before infra.db import", Date.now());
-import { prisma } from "@_/infra.db";
-console.log("[TRACE] @_/infra.auth/auth - after infra.db import", Date.now());
+console.log('[TRACE] @_/infra.auth/auth - START', Date.now());
 
+import { betterAuth } from 'better-auth';
+import { prismaAdapter } from 'better-auth/adapters/prisma';
+
+console.log('[TRACE] @_/infra.auth/auth - before infra.db import', Date.now());
+
+import { prisma } from '@_/infra.db';
+
+console.log('[TRACE] @_/infra.auth/auth - after infra.db import', Date.now());
+
+import { expo } from '@better-auth/expo';
+import { stripe } from '@better-auth/stripe';
+import { nextCookies } from 'better-auth/next-js';
+import { admin, username } from 'better-auth/plugins';
 /* PLUGIN CONFIG */
-import Stripe from "stripe";
-import { expo } from "@better-auth/expo";
-import { nextCookies } from "better-auth/next-js";
-import { username, admin } from "better-auth/plugins";
-import { stripe } from "@better-auth/stripe";
-console.log("[TRACE] @_/infra.auth/auth - before platform import", Date.now());
-import { serverEnv } from "@_/platform";
-console.log("[TRACE] @_/infra.auth/auth - after platform import", Date.now());
+import Stripe from 'stripe';
+
+console.log('[TRACE] @_/infra.auth/auth - before platform import', Date.now());
+
+import { serverEnv } from '@_/platform';
+
+console.log('[TRACE] @_/infra.auth/auth - after platform import', Date.now());
 
 const plugins = [
   expo(),
   username(),
   nextCookies(),
   stripe({
-    stripeClient: new Stripe(serverEnv.STRIPE_SECRET_KEY ?? ""),
+    stripeClient: new Stripe(serverEnv.STRIPE_SECRET_KEY ?? ''),
     stripeWebhookSecret: serverEnv.STRIPE_WEBHOOK_SECRET!,
     createCustomerOnSignUp: true,
+    subscription: {
+      enabled: true,
+      plans: [{ name: 'plan1' }],
+    },
   }),
   admin(),
 ];
 
-console.log("[TRACE] @_/infra.auth/auth - before lib.email import", Date.now());
+console.log('[TRACE] @_/infra.auth/auth - before lib.email import', Date.now());
+
 import {
-  sendEmail,
-  render,
   ResetPasswordEmail,
+  render,
+  sendEmail,
   VerificationEmail,
-} from "@_/lib.email";
-console.log("[TRACE] @_/infra.auth/auth - after lib.email import", Date.now());
+} from '@_/lib.email';
+
+console.log('[TRACE] @_/infra.auth/auth - after lib.email import', Date.now());
 
 export const auth = betterAuth({
   database: prismaAdapter(prisma, {
-    provider: "postgresql",
+    provider: 'postgresql',
   }),
   emailAndPassword: {
     enabled: true,
@@ -52,7 +65,7 @@ export const auth = betterAuth({
       );
       await sendEmail({
         to: user.email,
-        subject: "Reset your password",
+        subject: 'Reset your password',
         html,
       });
     },
@@ -68,20 +81,20 @@ export const auth = betterAuth({
       );
       await sendEmail({
         to: user.email,
-        subject: "Verify your email",
+        subject: 'Verify your email',
         html,
       });
     },
   },
   plugins,
   trustedOrigins: [
-    ...(serverEnv.NODE_ENV === "development"
+    ...(serverEnv.NODE_ENV === 'development'
       ? [
-          "exp://*/*", // Trust all Expo development URLs
-          "exp://10.0.0.*:*/*", // Trust 10.0.0.x IP range
-          "exp://192.168.*.*:*/*", // Trust 192.168.x.x IP range
-          "exp://172.*.*.*:*/*", // Trust 172.x.x.x IP range
-          "exp://localhost:*/*", // Trust localhost
+          'exp://*/*', // Trust all Expo development URLs
+          'exp://10.0.0.*:*/*', // Trust 10.0.0.x IP range
+          'exp://192.168.*.*:*/*', // Trust 192.168.x.x IP range
+          'exp://172.*.*.*:*/*', // Trust 172.x.x.x IP range
+          'exp://localhost:*/*', // Trust localhost
         ]
       : []),
   ],

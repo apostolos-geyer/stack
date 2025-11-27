@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import type { ReactNode, ComponentType } from "react";
+import type { ComponentType, ReactNode } from 'react';
 
 type ProviderFactory = ComponentType<{ children: ReactNode }>;
 
@@ -19,17 +19,18 @@ type ProviderFactory = ComponentType<{ children: ReactNode }>;
  */
 export function Provide<P extends object>(
   providers: ProviderFactory[],
-  Component: ComponentType<P>
+  Component: ComponentType<P>,
 ): ComponentType<P> {
-  const displayName = Component.displayName || Component.name || "Component";
+  const displayName = Component.displayName || Component.name || 'Component';
 
-  const WrappedComponent = (props: P) => {
+  const WrappedComponent = (props: P) =>
     // Nest providers: [A, B, C] becomes <A><B><C>{children}</C></B></A>
-    return providers.reduceRight(
-      (children, Provider) => <Provider>{children}</Provider>,
-      <Component {...props} />
+    providers.reduceRight(
+      (children, Provider, i) => (
+        <Provider key={`${i}${Provider.displayName}`}>{children}</Provider>
+      ),
+      <Component {...props} />,
     );
-  };
 
   WrappedComponent.displayName = `Provide(${displayName})`;
   return WrappedComponent;

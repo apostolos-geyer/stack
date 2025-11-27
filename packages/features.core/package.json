@@ -1,5 +1,5 @@
 {
-  "name": "@_/features.server",
+  "name": "@_/features.core",
   "version": "0.0.0",
   "private": true,
   "type": "module",

@@ -74,6 +74,17 @@ export const postgres: ProviderConfig = {
       timeout: 5s
       retries: 5
 
+  adminer:
+    image: adminer:latest
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    environment:
+      ADMINER_DEFAULT_SERVER: postgres
+    depends_on:
+      postgres:
+        condition: service_healthy
+
 volumes:
   postgres_data:
 `,
@@ -89,6 +100,14 @@ volumes:
 2. Run migrations: \`pnpm db:migrate:dev --name init\`
 3. Open Prisma Studio: \`pnpm db:studio\`
 
+### Database Viewer (Adminer)
+Access Adminer at http://localhost:8080 to browse, create, and edit database entries.
+- System: PostgreSQL
+- Server: postgres
+- Username: postgres
+- Password: postgres
+- Database: dev
+
 ### Stopping the Database
 \`\`\`bash
 pnpm db:stop
@@ -103,6 +122,10 @@ The database data is persisted in a Docker volume.`,
 **Port 5432 already in use**
 - Stop other PostgreSQL instances
 - Or change the port in docker-compose.yml
+
+**Port 8080 already in use (Adminer)**
+- Stop other services using port 8080
+- Or change the Adminer port in docker-compose.yml
 
 **Connection refused**
 - Ensure Docker Desktop is running
