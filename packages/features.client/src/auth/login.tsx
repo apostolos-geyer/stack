@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import { createContext, useContext, type ReactNode } from "react";
-import { useMutation, type UseMutationResult } from "@tanstack/react-query";
-import { useAuthFeatures } from "./index";
+import { createContext, useContext, type ReactNode } from 'react';
+import { useMutation, type UseMutationResult } from '@tanstack/react-query';
+import { useAuthFeatures } from './index';
 import {
   signInSchema,
   signUpSchema,
@@ -10,7 +10,7 @@ import {
   signUpDefaultValues,
   type SignInData,
   type SignUpData,
-} from "./schemas";
+} from './schemas';
 
 type LoginFeaturesValue = {
   signInSchema: typeof signInSchema;
@@ -21,11 +21,11 @@ type LoginFeaturesValue = {
   signUpMutation: UseMutationResult<void, Error, SignUpData>;
   handleSignIn: (
     data: SignInData,
-    callbacks?: { onSuccess?: () => void; onError?: (e: Error) => void }
+    callbacks?: { onSuccess?: () => void; onError?: (e: Error) => void },
   ) => Promise<void>;
   handleSignUp: (
     data: SignUpData,
-    callbacks?: { onSuccess?: () => void; onError?: (e: Error) => void }
+    callbacks?: { onSuccess?: () => void; onError?: (e: Error) => void },
   ) => Promise<void>;
 };
 
@@ -35,17 +35,13 @@ export function useLoginFeatures() {
   const ctx = useContext(LoginFeaturesContext);
   if (!ctx)
     throw new Error(
-      "useLoginFeatures must be used within LoginFeaturesProvider"
+      'useLoginFeatures must be used within LoginFeaturesProvider',
     );
   return ctx;
 }
 
 export function createLoginFeatures() {
-  return function LoginFeaturesProvider({
-    children,
-  }: {
-    children: ReactNode;
-  }) {
+  return function LoginFeaturesProvider({ children }: { children: ReactNode }) {
     const { authClient } = useAuthFeatures();
 
     const signInMutation = useMutation({
@@ -64,7 +60,7 @@ export function createLoginFeatures() {
         const result = await authClient.signUp.email({
           email: data.email,
           password: data.password,
-          name: data.name || "",
+          name: data.name || '',
         });
         if (result.error) throw new Error(result.error.message);
       },
@@ -72,7 +68,7 @@ export function createLoginFeatures() {
 
     const handleSignIn = async (
       data: SignInData,
-      callbacks?: { onSuccess?: () => void; onError?: (e: Error) => void }
+      callbacks?: { onSuccess?: () => void; onError?: (e: Error) => void },
     ) => {
       try {
         await signInMutation.mutateAsync(data);
@@ -84,7 +80,7 @@ export function createLoginFeatures() {
 
     const handleSignUp = async (
       data: SignUpData,
-      callbacks?: { onSuccess?: () => void; onError?: (e: Error) => void }
+      callbacks?: { onSuccess?: () => void; onError?: (e: Error) => void },
     ) => {
       try {
         await signUpMutation.mutateAsync(data);

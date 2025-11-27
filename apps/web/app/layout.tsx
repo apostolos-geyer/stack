@@ -45,7 +45,7 @@ export default function RootLayout({
       >
         <Providers>
           <div className="min-h-screen flex flex-col">
-            <main className="flex-1">{children}</main>
+            <main className="flex-1 mx-auto">{children}</main>
             <footer className="sticky bottom-0 py-2 text-center text-xs text-muted-foreground bg-background/80 backdrop-blur-sm border-t">
               An Apostoli Production
             </footer>

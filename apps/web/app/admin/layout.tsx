@@ -1,40 +1,28 @@
-"use client";
+import { unauthorized } from 'next/navigation';
+import { getSession } from '@/lib/dal';
 
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
-import { authClient } from "@_/infra.auth/client";
-
-export default function AdminLayout({
+export default async function AdminLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const router = useRouter();
-  const { data: session, isPending } = authClient.useSession();
-
-  useEffect(() => {
-    if (!isPending && (!session?.user || session.user.role !== "admin")) {
-      router.replace("/");
-    }
-  }, [session, isPending, router]);
-
-  if (isPending) {
-    return (
-      <div className="flex min-h-screen items-center justify-center">
-        <div className="text-muted-foreground">Loading...</div>
-      </div>
-    );
-  }
-
-  if (!session?.user || session.user.role !== "admin") {
-    return null;
-  }
+  const v = await getSession();
+  if (v === null) unauthorized();
+  const { user } = v;
+  if (
+    user.role === null ||
+    user.role === undefined ||
+    !user.role.split(',').some((role) => role === 'admin')
+  )
+    unauthorized();
 
   return (
     <div className="container py-8">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold">Admin Dashboard</h1>
-        <p className="text-muted-foreground">Manage users and system settings</p>
+        <h1 className="text-3xl font-bold">Admin</h1>
+        <p className="text-muted-foreground">
+          Manage users and system settings
+        </p>
       </div>
       {children}
     </div>

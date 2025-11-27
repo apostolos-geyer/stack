@@ -1,20 +1,21 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { Provide } from "@_/lib.client";
-import { authClient } from "@_/infra.auth/client";
-import { createAdminFeatures } from "@_/features.client/admin";
-import { createUsersListFeatures } from "@_/features.client/admin/users-list";
-import { createUserMutationsFeatures } from "@_/features.client/admin/user-mutations";
-import { UserTable } from "./components/user-table";
-import { UserCreateDialog } from "./components/user-create-dialog";
-import { UserEditDialog } from "./components/user-edit-dialog";
-import { UserRoleDialog } from "./components/user-role-dialog";
-import { UserBanDialog } from "./components/user-ban-dialog";
-import { UserDeleteDialog } from "./components/user-delete-dialog";
-import { useUserMutationsFeatures } from "@_/features.client/admin/user-mutations";
-import { toast } from "sonner";
-import type { User } from "./components/columns";
+import { createAdminFeatures } from '@_/features.client/admin';
+import {
+  createUserMutationsFeatures,
+  useUserMutationsFeatures,
+} from '@_/features.client/admin/user-mutations';
+import { createUsersListFeatures } from '@_/features.client/admin/users-list';
+import { Provide } from '@_/lib.client';
+import { useState } from 'react';
+import { toast } from 'sonner';
+import type { User } from './components/columns';
+import { UserBanDialog } from './components/user-ban-dialog';
+import { UserCreateDialog } from './components/user-create-dialog';
+import { UserDeleteDialog } from './components/user-delete-dialog';
+import { UserEditDialog } from './components/user-edit-dialog';
+import { UserRoleDialog } from './components/user-role-dialog';
+import { UserTable } from './components/user-table';
 
 function AdminPageContent() {
   const { unbanUserMutation } = useUserMutationsFeatures();
@@ -44,7 +45,7 @@ function AdminPageContent() {
   const handleUnban = async (user: User) => {
     try {
       await unbanUserMutation.mutateAsync(user.id);
-      toast.success("User unbanned successfully");
+      toast.success('User unbanned successfully');
     } catch (e) {
       toast.error((e as Error).message);
     }
@@ -100,11 +101,11 @@ function AdminPageContent() {
 
 const AdminPage = Provide(
   [
-    createAdminFeatures(authClient),
+    createAdminFeatures(),
     createUsersListFeatures(),
     createUserMutationsFeatures(),
   ],
-  AdminPageContent
+  AdminPageContent,
 );
 
 export default AdminPage;

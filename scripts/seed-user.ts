@@ -1,11 +1,13 @@
+// biome-ignore lint/suspicious/noTsIgnore: I don't give a fuck.
+// @ts-ignore
 import { auth } from '@_/infra.auth';
 
 (async () => {
   try {
     await auth.api.createUser({
       body: {
-        email: 'sudo@sudo.sudo',
-        password: 'sudo',
+        email: 'super@user.com',
+        password: 'superuserdo',
         name: 'sudo',
         role: ['admin', 'user'],
       },

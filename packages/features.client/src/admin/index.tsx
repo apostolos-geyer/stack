@@ -1,6 +1,7 @@
 "use client";
 
 import { createContext, useContext, type ReactNode } from "react";
+import { useAuthFeatures } from "../auth";
 import type { AuthClient } from "@_/infra.auth/client";
 
 type AdminFeaturesValue = {
@@ -18,12 +19,14 @@ export function useAdminFeatures() {
   return ctx;
 }
 
-export function createAdminFeatures(authClient: AuthClient) {
+export function createAdminFeatures() {
   return function AdminFeaturesProvider({
     children,
   }: {
     children: ReactNode;
   }) {
+    const { authClient } = useAuthFeatures();
+
     return (
       <AdminFeaturesContext.Provider value={{ authClient }}>
         {children}

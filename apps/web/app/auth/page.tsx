@@ -1,11 +1,9 @@
 'use client';
 
-import { createAuthFeatures } from '@_/features.client/auth';
 import {
   createLoginFeatures,
   useLoginFeatures,
 } from '@_/features.client/auth/login';
-import { authClient } from '@_/infra.auth/client';
 
 import { Provide } from '@_/lib.client';
 import { Card } from '@_/ui.web/components/card';
@@ -198,7 +196,7 @@ function AuthPageContent() {
 }
 
 const AuthPage = Provide(
-  [createAuthFeatures(authClient), createLoginFeatures()],
+  [createLoginFeatures()],
   function AuthPage() {
     return (
       <Suspense
