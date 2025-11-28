@@ -140,8 +140,12 @@ function AuthScreenContent() {
       <Card className="w-full max-w-md self-center p-6">
         <Tabs value={tab} onValueChange={setTab}>
           <TabsList>
-            <TabsTrigger value="sign-in">Sign In</TabsTrigger>
-            <TabsTrigger value="sign-up">Sign Up</TabsTrigger>
+            <TabsTrigger value="sign-in">
+              <Text>Sign In</Text>
+            </TabsTrigger>
+            <TabsTrigger value="sign-up">
+              <Text>Sign Up</Text>
+            </TabsTrigger>
           </TabsList>
 
           <TabsContent value="sign-in" className="mt-6">

@@ -18,6 +18,7 @@
     "@rn-primitives/select": "^1.2.0",
     "@rn-primitives/slot": "^1.2.0",
     "@rn-primitives/switch": "^1.2.0",
+    "@rn-primitives/tabs": "^1.2.0",
     "class-variance-authority": "catalog:",
     "clsx": "catalog:",
     "lightningcss": "catalog:native",
@@ -33,9 +34,9 @@
     "@_/cfg.ts": "workspace:*",
     "@turbo/gen": "^2.5.5",
     "@types/node": "catalog:",
-    "react-native": "catalog:native",
     "eslint": "catalog:",
     "expo": "catalog:native",
+    "react-native": "catalog:native",
     "tailwindcss": "catalog:",
     "typescript": "catalog:"
   },

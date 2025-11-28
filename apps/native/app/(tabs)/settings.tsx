@@ -469,9 +469,15 @@ const SettingsScreen = Provide(
 
         <Tabs value={tab} onValueChange={setTab} className="flex-1">
           <TabsList className="mb-6">
-            <TabsTrigger value="profile">Profile</TabsTrigger>
-            <TabsTrigger value="security">Security</TabsTrigger>
-            <TabsTrigger value="sessions">Sessions</TabsTrigger>
+            <TabsTrigger value="profile">
+              <Text>Profile</Text>
+            </TabsTrigger>
+            <TabsTrigger value="security">
+              <Text>Security</Text>
+            </TabsTrigger>
+            <TabsTrigger value="sessions">
+              <Text>Sessions</Text>
+            </TabsTrigger>
           </TabsList>
 
           <TabsContent value="profile" className="flex-1">
