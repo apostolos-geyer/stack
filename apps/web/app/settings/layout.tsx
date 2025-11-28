@@ -8,27 +8,22 @@ import {
 import { unauthorized } from 'next/navigation';
 import { getSession } from '@/lib/dal';
 
-export default async function AdminLayout({
+export default async function SettingsLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const v = await getSession();
-  if (v === null) unauthorized();
-  const { user } = v;
-  if (
-    user.role === null ||
-    user.role === undefined ||
-    !user.role.split(',').some((role) => role === 'admin')
-  )
-    unauthorized();
+  const session = await getSession();
+  if (session === null) unauthorized();
 
   return (
     <div className="container max-w-2xl xl:max-w-7xl mx-auto">
       <Card className="mx-auto">
         <CardHeader>
-          <CardTitle className="text-2xl">Admin Dashboard</CardTitle>
-          <CardDescription>Manage users and system settings</CardDescription>
+          <CardTitle className="text-2xl">Account Settings</CardTitle>
+          <CardDescription>
+            Manage your account settings and preferences
+          </CardDescription>
         </CardHeader>
         <CardContent>{children}</CardContent>
       </Card>

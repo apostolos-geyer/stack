@@ -41,6 +41,8 @@ const plugins = [
 console.log('[TRACE] @_/infra.auth/auth - before lib.email import', Date.now());
 
 import {
+  ChangeEmailEmail,
+  DeleteAccountEmail,
   ResetPasswordEmail,
   render,
   sendEmail,
@@ -84,6 +86,41 @@ export const auth = betterAuth({
         subject: 'Verify your email',
         html,
       });
+    },
+  },
+  user: {
+    changeEmail: {
+      enabled: true,
+      sendChangeEmailVerification: async ({ user, newEmail, url }) => {
+        const html = await render(
+          ChangeEmailEmail({
+            name: user.name,
+            newEmail,
+            url,
+          }),
+        );
+        await sendEmail({
+          to: newEmail,
+          subject: 'Confirm your new email address',
+          html,
+        });
+      },
+    },
+    deleteUser: {
+      enabled: true,
+      sendDeleteAccountVerification: async ({ user, url }) => {
+        const html = await render(
+          DeleteAccountEmail({
+            name: user.name,
+            url,
+          }),
+        );
+        await sendEmail({
+          to: user.email,
+          subject: 'Confirm account deletion',
+          html,
+        });
+      },
     },
   },
   plugins,

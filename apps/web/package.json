@@ -20,6 +20,7 @@
     "@_/ui.style": "workspace:*",
     "@_/ui.web": "workspace:*",
     "@prisma/client": "catalog:",
+    "motion": "^12.23.24",
     "next": "catalog:next16",
     "react": "catalog:next16",
     "react-dom": "catalog:next16",

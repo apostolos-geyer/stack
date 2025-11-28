@@ -7,7 +7,7 @@ import {
   type UseMutationResult,
 } from "@tanstack/react-query";
 import { useAdminFeatures } from "./index";
-import type { CreateUserData, UpdateUserData, BanUserData } from "./schemas";
+import type { CreateUserData, UpdateUserData, BanUserData, SetUserPasswordData } from "./schemas";
 
 type UserMutationsFeaturesValue = {
   createUserMutation: UseMutationResult<void, Error, CreateUserData>;
@@ -24,10 +24,15 @@ type UserMutationsFeaturesValue = {
   banUserMutation: UseMutationResult<
     void,
     Error,
-    { userId: string; banReason?: string }
+    { userId: string; banReason?: string; banExpiresIn?: number }
   >;
   unbanUserMutation: UseMutationResult<void, Error, string>;
   deleteUserMutation: UseMutationResult<void, Error, string>;
+  setUserPasswordMutation: UseMutationResult<
+    void,
+    Error,
+    { userId: string; data: SetUserPasswordData }
+  >;
 };
 
 const UserMutationsFeaturesContext =
@@ -100,13 +105,16 @@ export function createUserMutationsFeatures() {
       mutationFn: async ({
         userId,
         banReason,
+        banExpiresIn,
       }: {
         userId: string;
         banReason?: string;
+        banExpiresIn?: number;
       }) => {
         const result = await authClient.admin.banUser({
           userId,
           banReason,
+          banExpiresIn,
         });
         if (result.error) throw new Error(result.error.message);
       },
@@ -133,6 +141,23 @@ export function createUserMutationsFeatures() {
       onSuccess: invalidateUsers,
     });
 
+    const setUserPasswordMutation = useMutation({
+      mutationFn: async ({
+        userId,
+        data,
+      }: {
+        userId: string;
+        data: SetUserPasswordData;
+      }) => {
+        const result = await authClient.admin.setUserPassword({
+          userId,
+          newPassword: data.newPassword,
+        });
+        if (result.error) throw new Error(result.error.message);
+      },
+      onSuccess: invalidateUsers,
+    });
+
     return (
       <UserMutationsFeaturesContext.Provider
         value={{
@@ -142,6 +167,7 @@ export function createUserMutationsFeatures() {
           banUserMutation,
           unbanUserMutation,
           deleteUserMutation,
+          setUserPasswordMutation,
         }}
       >
         {children}

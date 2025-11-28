@@ -44,20 +44,20 @@
   --shadow-2xs: 2px -1px 3px 0px hsl(33.1579 34.5455% 21.5686% / 0.3);
   --shadow-xs: 2px -1px 3px 0px hsl(33.1579 34.5455% 21.5686% / 0.3);
   --shadow-sm:
-    2px -1px 3px 0px hsl(33.1579 34.5455% 21.5686% / 0.6),
-    2px 1px 2px -1px hsl(33.1579 34.5455% 21.5686% / 0.6);
+    2px -1px 3px 0px hsl(33.1579 34.5455% 21.5686% / 0.6), 2px 1px 2px -1px
+    hsl(33.1579 34.5455% 21.5686% / 0.6);
   --shadow:
-    2px -1px 3px 0px hsl(33.1579 34.5455% 21.5686% / 0.6),
-    2px 1px 2px -1px hsl(33.1579 34.5455% 21.5686% / 0.6);
+    2px -1px 3px 0px hsl(33.1579 34.5455% 21.5686% / 0.6), 2px 1px 2px -1px
+    hsl(33.1579 34.5455% 21.5686% / 0.6);
   --shadow-md:
-    2px -1px 3px 0px hsl(33.1579 34.5455% 21.5686% / 0.6),
-    2px 2px 4px -1px hsl(33.1579 34.5455% 21.5686% / 0.6);
+    2px -1px 3px 0px hsl(33.1579 34.5455% 21.5686% / 0.6), 2px 2px 4px -1px
+    hsl(33.1579 34.5455% 21.5686% / 0.6);
   --shadow-lg:
-    2px -1px 3px 0px hsl(33.1579 34.5455% 21.5686% / 0.6),
-    2px 4px 6px -1px hsl(33.1579 34.5455% 21.5686% / 0.6);
+    2px -1px 3px 0px hsl(33.1579 34.5455% 21.5686% / 0.6), 2px 4px 6px -1px
+    hsl(33.1579 34.5455% 21.5686% / 0.6);
   --shadow-xl:
-    2px -1px 3px 0px hsl(33.1579 34.5455% 21.5686% / 0.6),
-    2px 8px 10px -1px hsl(33.1579 34.5455% 21.5686% / 0.6);
+    2px -1px 3px 0px hsl(33.1579 34.5455% 21.5686% / 0.6), 2px 8px 10px -1px
+    hsl(33.1579 34.5455% 21.5686% / 0.6);
   --shadow-2xl: 2px -1px 3px 0px hsl(33.1579 34.5455% 21.5686% / 1.5);
   --tracking-normal: 0em;
   --spacing: 0.25rem;
@@ -100,29 +100,29 @@
   --font-serif: Lora, serif;
   --font-mono: IBM Plex Mono, monospace;
   --radius: 0rem;
-  --shadow-x: 2px;
+  --shadow-x: 1px;
   --shadow-y: -1px;
-  --shadow-blur: 3px;
+  --shadow-blur: 1px;
   --shadow-spread: 0px;
   --shadow-opacity: 0.6;
   --shadow-color: #ab8055;
   --shadow-2xs: 2px -1px 3px 0px hsl(30 33.8583% 50.1961% / 0.3);
   --shadow-xs: 2px -1px 3px 0px hsl(30 33.8583% 50.1961% / 0.3);
   --shadow-sm:
-    2px -1px 3px 0px hsl(30 33.8583% 50.1961% / 0.6),
-    2px 1px 2px -1px hsl(30 33.8583% 50.1961% / 0.6);
+    2px -1px 3px 0px hsl(30 33.8583% 50.1961% / 0.6), 2px 1px 2px -1px
+    hsl(30 33.8583% 50.1961% / 0.6);
   --shadow:
-    2px -1px 3px 0px hsl(30 33.8583% 50.1961% / 0.6),
-    2px 1px 2px -1px hsl(30 33.8583% 50.1961% / 0.6);
+    2px -1px 3px 0px hsl(30 33.8583% 50.1961% / 0.6), 2px 1px 2px -1px
+    hsl(30 33.8583% 50.1961% / 0.6);
   --shadow-md:
-    2px -1px 3px 0px hsl(30 33.8583% 50.1961% / 0.6),
-    2px 2px 4px -1px hsl(30 33.8583% 50.1961% / 0.6);
+    2px -1px 3px 0px hsl(30 33.8583% 50.1961% / 0.6), 2px 2px 4px -1px
+    hsl(30 33.8583% 50.1961% / 0.6);
   --shadow-lg:
-    2px -1px 3px 0px hsl(30 33.8583% 50.1961% / 0.6),
-    2px 4px 6px -1px hsl(30 33.8583% 50.1961% / 0.6);
+    2px -1px 3px 0px hsl(30 33.8583% 50.1961% / 0.6), 2px 4px 6px -1px
+    hsl(30 33.8583% 50.1961% / 0.6);
   --shadow-xl:
-    2px -1px 3px 0px hsl(30 33.8583% 50.1961% / 0.6),
-    2px 8px 10px -1px hsl(30 33.8583% 50.1961% / 0.6);
+    2px -1px 3px 0px hsl(30 33.8583% 50.1961% / 0.6), 2px 8px 10px -1px
+    hsl(30 33.8583% 50.1961% / 0.6);
   --shadow-2xl: 2px -1px 3px 0px hsl(30 33.8583% 50.1961% / 1.5);
 }
 

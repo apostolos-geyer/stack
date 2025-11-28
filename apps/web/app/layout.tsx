@@ -44,9 +44,9 @@ export default function RootLayout({
         className={`${libreBaskerville.variable} ${lora.variable} ${ibmPlexMono.variable} font-sans bg-background text-foreground`}
       >
         <Providers>
-          <div className="min-h-screen flex flex-col">
-            <main className="flex-1 mx-auto">{children}</main>
-            <footer className="sticky bottom-0 py-2 text-center text-xs text-muted-foreground bg-background/80 backdrop-blur-sm border-t">
+          <div className="min-h-screen flex flex-col pt-20">
+            <main className="flex-1 w-full py-6">{children}</main>
+            <footer className="py-2 text-center text-xs text-muted-foreground border-t">
               An Apostoli Production
             </footer>
           </div>

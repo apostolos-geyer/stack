@@ -3,7 +3,7 @@
 console.log("[TRACE] @_/lib.client - START", Date.now());
 
 import React from 'react'
-import { useState } from "react";
+import { useState, useEffect, type ReactNode } from "react";
 import superjson from "superjson";
 import { QueryClientProvider, type QueryClient } from "@tanstack/react-query";
 import { createTRPCClient, httpBatchLink, type HTTPHeaders } from "@trpc/client";
@@ -15,6 +15,7 @@ console.log("[TRACE] @_/lib.client - after api.trpc import", Date.now());
 import { makeQueryClient } from './query-client'
 
 export { Provide } from './provide'
+export { useFirstRender, useOnce } from './hooks'
 
 export const { TRPCProvider, useTRPC, useTRPCClient } = createTRPCContext<AppRouter>();
 
@@ -50,4 +51,10 @@ export function TRPCQueryClientProvider({ url, children, headers }: TRPCQueryCli
       </TRPCProvider>
     </QueryClientProvider>
   )
+}
+
+export function Mounted({ children }: { children: ReactNode }) {
+  const [isMounted, setIsMounted] = useState(false);
+  useEffect(() => setIsMounted(true), []);
+  return isMounted ? children : null;
 }

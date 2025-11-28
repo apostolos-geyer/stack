@@ -13,38 +13,39 @@ import { FieldGroup } from "@_/ui.web/components/field";
 import { useAppForm } from "@_/ui.web/form";
 import { useUserMutationsFeatures } from "@_/features.client/admin/user-mutations";
 import {
-  banUserSchema,
-  banUserDefaultValues,
-  banDurationOptions,
+  setUserPasswordSchema,
+  setUserPasswordDefaultValues,
 } from "@_/features.client/admin/schemas";
 import { toast } from "sonner";
 import type { User } from "./columns";
 
-type UserBanDialogProps = {
+type UserPasswordDialogProps = {
   user: User | null;
   open: boolean;
   onOpenChange: (open: boolean) => void;
 };
 
-export function UserBanDialog({ user, open, onOpenChange }: UserBanDialogProps) {
-  const { banUserMutation } = useUserMutationsFeatures();
+export function UserPasswordDialog({
+  user,
+  open,
+  onOpenChange,
+}: UserPasswordDialogProps) {
+  const { setUserPasswordMutation } = useUserMutationsFeatures();
 
   const form = useAppForm({
-    defaultValues: banUserDefaultValues,
+    defaultValues: setUserPasswordDefaultValues,
     validators: {
-      onSubmit: banUserSchema,
+      onBlur: setUserPasswordSchema,
+      onSubmit: setUserPasswordSchema,
     },
     onSubmit: async ({ value }) => {
       if (!user) return;
       try {
-        await banUserMutation.mutateAsync({
+        await setUserPasswordMutation.mutateAsync({
           userId: user.id,
-          banReason: value.banReason || undefined,
-          banExpiresIn: value.banExpiresIn
-            ? parseInt(value.banExpiresIn, 10)
-            : undefined,
+          data: value,
         });
-        toast.success("User banned successfully");
+        toast.success("Password updated successfully");
         onOpenChange(false);
         form.reset();
       } catch (e) {
@@ -57,10 +58,9 @@ export function UserBanDialog({ user, open, onOpenChange }: UserBanDialogProps) 
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Ban User</DialogTitle>
+          <DialogTitle>Set Password</DialogTitle>
           <DialogDescription>
-            Ban {user?.email} from accessing the system. They will not be able
-            to sign in until unbanned.
+            Set a new password for {user?.email}.
           </DialogDescription>
         </DialogHeader>
 
@@ -73,23 +73,20 @@ export function UserBanDialog({ user, open, onOpenChange }: UserBanDialogProps) 
             className="space-y-4"
           >
             <FieldGroup>
-              <form.AppField name="banReason">
+              <form.AppField name="newPassword">
                 {(field) => (
-                  <field.TextField
-                    label="Ban Reason (optional)"
-                    placeholder="Enter reason for ban..."
+                  <field.PasswordField
+                    label="New Password"
+                    placeholder="••••••••"
                   />
                 )}
               </form.AppField>
 
-              <form.AppField name="banExpiresIn">
+              <form.AppField name="confirmPassword">
                 {(field) => (
-                  <field.SelectField
-                    label="Ban Duration"
-                    options={banDurationOptions.map((opt) => ({
-                      value: opt.value,
-                      label: opt.label,
-                    }))}
+                  <field.PasswordField
+                    label="Confirm Password"
+                    placeholder="••••••••"
                   />
                 )}
               </form.AppField>
@@ -103,13 +100,11 @@ export function UserBanDialog({ user, open, onOpenChange }: UserBanDialogProps) 
               >
                 Cancel
               </Button>
-              <Button
-                type="submit"
-                variant="destructive"
-                disabled={banUserMutation.isPending}
-              >
-                {banUserMutation.isPending ? "Banning..." : "Ban User"}
-              </Button>
+              <form.SubmitButton disabled={setUserPasswordMutation.isPending}>
+                {setUserPasswordMutation.isPending
+                  ? "Updating..."
+                  : "Set Password"}
+              </form.SubmitButton>
             </DialogFooter>
           </form>
         </form.AppForm>

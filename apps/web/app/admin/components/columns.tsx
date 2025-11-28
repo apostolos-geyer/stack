@@ -30,12 +30,15 @@ type ColumnActions = {
   onUnban: (user: User) => void;
   onDelete: (user: User) => void;
   onSetRole: (user: User) => void;
+  onSetPassword: (user: User) => void;
+  onImpersonate: (user: User) => void;
 };
 
 export function createColumns(actions: ColumnActions): ColumnDef<User>[] {
   return [
     {
       accessorKey: "name",
+      size: 150,
       header: ({ column }) => (
         <Button
           variant="ghost"
@@ -50,6 +53,7 @@ export function createColumns(actions: ColumnActions): ColumnDef<User>[] {
     },
     {
       accessorKey: "email",
+      size: 250,
       header: ({ column }) => (
         <Button
           variant="ghost"
@@ -63,6 +67,7 @@ export function createColumns(actions: ColumnActions): ColumnDef<User>[] {
     },
     {
       accessorKey: "role",
+      size: 100,
       header: "Role",
       cell: ({ row }) => {
         const role = row.getValue("role") as string | null;
@@ -75,6 +80,7 @@ export function createColumns(actions: ColumnActions): ColumnDef<User>[] {
     },
     {
       accessorKey: "banned",
+      size: 100,
       header: "Status",
       cell: ({ row }) => {
         const banned = row.getValue("banned") as boolean | null;
@@ -87,6 +93,7 @@ export function createColumns(actions: ColumnActions): ColumnDef<User>[] {
     },
     {
       accessorKey: "createdAt",
+      size: 120,
       header: ({ column }) => (
         <Button
           variant="ghost"
@@ -104,6 +111,7 @@ export function createColumns(actions: ColumnActions): ColumnDef<User>[] {
     },
     {
       id: "actions",
+      size: 50,
       cell: ({ row }) => {
         const user = row.original;
         const isBanned = user.banned;
@@ -123,6 +131,13 @@ export function createColumns(actions: ColumnActions): ColumnDef<User>[] {
               </DropdownMenuItem>
               <DropdownMenuItem onClick={() => actions.onSetRole(user)}>
                 Change role
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => actions.onSetPassword(user)}>
+                Set password
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={() => actions.onImpersonate(user)}>
+                Impersonate
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               {isBanned ? (

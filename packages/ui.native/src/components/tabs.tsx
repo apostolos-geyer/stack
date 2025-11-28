@@ -63,8 +63,8 @@ function TabsTrigger({ value, children, className }: TabsTriggerProps) {
     <Pressable
       onPress={() => onValueChange(value)}
       className={cn(
-        "flex-1 items-center justify-center rounded-md py-2 px-3",
-        isActive && "bg-background shadow-sm",
+        "flex-1 items-center justify-center rounded-md py-2 px-3 bg-transparent",
+        isActive ? "bg-background shadow-sm" : "bg-transparent",
         className
       )}
     >

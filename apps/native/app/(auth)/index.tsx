@@ -1,19 +1,28 @@
-import { useState } from "react"
-import { View, Alert, ScrollView } from "react-native"
-import { useRouter } from "expo-router"
+import { createAuthFeatures } from '@_/features.client/auth';
+import {
+  createLoginFeatures,
+  useLoginFeatures,
+} from '@_/features.client/auth/login';
+import { authClient } from '@_/infra.auth/client';
 
-import { Provide } from "@_/lib.client"
-import { createAuthFeatures } from "@_/features.client/auth"
-import { createLoginFeatures, useLoginFeatures } from "@_/features.client/auth/login"
-import { authClient } from "@_/infra.auth/client"
-import { useAppForm } from "@_/ui.native/form"
-import { Text } from "@_/ui.native/components/text"
-import { Card } from "@_/ui.native/components/card"
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@_/ui.native/components/tabs"
+import { Provide } from '@_/lib.client';
+import { Card } from '@_/ui.native/components/card';
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from '@_/ui.native/components/tabs';
+import { Text } from '@_/ui.native/components/text';
+import { useAppForm } from '@_/ui.native/form';
+import { useRouter } from 'expo-router';
+import { useState } from 'react';
+import { Alert, ScrollView, View } from 'react-native';
 
 function SignInForm() {
-  const router = useRouter()
-  const { signInDefaultValues, signInSchema, signInMutation } = useLoginFeatures()
+  const router = useRouter();
+  const { signInDefaultValues, signInSchema, signInMutation } =
+    useLoginFeatures();
 
   const form = useAppForm({
     defaultValues: signInDefaultValues,
@@ -23,14 +32,13 @@ function SignInForm() {
     },
     onSubmit: async ({ value }) => {
       try {
-        await signInMutation.mutateAsync(value)
-        // Navigate to authenticated area after sign in
-        router.replace("/")
+        await signInMutation.mutateAsync(value);
+        router.replace('/(tabs)');
       } catch (e) {
-        Alert.alert("Error", (e as Error).message)
+        Alert.alert('Error', (e as Error).message);
       }
     },
-  })
+  });
 
   return (
     <form.AppForm>
@@ -53,17 +61,18 @@ function SignInForm() {
       </View>
 
       <View className="mt-6">
-        <form.SubmitButton disabled={signInMutation.isPending}>
-          {signInMutation.isPending ? "Signing in..." : "Sign In"}
+        <form.SubmitButton loadingText="Signing in...">
+          Sign In
         </form.SubmitButton>
       </View>
     </form.AppForm>
-  )
+  );
 }
 
 function SignUpForm() {
-  const router = useRouter()
-  const { signUpDefaultValues, signUpSchema, signUpMutation } = useLoginFeatures()
+  const router = useRouter();
+  const { signUpDefaultValues, signUpSchema, signUpMutation } =
+    useLoginFeatures();
 
   const form = useAppForm({
     defaultValues: signUpDefaultValues,
@@ -73,14 +82,13 @@ function SignUpForm() {
     },
     onSubmit: async ({ value }) => {
       try {
-        await signUpMutation.mutateAsync(value)
-        // Navigate to authenticated area after sign up
-        router.replace("/")
+        await signUpMutation.mutateAsync(value);
+        router.replace('/(tabs)');
       } catch (e) {
-        Alert.alert("Error", (e as Error).message)
+        Alert.alert('Error', (e as Error).message);
       }
     },
-  })
+  });
 
   return (
     <form.AppForm>
@@ -112,16 +120,16 @@ function SignUpForm() {
       </View>
 
       <View className="mt-6">
-        <form.SubmitButton disabled={signUpMutation.isPending}>
-          {signUpMutation.isPending ? "Creating account..." : "Sign Up"}
+        <form.SubmitButton loadingText="Creating account...">
+          Sign Up
         </form.SubmitButton>
       </View>
     </form.AppForm>
-  )
+  );
 }
 
 function AuthScreenContent() {
-  const [tab, setTab] = useState("sign-in")
+  const [tab, setTab] = useState('sign-in');
 
   return (
     <ScrollView
@@ -158,14 +166,14 @@ function AuthScreenContent() {
         </Tabs>
       </Card>
     </ScrollView>
-  )
+  );
 }
 
-const HomeScreen = Provide(
+const AuthScreen = Provide(
   [createAuthFeatures(authClient), createLoginFeatures()],
-  function HomeScreen() {
-    return <AuthScreenContent />
-  }
-)
+  function AuthScreen() {
+    return <AuthScreenContent />;
+  },
+);
 
-export default HomeScreen
+export default AuthScreen;

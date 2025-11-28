@@ -4,6 +4,9 @@ console.log('[TRACE] next.config.ts - START', Date.now());
 
 const nextConfig: NextConfig = {
   reactCompiler: true,
+  experimental: {
+    viewTransition: true,
+  },
   transpilePackages: [
     '@_/api.trpc',
     '@_/features.client',
