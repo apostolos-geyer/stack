@@ -11,7 +11,7 @@ import {
 import { Button } from "@_/ui.web/components/button";
 import { FieldGroup } from "@_/ui.web/components/field";
 import { useAppForm } from "@_/ui.web/form";
-import { useUserMutationsFeatures } from "@_/features.client/admin/user-mutations";
+import { useSetUserPasswordMutation } from "@_/features.client/admin/hooks";
 import {
   setUserPasswordSchema,
   setUserPasswordDefaultValues,
@@ -30,7 +30,7 @@ export function UserPasswordDialog({
   open,
   onOpenChange,
 }: UserPasswordDialogProps) {
-  const { setUserPasswordMutation } = useUserMutationsFeatures();
+  const setUserPasswordMutation = useSetUserPasswordMutation();
 
   const form = useAppForm({
     defaultValues: setUserPasswordDefaultValues,

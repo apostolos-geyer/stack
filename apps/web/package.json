@@ -19,6 +19,7 @@
     "@_/platform": "workspace:*",
     "@_/ui.style": "workspace:*",
     "@_/ui.web": "workspace:*",
+    "@_/ui.utils": "workspace:*",
     "@prisma/client": "catalog:",
     "motion": "^12.23.24",
     "next": "catalog:next16",

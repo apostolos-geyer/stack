@@ -1,6 +1,6 @@
 'use client';
 
-import { useSessionManagementFeatures } from '@_/features.client/admin/session-management';
+import { useUserSessions, useRevokeSessionMutation, useRevokeAllSessionsMutation } from '@_/features.client/admin/hooks';
 import { Badge } from '@_/ui.web/components/badge';
 import { Button } from '@_/ui.web/components/button';
 import { TableCell, TableRow } from '@_/ui.web/components/table';
@@ -13,9 +13,9 @@ type UserSessionsRowProps = {
 };
 
 export function UserSessionsRow({ userId, colSpan }: UserSessionsRowProps) {
-  const { useUserSessions, revokeSessionMutation, revokeAllSessionsMutation } =
-    useSessionManagementFeatures();
   const sessionsQuery = useUserSessions(userId);
+  const revokeSessionMutation = useRevokeSessionMutation();
+  const revokeAllSessionsMutation = useRevokeAllSessionsMutation();
 
   const handleRevokeSession = async (sessionToken: string) => {
     try {

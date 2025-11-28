@@ -43,12 +43,12 @@ export function FloatingHeader() {
         className="flex items-center justify-between
           bg-background/20 backdrop-blur-sm border border-border/50
           shadow-lg shadow-black/10
-          px-4 py-2"
+          px-4 py-2 rounded-xl"
         suppressHydrationWarning
       >
         <Link
           href="/"
-          className="flex h-8 w-8 items-center justify-center aspect-square bg-primary/10 hover:opacity-80 transition-opacity"
+          className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10 hover:opacity-80 transition-opacity"
         >
           <HomeIcon className="h-4 w-4 text-primary" />
         </Link>
@@ -74,10 +74,10 @@ export function FloatingHeader() {
                         <img
                           src={user.image}
                           alt={user.name || 'User'}
-                          className="h-8 w-8 aspect-square object-cover"
+                          className="h-8 w-8 object-cover rounded-full"
                         />
                       ) : (
-                        <div className="flex h-8 w-8 items-center justify-center aspect-square bg-primary/10">
+                        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10">
                           <UserIcon className="h-4 w-4 text-primary" />
                         </div>
                       )}

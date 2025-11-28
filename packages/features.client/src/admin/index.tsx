@@ -19,25 +19,25 @@ export function useAdminFeatures() {
   return ctx;
 }
 
-export function createAdminFeatures() {
-  return function AdminFeaturesProvider({
-    children,
-  }: {
-    children: ReactNode;
-  }) {
-    const { authClient } = useAuthFeatures();
+export function AdminFeaturesProvider({
+  children,
+}: {
+  children: ReactNode;
+}) {
+  const { authClient } = useAuthFeatures();
 
-    return (
-      <AdminFeaturesContext.Provider value={{ authClient }}>
-        {children}
-      </AdminFeaturesContext.Provider>
-    );
-  };
+  return (
+    <AdminFeaturesContext.Provider value={{ authClient }}>
+      {children}
+    </AdminFeaturesContext.Provider>
+  );
+}
+
+/** @deprecated Use AdminFeaturesProvider directly */
+export function createAdminFeatures() {
+  return AdminFeaturesProvider;
 }
 
 export * from "./schemas";
-export * from "./user-mutations";
+export * from "./hooks";
 export * from "./users-list";
-export * from "./session-management";
-export * from "./impersonation";
-export * from "./permissions";

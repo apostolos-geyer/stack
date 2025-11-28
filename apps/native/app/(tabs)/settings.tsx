@@ -1,9 +1,21 @@
-import {
-  createAccountFeatures,
-  useAccountFeatures,
-} from '@_/features.client/account';
 import { useAuthFeatures } from '@_/features.client/auth';
-import { Provide } from '@_/lib.client';
+import {
+  updateProfileSchema,
+  updateProfileDefaultValues,
+  changeEmailSchema,
+  changeEmailDefaultValues,
+  changePasswordSchema,
+  changePasswordDefaultValues,
+} from '@_/features.client/account/schemas';
+import {
+  useUpdateProfileMutation,
+  useChangeEmailMutation,
+  useChangePasswordMutation,
+  useDeleteAccountMutation,
+  useSessionsQuery,
+  useRevokeSessionMutation,
+  useRevokeAllSessionsMutation,
+} from '@_/features.client/account/hooks';
 import { Badge } from '@_/ui.native/components/badge';
 import { Button } from '@_/ui.native/components/button';
 import {
@@ -37,11 +49,7 @@ import { DefaultAppView } from '@/components/AppView';
 
 function ProfileForm() {
   const { session } = useAuthFeatures();
-  const {
-    updateProfileDefaultValues,
-    updateProfileSchema,
-    updateProfileMutation,
-  } = useAccountFeatures();
+  const updateProfileMutation = useUpdateProfileMutation();
   const user = session.data?.user;
 
   const form = useAppForm({
@@ -108,8 +116,7 @@ function ProfileForm() {
 
 function EmailForm() {
   const { session } = useAuthFeatures();
-  const { changeEmailDefaultValues, changeEmailSchema, changeEmailMutation } =
-    useAccountFeatures();
+  const changeEmailMutation = useChangeEmailMutation();
   const user = session.data?.user;
 
   const form = useAppForm({
@@ -170,11 +177,7 @@ function EmailForm() {
 }
 
 function PasswordForm() {
-  const {
-    changePasswordDefaultValues,
-    changePasswordSchema,
-    changePasswordMutation,
-  } = useAccountFeatures();
+  const changePasswordMutation = useChangePasswordMutation();
 
   const form = useAppForm({
     defaultValues: changePasswordDefaultValues,
@@ -252,7 +255,7 @@ function PasswordForm() {
 
 function DeleteAccountSection() {
   const router = useRouter();
-  const { deleteAccountMutation } = useAccountFeatures();
+  const deleteAccountMutation = useDeleteAccountMutation();
 
   const handleDelete = () => {
     Alert.prompt(
@@ -313,8 +316,9 @@ function DeleteAccountSection() {
 }
 
 function SessionsSection() {
-  const { sessionsQuery, revokeSessionMutation, revokeAllSessionsMutation } =
-    useAccountFeatures();
+  const sessionsQuery = useSessionsQuery();
+  const revokeSessionMutation = useRevokeSessionMutation();
+  const revokeAllSessionsMutation = useRevokeAllSessionsMutation();
   const { session: currentSession } = useAuthFeatures();
 
   const formatDate = (date: Date) => {
@@ -457,50 +461,53 @@ function SessionsSection() {
   );
 }
 
-const SettingsScreen = Provide(
-  [createAccountFeatures(), DefaultAppView],
-  function SettingsScreenContent() {
-    const [tab, setTab] = useState('profile');
-    return (
-      <>
-        <Text variant="h2" className="mb-6">
-          Settings
-        </Text>
+function SettingsScreenContent() {
+  const [tab, setTab] = useState('profile');
+  return (
+    <>
+      <Text variant="h2" className="mb-6">
+        Settings
+      </Text>
 
-        <Tabs value={tab} onValueChange={setTab} className="flex-1">
-          <TabsList className="mb-6">
-            <TabsTrigger value="profile">
-              <Text>Profile</Text>
-            </TabsTrigger>
-            <TabsTrigger value="security">
-              <Text>Security</Text>
-            </TabsTrigger>
-            <TabsTrigger value="sessions">
-              <Text>Sessions</Text>
-            </TabsTrigger>
-          </TabsList>
+      <Tabs value={tab} onValueChange={setTab} className="flex-1">
+        <TabsList className="mb-6">
+          <TabsTrigger value="profile">
+            <Text>Profile</Text>
+          </TabsTrigger>
+          <TabsTrigger value="security">
+            <Text>Security</Text>
+          </TabsTrigger>
+          <TabsTrigger value="sessions">
+            <Text>Sessions</Text>
+          </TabsTrigger>
+        </TabsList>
 
-          <TabsContent value="profile" className="flex-1">
-            <View className="gap-6">
-              <ProfileForm />
-              <EmailForm />
-            </View>
-          </TabsContent>
+        <TabsContent value="profile" className="flex-1">
+          <View className="gap-6">
+            <ProfileForm />
+            <EmailForm />
+          </View>
+        </TabsContent>
 
-          <TabsContent value="security">
-            <View className="gap-6">
-              <PasswordForm />
-              <DeleteAccountSection />
-            </View>
-          </TabsContent>
+        <TabsContent value="security">
+          <View className="gap-6">
+            <PasswordForm />
+            <DeleteAccountSection />
+          </View>
+        </TabsContent>
 
-          <TabsContent value="sessions">
-            <SessionsSection />
-          </TabsContent>
-        </Tabs>
-      </>
-    );
-  },
-);
+        <TabsContent value="sessions">
+          <SessionsSection />
+        </TabsContent>
+      </Tabs>
+    </>
+  );
+}
 
-export default SettingsScreen;
+export default function SettingsScreen() {
+  return (
+    <DefaultAppView>
+      <SettingsScreenContent />
+    </DefaultAppView>
+  );
+}

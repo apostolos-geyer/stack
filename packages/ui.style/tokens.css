@@ -34,7 +34,7 @@
   --font-sans: Libre Baskerville, serif;
   --font-serif: Lora, serif;
   --font-mono: IBM Plex Mono, monospace;
-  --radius: 0rem;
+  --radius: 1.675rem;
   --shadow-x: 2px;
   --shadow-y: -1px;
   --shadow-blur: 3px;
@@ -59,7 +59,7 @@
     2px -1px 3px 0px hsl(33.1579 34.5455% 21.5686% / 0.6), 2px 8px 10px -1px
     hsl(33.1579 34.5455% 21.5686% / 0.6);
   --shadow-2xl: 2px -1px 3px 0px hsl(33.1579 34.5455% 21.5686% / 1.5);
-  --tracking-normal: 0em;
+  --tracking-normal: -0.05em;
   --spacing: 0.25rem;
 }
 
@@ -99,10 +99,10 @@
   --font-sans: Libre Baskerville, serif;
   --font-serif: Lora, serif;
   --font-mono: IBM Plex Mono, monospace;
-  --radius: 0rem;
-  --shadow-x: 1px;
+  --radius: 1.675rem;
+  --shadow-x: 2px;
   --shadow-y: -1px;
-  --shadow-blur: 1px;
+  --shadow-blur: 3px;
   --shadow-spread: 0px;
   --shadow-opacity: 0.6;
   --shadow-color: #ab8055;
@@ -184,4 +184,8 @@
   --tracking-wide: calc(var(--tracking-normal) + 0.025em);
   --tracking-wider: calc(var(--tracking-normal) + 0.05em);
   --tracking-widest: calc(var(--tracking-normal) + 0.1em);
+}
+
+body {
+  letter-spacing: var(--tracking-normal);
 }

@@ -1,11 +1,15 @@
 'use client';
 
 import {
-  createLoginFeatures,
-  useLoginFeatures,
-} from '@_/features.client/auth/login';
-
-import { Provide } from '@_/lib.client';
+  useSignInMutation,
+  useSignUpMutation,
+} from '@_/features.client/auth/hooks';
+import {
+  signInDefaultValues,
+  signInSchema,
+  signUpDefaultValues,
+  signUpSchema,
+} from '@_/features.client/auth/schemas';
 import { Card } from '@_/ui.web/components/card';
 import { FieldGroup } from '@_/ui.web/components/field';
 import {
@@ -21,8 +25,7 @@ import { toast } from 'sonner';
 
 function SignInForm() {
   const router = useRouter();
-  const { signInDefaultValues, signInSchema, signInMutation } =
-    useLoginFeatures();
+  const signInMutation = useSignInMutation();
 
   const form = useAppForm({
     defaultValues: signInDefaultValues,
@@ -81,8 +84,7 @@ function SignInForm() {
 
 function SignUpForm() {
   const router = useRouter();
-  const { signUpDefaultValues, signUpSchema, signUpMutation } =
-    useLoginFeatures();
+  const signUpMutation = useSignUpMutation();
 
   const form = useAppForm({
     defaultValues: signUpDefaultValues,
@@ -158,7 +160,7 @@ function AuthPageContent() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center">
+    <div className="flex flex-col h-full items-center justify-center">
       <Card className="w-full max-w-md space-y-6 p-6">
         <Tabs value={tab} onValueChange={handleTabChange}>
           <TabsList className="w-full">
@@ -195,21 +197,16 @@ function AuthPageContent() {
   );
 }
 
-const AuthPage = Provide(
-  [createLoginFeatures()],
-  function AuthPage() {
-    return (
-      <Suspense
-        fallback={
-          <div className="flex min-h-screen items-center justify-center">
-            Loading...
-          </div>
-        }
-      >
-        <AuthPageContent />
-      </Suspense>
-    );
-  },
-);
-
-export default AuthPage;
+export default function AuthPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="flex min-h-screen items-center justify-center">
+          Loading...
+        </div>
+      }
+    >
+      <AuthPageContent />
+    </Suspense>
+  );
+}

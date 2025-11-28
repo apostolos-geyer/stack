@@ -1,17 +1,11 @@
 'use client';
 
-import { createAdminFeatures } from '@_/features.client/admin';
+import { AdminFeaturesProvider } from '@_/features.client/admin';
 import {
-  createImpersonationFeatures,
-  useImpersonationFeatures,
-} from '@_/features.client/admin/impersonation';
-import { createSessionManagementFeatures } from '@_/features.client/admin/session-management';
-import {
-  createUserMutationsFeatures,
-  useUserMutationsFeatures,
-} from '@_/features.client/admin/user-mutations';
-import { createUsersListFeatures } from '@_/features.client/admin/users-list';
-import { Provide } from '@_/lib.client';
+  useUnbanUserMutation,
+  useImpersonateMutation,
+} from '@_/features.client/admin/hooks';
+import { UsersListProvider } from '@_/features.client/admin/users-list';
 import { useState } from 'react';
 import { toast } from 'sonner';
 import type { User } from './components/columns';
@@ -25,8 +19,8 @@ import { UserRoleDialog } from './components/user-role-dialog';
 import { UserTable } from './components/user-table';
 
 function AdminPageContent() {
-  const { unbanUserMutation } = useUserMutationsFeatures();
-  const { impersonateUserMutation } = useImpersonationFeatures();
+  const unbanUserMutation = useUnbanUserMutation();
+  const impersonateMutation = useImpersonateMutation();
 
   const [createDialogOpen, setCreateDialogOpen] = useState(false);
   const [editDialogOpen, setEditDialogOpen] = useState(false);
@@ -67,7 +61,7 @@ function AdminPageContent() {
 
   const handleImpersonate = async (user: User) => {
     try {
-      await impersonateUserMutation.mutateAsync(user.id);
+      await impersonateMutation.mutateAsync(user.id);
     } catch (e) {
       toast.error((e as Error).message);
     }
@@ -131,15 +125,12 @@ function AdminPageContent() {
   );
 }
 
-const AdminPage = Provide(
-  [
-    createAdminFeatures(),
-    createUsersListFeatures(),
-    createUserMutationsFeatures(),
-    createSessionManagementFeatures(),
-    createImpersonationFeatures(),
-  ],
-  AdminPageContent,
-);
-
-export default AdminPage;
+export default function AdminPage() {
+  return (
+    <AdminFeaturesProvider>
+      <UsersListProvider>
+        <AdminPageContent />
+      </UsersListProvider>
+    </AdminFeaturesProvider>
+  );
+}

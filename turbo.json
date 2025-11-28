@@ -3,45 +3,26 @@
   "ui": "tui",
   "tasks": {
     "build": {
-      "dependsOn": [
-        "^db:generate",
-        "^build"
-      ],
-      "inputs": [
-        "$TURBO_DEFAULT$",
-        ".env*"
-      ],
-      "outputs": [
-        "dist/**",
-        ".next/**",
-        "!.next/cache/**"
-      ]
+      "dependsOn": ["^db:generate", "^build"],
+      "inputs": ["$TURBO_DEFAULT$", ".env*"],
+      "outputs": ["dist/**", ".next/**", "!.next/cache/**"]
     },
     "lint": {
-      "dependsOn": [
-        "^lint"
-      ]
+      "dependsOn": ["^lint"]
     },
     "typecheck": {
-      "dependsOn": [
-        "^typecheck"
-      ]
+      "dependsOn": ["^typecheck"]
     },
+    "topo": {},
     "dev": {
-      "dependsOn": [
-        "^db:generate"
-      ],
+      "dependsOn": ["^db:generate"],
       "cache": false,
       "persistent": true
     },
     "db:generate": {
       "cache": false,
-      "inputs": [
-        "prisma/schema.prisma"
-      ],
-      "outputs": [
-        "src/generated/**"
-      ]
+      "inputs": ["prisma/schema.prisma"],
+      "outputs": ["src/generated/**"]
     },
     "db:migrate:dev": {
       "cache": false

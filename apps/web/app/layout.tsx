@@ -8,6 +8,7 @@ import '@_/ui.style';
 console.log('[TRACE] app/layout.tsx - after ui.style', Date.now());
 
 import { Providers } from './providers';
+import { FloatingHeader } from './components/floating-header';
 
 console.log('[TRACE] app/layout.tsx - after providers', Date.now());
 
@@ -33,6 +34,8 @@ export const metadata: Metadata = {
   description: 'lowkey tuff',
 };
 
+import { cn } from '@_/ui.utils';
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -41,15 +44,21 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${libreBaskerville.variable} ${lora.variable} ${ibmPlexMono.variable} font-sans bg-background text-foreground`}
+        className={cn(
+          libreBaskerville.variable,
+          lora.variable,
+          ibmPlexMono.variable,
+          `font-sans bg-background text-foreground min-h-dvh flex flex-col`,
+        )}
       >
         <Providers>
-          <div className="min-h-screen flex flex-col pt-20">
-            <main className="flex-1 w-full py-6">{children}</main>
-            <footer className="py-2 text-center text-xs text-muted-foreground border-t">
-              An Apostoli Production
-            </footer>
-          </div>
+          <FloatingHeader />
+          <main className="flex flex-col flex-1 w-full py-6 mt-20">
+            {children}
+          </main>
+          <footer className="py-2 text-center text-xs text-muted-foreground border-t">
+            An Apostoli Production
+          </footer>
         </Providers>
       </body>
     </html>

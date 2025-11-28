@@ -1,11 +1,8 @@
-import { createAuthFeatures } from '@_/features.client/auth';
-import { authClient } from '@_/infra.auth/client';
-import { Provide } from '@_/lib.client';
 import { Tabs } from 'expo-router';
 import { Home, Settings } from 'lucide-react-native';
 import { useColorScheme } from 'react-native';
 
-function TabsLayoutContent() {
+export default function TabsLayout() {
   const colorScheme = useColorScheme();
   const isDark = colorScheme === 'dark';
 
@@ -50,7 +47,3 @@ function TabsLayoutContent() {
     </Tabs>
   );
 }
-
-const TabsLayout = Provide([createAuthFeatures(authClient)], TabsLayoutContent);
-
-export default TabsLayout;

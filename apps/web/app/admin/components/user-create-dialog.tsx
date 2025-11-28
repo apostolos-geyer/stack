@@ -11,7 +11,7 @@ import {
 import { Button } from "@_/ui.web/components/button";
 import { FieldGroup } from "@_/ui.web/components/field";
 import { useAppForm } from "@_/ui.web/form";
-import { useUserMutationsFeatures } from "@_/features.client/admin/user-mutations";
+import { useCreateUserMutation } from "@_/features.client/admin/hooks";
 import {
   createUserSchema,
   createUserDefaultValues,
@@ -24,7 +24,7 @@ type UserCreateDialogProps = {
 };
 
 export function UserCreateDialog({ open, onOpenChange }: UserCreateDialogProps) {
-  const { createUserMutation } = useUserMutationsFeatures();
+  const createUserMutation = useCreateUserMutation();
 
   const form = useAppForm({
     defaultValues: createUserDefaultValues,

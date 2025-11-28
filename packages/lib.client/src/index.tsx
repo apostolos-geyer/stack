@@ -14,7 +14,6 @@ import type { AppRouter } from "@_/api.trpc";
 console.log("[TRACE] @_/lib.client - after api.trpc import", Date.now());
 import { makeQueryClient } from './query-client'
 
-export { Provide } from './provide'
 export { useFirstRender, useOnce } from './hooks'
 
 export const { TRPCProvider, useTRPC, useTRPCClient } = createTRPCContext<AppRouter>();

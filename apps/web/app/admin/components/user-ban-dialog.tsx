@@ -11,7 +11,7 @@ import {
 import { Button } from "@_/ui.web/components/button";
 import { FieldGroup } from "@_/ui.web/components/field";
 import { useAppForm } from "@_/ui.web/form";
-import { useUserMutationsFeatures } from "@_/features.client/admin/user-mutations";
+import { useBanUserMutation } from "@_/features.client/admin/hooks";
 import {
   banUserSchema,
   banUserDefaultValues,
@@ -27,7 +27,7 @@ type UserBanDialogProps = {
 };
 
 export function UserBanDialog({ user, open, onOpenChange }: UserBanDialogProps) {
-  const { banUserMutation } = useUserMutationsFeatures();
+  const banUserMutation = useBanUserMutation();
 
   const form = useAppForm({
     defaultValues: banUserDefaultValues,

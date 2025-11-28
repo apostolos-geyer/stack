@@ -1,14 +1,14 @@
 "use client";
 
 import { Button } from "@_/ui.web/components/button";
-import { useImpersonationFeatures } from "@_/features.client/admin/impersonation";
+import { useIsImpersonating, useStopImpersonatingMutation } from "@_/features.client/admin/hooks";
 import { useAuthFeatures } from "@_/features.client/auth";
 import { UserIcon, XIcon } from "lucide-react";
 import { toast } from "sonner";
 
 export function ImpersonationFab() {
-  const { isImpersonating, stopImpersonatingMutation } =
-    useImpersonationFeatures();
+  const isImpersonating = useIsImpersonating();
+  const stopImpersonatingMutation = useStopImpersonatingMutation();
   const { session } = useAuthFeatures();
 
   if (!isImpersonating) {

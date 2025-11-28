@@ -1,11 +1,13 @@
-import { createAuthFeatures } from '@_/features.client/auth';
 import {
-  createLoginFeatures,
-  useLoginFeatures,
-} from '@_/features.client/auth/login';
-import { authClient } from '@_/infra.auth/client';
-
-import { Provide } from '@_/lib.client';
+  signInSchema,
+  signInDefaultValues,
+  signUpSchema,
+  signUpDefaultValues,
+} from '@_/features.client/auth/schemas';
+import {
+  useSignInMutation,
+  useSignUpMutation,
+} from '@_/features.client/auth/hooks';
 import { Card } from '@_/ui.native/components/card';
 import {
   Tabs,
@@ -21,8 +23,7 @@ import { Alert, ScrollView, View } from 'react-native';
 
 function SignInForm() {
   const router = useRouter();
-  const { signInDefaultValues, signInSchema, signInMutation } =
-    useLoginFeatures();
+  const signInMutation = useSignInMutation();
 
   const form = useAppForm({
     defaultValues: signInDefaultValues,
@@ -71,8 +72,7 @@ function SignInForm() {
 
 function SignUpForm() {
   const router = useRouter();
-  const { signUpDefaultValues, signUpSchema, signUpMutation } =
-    useLoginFeatures();
+  const signUpMutation = useSignUpMutation();
 
   const form = useAppForm({
     defaultValues: signUpDefaultValues,
@@ -173,11 +173,6 @@ function AuthScreenContent() {
   );
 }
 
-const AuthScreen = Provide(
-  [createAuthFeatures(authClient), createLoginFeatures()],
-  function AuthScreen() {
-    return <AuthScreenContent />;
-  },
-);
-
-export default AuthScreen;
+export default function AuthScreen() {
+  return <AuthScreenContent />;
+}

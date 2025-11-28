@@ -10,15 +10,13 @@
   "exports": {
     ".": "./src/index.ts",
     "./auth": "./src/auth/index.tsx",
-    "./auth/login": "./src/auth/login.tsx",
+    "./auth/hooks": "./src/auth/hooks.ts",
+    "./auth/schemas": "./src/auth/schemas.ts",
     "./admin": "./src/admin/index.tsx",
+    "./admin/hooks": "./src/admin/hooks.ts",
     "./admin/users-list": "./src/admin/users-list.tsx",
-    "./admin/user-mutations": "./src/admin/user-mutations.tsx",
     "./admin/schemas": "./src/admin/schemas.ts",
-    "./admin/session-management": "./src/admin/session-management.tsx",
-    "./admin/impersonation": "./src/admin/impersonation.tsx",
-    "./admin/permissions": "./src/admin/permissions.tsx",
-    "./account": "./src/account/index.tsx",
+    "./account/hooks": "./src/account/hooks.ts",
     "./account/schemas": "./src/account/schemas.ts"
   },
   "dependencies": {

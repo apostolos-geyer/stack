@@ -29,8 +29,10 @@ import { TOKENS, type ThemeColors, type ColorToken } from '@_/ui.style/tokens';
 
 import { createAuthFeatures, useAuthFeatures } from '@_/features.client/auth';
 import { authClient } from '@_/infra.auth/client';
-import { Provide, TRPCQueryClientProvider } from '@_/lib.client';
+import { TRPCQueryClientProvider } from '@_/lib.client';
 import { ActivityIndicator, useColorScheme, View } from 'react-native';
+
+const AuthFeaturesProvider = createAuthFeatures(authClient);
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -63,17 +65,12 @@ function AuthRouter() {
 
 function RootLayoutContent() {
   return (
-    <>
+    <AuthFeaturesProvider>
       <AuthRouter />
       <Slot />
-    </>
+    </AuthFeaturesProvider>
   );
 }
-
-const RootLayoutWithAuth = Provide(
-  [createAuthFeatures(authClient)],
-  RootLayoutContent,
-);
 
 const useDeriveTheme = () => {
   const colorScheme = useColorScheme();
@@ -132,7 +129,7 @@ export default function RootLayout() {
     <ThemeProvider value={theme}>
       <TRPCQueryClientProvider url={'http://localhost:3000/api/trpc'}>
         <SafeAreaProvider style={{ flex: 1 }}>
-          <RootLayoutWithAuth />
+          <RootLayoutContent />
         </SafeAreaProvider>
       </TRPCQueryClientProvider>
     </ThemeProvider>

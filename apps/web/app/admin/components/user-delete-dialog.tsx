@@ -10,7 +10,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@_/ui.web/components/alert-dialog";
-import { useUserMutationsFeatures } from "@_/features.client/admin/user-mutations";
+import { useDeleteUserMutation } from "@_/features.client/admin/hooks";
 import { toast } from "sonner";
 import type { User } from "./columns";
 
@@ -25,7 +25,7 @@ export function UserDeleteDialog({
   open,
   onOpenChange,
 }: UserDeleteDialogProps) {
-  const { deleteUserMutation } = useUserMutationsFeatures();
+  const deleteUserMutation = useDeleteUserMutation();
 
   const handleDelete = async () => {
     if (!user) return;

@@ -12,7 +12,7 @@ import {
 import { Button } from "@_/ui.web/components/button";
 import { FieldGroup } from "@_/ui.web/components/field";
 import { useAppForm } from "@_/ui.web/form";
-import { useUserMutationsFeatures } from "@_/features.client/admin/user-mutations";
+import { useUpdateUserMutation } from "@_/features.client/admin/hooks";
 import { updateUserSchema } from "@_/features.client/admin/schemas";
 import { toast } from "sonner";
 import type { User } from "./columns";
@@ -28,7 +28,7 @@ export function UserEditDialog({
   open,
   onOpenChange,
 }: UserEditDialogProps) {
-  const { updateUserMutation } = useUserMutationsFeatures();
+  const updateUserMutation = useUpdateUserMutation();
 
   const form = useAppForm({
     defaultValues: {

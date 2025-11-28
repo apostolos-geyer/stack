@@ -1,11 +1,25 @@
 'use client';
 
 import {
-  createAccountFeatures,
-  useAccountFeatures,
-} from '@_/features.client/account';
+  useChangeEmailMutation,
+  useChangePasswordMutation,
+  useDeleteAccountMutation,
+  useRevokeAllSessionsMutation,
+  useRevokeSessionMutation,
+  useSessionsQuery,
+  useUpdateProfileMutation,
+} from '@_/features.client/account/hooks';
+import {
+  changeEmailDefaultValues,
+  changeEmailSchema,
+  changePasswordDefaultValues,
+  changePasswordSchema,
+  deleteAccountDefaultValues,
+  deleteAccountSchema,
+  updateProfileDefaultValues,
+  updateProfileSchema,
+} from '@_/features.client/account/schemas';
 import { useAuthFeatures } from '@_/features.client/auth';
-import { Provide } from '@_/lib.client';
 import {
   AlertDialog,
   AlertDialogCancel,
@@ -48,11 +62,7 @@ import { toast } from 'sonner';
 
 function ProfileForm() {
   const { session } = useAuthFeatures();
-  const {
-    updateProfileDefaultValues,
-    updateProfileSchema,
-    updateProfileMutation,
-  } = useAccountFeatures();
+  const updateProfileMutation = useUpdateProfileMutation();
   const user = session.data?.user;
 
   const form = useAppForm({
@@ -126,8 +136,7 @@ function ProfileForm() {
 
 function EmailForm() {
   const { session } = useAuthFeatures();
-  const { changeEmailDefaultValues, changeEmailSchema, changeEmailMutation } =
-    useAccountFeatures();
+  const changeEmailMutation = useChangeEmailMutation();
   const user = session.data?.user;
 
   const form = useAppForm({
@@ -212,11 +221,7 @@ function EmailForm() {
 }
 
 function PasswordForm() {
-  const {
-    changePasswordDefaultValues,
-    changePasswordSchema,
-    changePasswordMutation,
-  } = useAccountFeatures();
+  const changePasswordMutation = useChangePasswordMutation();
 
   const form = useAppForm({
     defaultValues: changePasswordDefaultValues,
@@ -302,8 +307,9 @@ function PasswordForm() {
 }
 
 function SessionsSection() {
-  const { sessionsQuery, revokeSessionMutation, revokeAllSessionsMutation } =
-    useAccountFeatures();
+  const sessionsQuery = useSessionsQuery();
+  const revokeSessionMutation = useRevokeSessionMutation();
+  const revokeAllSessionsMutation = useRevokeAllSessionsMutation();
   const { session: currentSession } = useAuthFeatures();
 
   const formatDate = (date: Date) => {
@@ -417,11 +423,7 @@ function SessionsSection() {
 }
 
 function DeleteAccountDialog() {
-  const {
-    deleteAccountDefaultValues,
-    deleteAccountSchema,
-    deleteAccountMutation,
-  } = useAccountFeatures();
+  const deleteAccountMutation = useDeleteAccountMutation();
   const [dialogOpen, setDialogOpen] = useState(false);
 
   const form = useAppForm({
@@ -514,7 +516,7 @@ function DeleteAccountDialog() {
   );
 }
 
-function SettingsPageContent() {
+export default function SettingsPage() {
   return (
     <Tabs defaultValue="profile" className="w-full">
       <TabsList className="mb-6">
@@ -548,7 +550,3 @@ function SettingsPageContent() {
     </Tabs>
   );
 }
-
-const SettingsPage = Provide([createAccountFeatures()], SettingsPageContent);
-
-export default SettingsPage;

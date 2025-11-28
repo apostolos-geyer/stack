@@ -1,4 +1,4 @@
-import { useUsersListFeatures } from '@_/features.client/admin/users-list';
+import { useUsersListContext } from '@_/features.client/admin/users-list';
 import { Button } from '@_/ui.web/components/button';
 import { Input } from '@_/ui.web/components/input';
 import {
@@ -43,7 +43,7 @@ export function UserTable({
   onCreateUser,
 }: UserTableProps) {
   const { usersQuery, filters, setSearch, setPage, setSorting } =
-    useUsersListFeatures();
+    useUsersListContext();
 
   const [sorting, setSortingState] = useState<SortingState>([]);
   const [searchInput, setSearchInput] = useState(filters.search);

@@ -1,7 +1,9 @@
 "use client";
 
+import { useMutation } from "@tanstack/react-query";
 import { useMemo } from "react";
 import { useAuthFeatures } from "./context";
+import { type SignInData, type SignUpData } from "./schemas";
 
 /**
  * Check if current user has any of the given roles.
@@ -55,4 +57,40 @@ export function useHasPermissions(permissions: string[]): boolean {
     // Check if any permission matches a role
     return permissions.some((perm) => userRoles.includes(perm));
   }, [session.data?.user?.role, permissions]);
+}
+
+/**
+ * Hook for signing in with email/password.
+ */
+export function useSignInMutation() {
+  const { authClient } = useAuthFeatures();
+
+  return useMutation({
+    mutationFn: async (data: SignInData) => {
+      const result = await authClient.signIn.email({
+        email: data.email,
+        password: data.password,
+        rememberMe: data.rememberMe,
+      });
+      if (result.error) throw new Error(result.error.message);
+    },
+  });
+}
+
+/**
+ * Hook for signing up with email/password.
+ */
+export function useSignUpMutation() {
+  const { authClient } = useAuthFeatures();
+
+  return useMutation({
+    mutationFn: async (data: SignUpData) => {
+      const result = await authClient.signUp.email({
+        email: data.email,
+        password: data.password,
+        name: data.name || "",
+      });
+      if (result.error) throw new Error(result.error.message);
+    },
+  });
 }
