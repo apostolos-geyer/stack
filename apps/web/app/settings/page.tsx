@@ -59,6 +59,7 @@ import {
 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
+import { AvatarUpload } from '../../components/avatar-upload';
 
 function ProfileForm() {
   const { session } = useAuthFeatures();
@@ -84,7 +85,6 @@ function ProfileForm() {
   useEffect(() => {
     if (user) {
       form.setFieldValue('name', user.name || '');
-      form.setFieldValue('image', user.image || '');
     }
   }, [user]);
 
@@ -98,37 +98,32 @@ function ProfileForm() {
         <CardDescription>Update your profile information</CardDescription>
       </CardHeader>
       <CardContent>
-        <form.AppForm>
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              form.handleSubmit();
-            }}
-          >
-            <FieldGroup>
-              <form.AppField name="name">
-                {(field) => (
-                  <field.TextField label="Name" placeholder="Your name" />
-                )}
-              </form.AppField>
+        <div className="flex items-start gap-6">
+          <AvatarUpload size="xl" />
+          <form.AppForm>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                form.handleSubmit();
+              }}
+              className="flex-1"
+            >
+              <FieldGroup>
+                <form.AppField name="name">
+                  {(field) => (
+                    <field.TextField label="Name" placeholder="Your name" />
+                  )}
+                </form.AppField>
+              </FieldGroup>
 
-              <form.AppField name="image">
-                {(field) => (
-                  <field.TextField
-                    label="Profile Image URL"
-                    placeholder="https://example.com/avatar.jpg"
-                  />
-                )}
-              </form.AppField>
-            </FieldGroup>
-
-            <div className="mt-6">
-              <form.SubmitButton disabled={updateProfileMutation.isPending}>
-                {updateProfileMutation.isPending ? 'Saving...' : 'Save Changes'}
-              </form.SubmitButton>
-            </div>
-          </form>
-        </form.AppForm>
+              <div className="mt-6">
+                <form.SubmitButton disabled={updateProfileMutation.isPending}>
+                  {updateProfileMutation.isPending ? 'Saving...' : 'Save Changes'}
+                </form.SubmitButton>
+              </div>
+            </form>
+          </form.AppForm>
+        </div>
       </CardContent>
     </Card>
   );

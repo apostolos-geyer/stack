@@ -46,7 +46,7 @@ Examples:
 Next Steps (after switching):
   1. Configure DATABASE_URL in .env (if needed)
   2. Start your database (Docker, Supabase CLI, or Prisma Dev)
-  3. Run migrations: pnpm --filter @_/infra.db db:migrate:dev --name init
+  3. Run migrations: pnpm --filter @_/db db:migrate:dev --name init
   4. Start your app: pnpm dev
 
 Providers:
@@ -131,14 +131,14 @@ Options:
 Features:
   - Visual display of current symlink status
   - Checkbox UI for package selection
-  - Default targets pre-selected (apps/web, packages/infra.db, packages/infra.auth)
+  - Default targets pre-selected (apps/web, packages/db, packages/features)
   - Automatic replacement of existing files/symlinks
   - Validation of source file and target packages
 
 Examples:
   pnpm settings env:links                                 # Interactive mode
   pnpm settings env:links --source .env                   # Specify source file
-  pnpm settings env:links --targets apps/web,packages/infra.db  # Specify targets
+  pnpm settings env:links --targets apps/web,packages/db  # Specify targets
 
 Symlink Status Indicators:
   ✓ linked              - Correctly linked to root .env

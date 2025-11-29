@@ -1,7 +1,7 @@
 "use client";
 
 import { type ReactNode } from "react";
-import type { AuthClient } from "@_/infra.auth/client";
+import type { AuthClient } from "@_/features/auth/client";
 import { AuthFeaturesContext } from "./context";
 
 export { useAuthFeatures } from "./context";

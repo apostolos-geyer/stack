@@ -2,7 +2,7 @@
 
 import { createContext, useContext, type ReactNode } from "react";
 import { useAuthFeatures } from "../auth";
-import type { AuthClient } from "@_/infra.auth/client";
+import type { AuthClient } from "@_/features/auth/client";
 
 type AdminFeaturesValue = {
   authClient: AuthClient;

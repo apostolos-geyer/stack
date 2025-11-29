@@ -31,7 +31,7 @@ export const { TRPCProvider, useTRPC, useTRPCClient } = createTRPCContext<AppRou
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { createTRPCClient, httpBatchLink } from '@trpc/client';
 import { useState } from 'react';
-import { TRPCProvider } from '@_/lib.client';
+import { TRPCProvider } from '@_/features.client/lib';
 
 function makeQueryClient() {
   return new QueryClient({
@@ -75,7 +75,7 @@ Always use `useQuery` with `trpc.route.queryOptions()`:
 
 ```typescript
 import { useQuery } from '@tanstack/react-query';
-import { useTRPC } from '@_/lib.client';
+import { useTRPC } from '@_/features.client/lib';
 
 function UserProfile() {
   const trpc = useTRPC();
@@ -105,7 +105,7 @@ function UserProfile() {
 
 ```typescript
 import { useQuery, skipToken } from '@tanstack/react-query';
-import { useTRPC } from '@_/lib.client';
+import { useTRPC } from '@_/features.client/lib';
 
 function UserDetails({ userId }: { userId?: string }) {
   const trpc = useTRPC();
@@ -125,7 +125,7 @@ Always use `useMutation` with `trpc.route.mutationOptions()`:
 
 ```typescript
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useTRPC } from '@_/lib.client';
+import { useTRPC } from '@_/features.client/lib';
 
 function CreatePost() {
   const trpc = useTRPC();
@@ -164,7 +164,7 @@ function CreatePost() {
 
 ```typescript
 import { useQueryClient, useMutation } from '@tanstack/react-query';
-import { useTRPC } from '@_/lib.client';
+import { useTRPC } from '@_/features.client/lib';
 
 function ProfileEditor() {
   const trpc = useTRPC();
@@ -206,7 +206,7 @@ const rootKey = trpc.pathKey();
 
 ```typescript
 import { useQueryClient } from '@tanstack/react-query';
-import { useTRPC } from '@_/lib.client';
+import { useTRPC } from '@_/features.client/lib';
 
 function PostsList() {
   const trpc = useTRPC();
@@ -235,7 +235,7 @@ function PostsList() {
 
 ```typescript
 import { useSuspenseQuery } from '@tanstack/react-query';
-import { useTRPC } from '@_/lib.client';
+import { useTRPC } from '@_/features.client/lib';
 
 function UserProfile() {
   const trpc = useTRPC();
@@ -251,7 +251,7 @@ function UserProfile() {
 
 ```typescript
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { useTRPC } from '@_/lib.client';
+import { useTRPC } from '@_/features.client/lib';
 
 function InfinitePosts() {
   const trpc = useTRPC();
@@ -283,7 +283,7 @@ function InfinitePosts() {
 
 ```typescript
 import type { inferInput, inferOutput } from '@trpc/tanstack-react-query';
-import type { useTRPC } from '@_/lib.client';
+import type { useTRPC } from '@_/features.client/lib';
 
 // Infer input type for a procedure
 type CreatePostInput = inferInput<ReturnType<typeof useTRPC>['posts']['create']>;
@@ -297,7 +297,7 @@ type UserOutput = inferOutput<ReturnType<typeof useTRPC>['user']['me']>;
 For server-side or non-React contexts:
 
 ```typescript
-import { useTRPCClient } from '@_/lib.client';
+import { useTRPCClient } from '@_/features.client/lib';
 
 function Component() {
   const client = useTRPCClient();
@@ -317,7 +317,7 @@ Use this pattern in `features.client` for composable feature contexts:
 ```typescript
 import { createContext, useContext, type ReactNode } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { useTRPC } from '@_/lib.client';
+import { useTRPC } from '@_/features.client/lib';
 
 type ProfileFeaturesValue = {
   profile: User | undefined;

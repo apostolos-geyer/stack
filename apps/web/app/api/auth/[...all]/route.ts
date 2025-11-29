@@ -1,1 +1,1 @@
-export { DELETE, GET, PATCH, POST, PUT } from '@_/infra.auth/handler';
+export { DELETE, GET, PATCH, POST, PUT } from '@_/features/auth/handler';

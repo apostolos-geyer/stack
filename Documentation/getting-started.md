@@ -62,7 +62,7 @@ DATABASE_AUTH_TOKEN="your_token"
 ## migrate
 
 ```bash
-pnpm --filter @_/infra.db db:migrate:dev --name init
+pnpm --filter @_/db db:migrate:dev --name init
 ```
 
 ## run

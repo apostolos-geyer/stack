@@ -24,11 +24,11 @@ Documentation/      # you are here
 
 ## packages
 
-### @_/infra.auth
+### @_/features/auth
 
 better-auth instance. exports `auth` and client utilities.
 
-### @_/infra.db
+### @_/db
 
 prisma client. exports `prisma` and generated types.
 
@@ -57,8 +57,8 @@ shadcn components, tailwind 4.
 ## imports
 
 ```typescript
-import { auth } from "@_/infra.auth"
-import { prisma } from "@_/infra.db"
+import { auth } from "@_/features/auth"
+import { prisma } from "@_/db"
 import { Button } from "@_/ui.web/components/button"
 import { cn } from "@_/ui.web/lib/utils"
 ```

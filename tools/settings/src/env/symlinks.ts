@@ -75,7 +75,7 @@ export async function discoverEnvFiles(): Promise<string[]> {
  * @example
  * ```typescript
  * const packages = await discoverPackages();
- * // Returns: ["apps/web", "apps/native", "packages/infra.db", ...]
+ * // Returns: ["apps/web", "apps/native", "packages/db", ...]
  * ```
  */
 export async function discoverPackages(): Promise<string[]> {
@@ -125,7 +125,7 @@ export async function discoverPackages(): Promise<string[]> {
  * @throws Error if the source file does not exist
  * @example
  * ```typescript
- * const results = await createSymlinks(".env.local", ["apps/web", "packages/infra.db"]);
+ * const results = await createSymlinks(".env.local", ["apps/web", "packages/db"]);
  * results.forEach(r => {
  *   console.log(`${r.target}: ${r.success ? "✓" : "✗ " + r.error}`);
  * });
@@ -251,7 +251,7 @@ export async function getSymlinkStatus(): Promise<SymlinkStatus[]> {
  * @returns Promise resolving to array of SymlinkResult objects indicating success/failure
  * @example
  * ```typescript
- * const results = await removeSymlinks(["apps/web", "packages/infra.db"]);
+ * const results = await removeSymlinks(["apps/web", "packages/db"]);
  * ```
  */
 export async function removeSymlinks(targets: string[]): Promise<SymlinkResult[]> {

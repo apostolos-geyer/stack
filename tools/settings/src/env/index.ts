@@ -26,7 +26,7 @@
  * console.log(`Added ${result.added.length} vars`);
  *
  * // Create symlinks
- * await createSymlinks(".env.local", ["apps/web", "packages/infra.db"]);
+ * await createSymlinks(".env.local", ["apps/web", "packages/db"]);
  * ```
  */
 

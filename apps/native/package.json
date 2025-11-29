@@ -9,9 +9,8 @@
     "ios": "expo start --ios"
   },
   "dependencies": {
+    "@_/features": "workspace:",
     "@_/features.client": "workspace:",
-    "@_/infra.auth": "workspace:",
-    "@_/lib.client": "workspace:",
     "@_/ui.native": "workspace:",
     "@_/ui.style": "workspace:",
     "@_/ui.utils": "workspace:",

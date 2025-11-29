@@ -28,8 +28,8 @@ import '@_/ui.native/styles.css';
 import { TOKENS, type ThemeColors, type ColorToken } from '@_/ui.style/tokens';
 
 import { createAuthFeatures, useAuthFeatures } from '@_/features.client/auth';
-import { authClient } from '@_/infra.auth/client';
-import { TRPCQueryClientProvider } from '@_/lib.client';
+import { authClient } from '@_/features/auth/client';
+import { TRPCQueryClientProvider } from '@_/features.client/lib';
 import { ActivityIndicator, useColorScheme, View } from 'react-native';
 
 const AuthFeaturesProvider = createAuthFeatures(authClient);

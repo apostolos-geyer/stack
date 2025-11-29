@@ -15,9 +15,12 @@
     },
     "topo": {},
     "dev": {
-      "dependsOn": ["^db:generate"],
+      "dependsOn": ["//#services:up", "^db:generate"],
       "cache": false,
       "persistent": true
+    },
+    "//#services:up": {
+      "cache": false
     },
     "db:generate": {
       "cache": false,

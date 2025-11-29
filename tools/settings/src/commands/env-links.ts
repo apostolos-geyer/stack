@@ -47,7 +47,7 @@ export interface EnvLinksOptions {
  * // Non-interactive mode
  * await envLinks({
  *   source: '.env',
- *   targets: ['apps/web', 'packages/infra.db']
+ *   targets: ['apps/web', 'packages/db']
  * })
  * ```
  */
@@ -296,6 +296,6 @@ Features:
 Examples:
   pnpm settings env:links                                 # Interactive mode
   pnpm settings env:links --source .env                   # Select source file
-  pnpm settings env:links --targets apps/web,packages/infra.db  # Specify targets
+  pnpm settings env:links --targets apps/web,packages/db  # Specify targets
 `)
 }

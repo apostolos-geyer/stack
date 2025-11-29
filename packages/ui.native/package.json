@@ -9,7 +9,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@_/lib.client": "workspace:*",
+    "@_/features.client": "workspace:*",
     "@_/ui.style": "workspace:*",
     "@_/ui.utils": "workspace:*",
     "@rn-primitives/checkbox": "^1.2.0",

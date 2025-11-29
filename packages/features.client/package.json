@@ -9,6 +9,11 @@
   },
   "exports": {
     ".": "./src/index.ts",
+    "./lib": "./src/lib/index.tsx",
+    "./lib/ssr": "./src/lib/ssr.tsx",
+    "./lib/form": "./src/lib/form.tsx",
+    "./lib/react-query": "./src/lib/react-query.ts",
+    "./lib/react-form": "./src/lib/react-form.ts",
     "./auth": "./src/auth/index.tsx",
     "./auth/hooks": "./src/auth/hooks.ts",
     "./auth/schemas": "./src/auth/schemas.ts",
@@ -17,11 +22,18 @@
     "./admin/users-list": "./src/admin/users-list.tsx",
     "./admin/schemas": "./src/admin/schemas.ts",
     "./account/hooks": "./src/account/hooks.ts",
-    "./account/schemas": "./src/account/schemas.ts"
+    "./account/schemas": "./src/account/schemas.ts",
+    "./upload": "./src/upload/index.ts"
   },
   "dependencies": {
-    "@_/infra.auth": "workspace:*",
+    "@_/api.trpc": "workspace:*",
+    "@_/features": "workspace:*",
+    "@tanstack/react-form": "catalog:",
     "@tanstack/react-query": "catalog:",
+    "@trpc/client": "catalog:",
+    "@trpc/tanstack-react-query": "catalog:",
+    "server-only": "catalog:",
+    "superjson": "catalog:",
     "zod": "catalog:"
   },
   "devDependencies": {

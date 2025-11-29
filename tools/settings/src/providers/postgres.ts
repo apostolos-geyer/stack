@@ -6,7 +6,7 @@ import { PG_CLIENT_TS, PRISMA_CONFIG_TS } from "./templates.ts";
  * Unmanaged PostgreSQL provider configuration
  *
  * Uses Docker Compose for local development with a standard PostgreSQL container.
- * Generates a docker-compose.yml file in the infra.db package.
+ * Generates a docker-compose.yml file in the db package.
  */
 export const postgres: ProviderConfig = {
   id: "postgres",
@@ -33,9 +33,9 @@ export const postgres: ProviderConfig = {
         // DATABASE_URL is auto-populated by db-switch.ts (matches docker-compose.yml)
       },
       packageJsonScripts: {
-        dev: "docker compose up -d && prisma studio",
-        "db:start": "docker compose up -d",
-        "db:stop": "docker compose down",
+        dev: "docker compose --profile postgres up -d && prisma studio",
+        "db:start": "docker compose --profile postgres up -d",
+        "db:stop": "docker compose --profile postgres down",
       },
       systemDeps: [SYSTEM_DEPS.docker],
     },
@@ -55,39 +55,7 @@ export const postgres: ProviderConfig = {
   templates: {
     clientTs: PG_CLIENT_TS,
     prismaConfigTs: PRISMA_CONFIG_TS,
-    // Docker Compose file to be generated
-    dockerComposeYml: `services:
-  postgres:
-    image: postgres:16
-    restart: unless-stopped
-    ports:
-      - "5432:5432"
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: dev
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
-      interval: 5s
-      timeout: 5s
-      retries: 5
-
-  adminer:
-    image: adminer:latest
-    restart: unless-stopped
-    ports:
-      - "8080:8080"
-    environment:
-      ADMINER_DEFAULT_SERVER: postgres
-    depends_on:
-      postgres:
-        condition: service_healthy
-
-volumes:
-  postgres_data:
-`,
+    // Uses repo-level docker-compose.yml with --profile postgres
   },
   readme: {
     quickstart: `## Quick Start
@@ -121,21 +89,21 @@ The database data is persisted in a Docker volume.`,
 
 **Port 5432 already in use**
 - Stop other PostgreSQL instances
-- Or change the port in docker-compose.yml
+- Or change the port in the repo-level docker-compose.yml
 
 **Port 8080 already in use (Adminer)**
 - Stop other services using port 8080
-- Or change the Adminer port in docker-compose.yml
+- Or change the Adminer port in the repo-level docker-compose.yml
 
 **Connection refused**
 - Ensure Docker Desktop is running
 - Start the container: \`pnpm db:start\`
-- Check container status: \`docker compose ps\`
+- Check container status: \`docker compose --profile postgres ps\`
 
 **Reset database**
 \`\`\`bash
 pnpm db:stop
-docker volume rm infra.db_postgres_data
+docker volume rm stack_postgres_data
 pnpm db:start
 \`\`\``,
   },

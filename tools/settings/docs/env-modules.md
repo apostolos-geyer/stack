@@ -392,7 +392,7 @@ import { discoverPackages } from './env/index.js';
 
 const packages = await discoverPackages();
 console.log(packages);
-// ["apps/web", "apps/native", "packages/infra.db", ...]
+// ["apps/web", "apps/native", "packages/db", ...]
 ```
 
 **Features:**
@@ -421,7 +421,7 @@ import { createSymlinks } from './env/index.js';
 const results = await createSymlinks(".env.local", [
   "apps/web",
   "apps/native",
-  "packages/infra.db"
+  "packages/db"
 ]);
 
 results.forEach(r => {
@@ -487,7 +487,7 @@ import { removeSymlinks } from './env/index.js';
 
 const results = await removeSymlinks([
   "apps/web",
-  "packages/infra.db"
+  "packages/db"
 ]);
 ```
 

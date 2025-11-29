@@ -1,6 +1,6 @@
 // biome-ignore lint/suspicious/noTsIgnore: I don't give a fuck.
 // @ts-ignore
-import { auth } from '@_/infra.auth';
+import { auth } from '@_/features/auth';
 
 (async () => {
   try {

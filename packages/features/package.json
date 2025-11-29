@@ -1,0 +1,54 @@
+{
+  "name": "@_/features",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./auth": "./src/auth/index.ts",
+    "./auth/client": {
+      "react-native": "./src/auth/client.native.ts",
+      "import": "./src/auth/client.ts",
+      "default": "./src/auth/client.ts"
+    },
+    "./auth/client.native": "./src/auth/client.native.ts",
+    "./auth/handler": "./src/auth/handler.ts",
+    "./context": "./src/lib/context.ts",
+    "./services": "./src/core/services/index.ts",
+    "./upload": "./src/upload/index.ts",
+    "./user": "./src/user/index.ts"
+  },
+  "typesVersions": {
+    "*": {
+      "auth": ["./src/auth/index.ts"],
+      "auth/client": ["./src/auth/client.ts"],
+      "auth/handler": ["./src/auth/handler.ts"],
+      "context": ["./src/lib/context.ts"],
+      "services": ["./src/core/services/index.ts"],
+      "upload": ["./src/upload/index.ts"],
+      "user": ["./src/user/index.ts"]
+    }
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "generate": "pnpx @better-auth/cli generate --config ./src/auth/index.ts --output ../db/prisma/schema.prisma -y"
+  },
+  "dependencies": {
+    "@_/db": "workspace:*",
+    "@_/lib.email": "workspace:*",
+    "@_/lib.storage": "workspace:*",
+    "@_/platform": "workspace:*",
+    "@better-auth/expo": "^1.4.3",
+    "@better-auth/stripe": "^1.4.3",
+    "better-auth": "^1.4.3",
+    "expo-secure-store": "^15.0.7",
+    "stripe": "^20.0.0"
+  },
+  "devDependencies": {
+    "@_/cfg.eslint": "workspace:*",
+    "@_/cfg.ts": "workspace:*",
+    "@better-auth/cli": "^1.4.3",
+    "@types/node": "catalog:",
+    "typescript": "catalog:"
+  }
+}

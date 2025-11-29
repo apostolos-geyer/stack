@@ -1,16 +1,9 @@
 'use client';
 
-console.log('[TRACE] app/providers.tsx - START', Date.now());
-
 import { ThemeProvider } from 'next-themes';
-
-console.log('[TRACE] app/providers.tsx - after next-themes', Date.now());
-
 import { createAuthFeatures } from '@_/features.client/auth';
-import { authClient } from '@_/infra.auth/client';
-import { TRPCQueryClientProvider } from '@_/lib.client';
-
-console.log('[TRACE] app/providers.tsx - after lib.client', Date.now());
+import { authClient } from '@_/features/auth/client';
+import { TRPCQueryClientProvider } from '@_/features.client/lib';
 
 const AuthFeaturesProvider = createAuthFeatures(authClient);
 

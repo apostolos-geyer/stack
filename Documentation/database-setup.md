@@ -55,11 +55,11 @@ TURSO_AUTH_TOKEN=your-token
 
 | command | what |
 |---------|------|
-| `pnpm --filter @_/infra.db db:generate` | generate client |
-| `pnpm --filter @_/infra.db db:migrate:dev` | dev migrations |
-| `pnpm --filter @_/infra.db db:migrate:deploy` | prod migrations |
-| `pnpm --filter @_/infra.db db:push` | push schema directly |
-| `pnpm --filter @_/infra.db db:studio` | prisma studio |
+| `pnpm --filter @_/db db:generate` | generate client |
+| `pnpm --filter @_/db db:migrate:dev` | dev migrations |
+| `pnpm --filter @_/db db:migrate:deploy` | prod migrations |
+| `pnpm --filter @_/db db:push` | push schema directly |
+| `pnpm --filter @_/db db:studio` | prisma studio |
 
 ## prisma 7 notes
 

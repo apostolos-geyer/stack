@@ -20,7 +20,7 @@ packages/
 
   # Infrastructure
   infra.auth/           # Better-auth with Prisma, Stripe, Expo, email
-  infra.db/             # Prisma 7 with provider adapters
+  db/             # Prisma 7 with provider adapters
 
   # Libraries
   lib.client/           # React Query, TanStack Form, auth controllers
@@ -104,7 +104,7 @@ import { expoClient } from '@better-auth/expo/client'
 // Uses SecureStore instead of localStorage
 ```
 
-### infra.db
+### db
 
 Prisma 7 with database provider adapters.
 
@@ -225,8 +225,8 @@ export const serverEnv = createEnv({
 
 All packages use `@_/` prefix:
 ```typescript
-import { auth } from "@_/infra.auth"
-import { prisma } from "@_/infra.db"
+import { auth } from "@_/features/auth"
+import { prisma } from "@_/db"
 import { Button } from "@_/ui.web/components/button"
 ```
 
@@ -278,7 +278,7 @@ lib.client/form.tsx
 
 ## Future Architecture
 
-### Planned: features.client / features.server
+### Planned: features.client / features.core
 
 Extract business logic from lib.* packages:
 
@@ -286,7 +286,7 @@ Extract business logic from lib.* packages:
 packages/
   features.client/      # Form controllers, client business logic
     controllers/auth/
-  features.server/      # Services, server business logic
+  features.core/      # Services, server business logic
     services/
   lib.client/           # Framework utilities only
   lib.server/           # Context utilities only

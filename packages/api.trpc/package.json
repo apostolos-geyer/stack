@@ -13,7 +13,8 @@
     "./handler": "./src/handler.ts"
   },
   "dependencies": {
-    "@_/lib.server": "workspace:*"
+    "@_/features": "workspace:*",
+    "zod": "catalog:"
   },
   "devDependencies": {
     "@trpc/server": "catalog:",

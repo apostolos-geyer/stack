@@ -13,24 +13,28 @@
     "format": "biome format ./packages",
     "format:fix": "biome format ./packages --write",
     "db:generate": "turbo db:generate",
-    "db:migrate:dev": "pnpm --filter @_/infra.db db:migrate:dev",
-    "db:migrate:deploy": "pnpm --filter @_/infra.db db:migrate:deploy",
-    "db:push": "pnpm --filter @_/infra.db db:push",
-    "db:studio": "pnpm --filter @_/infra.db db:studio",
+    "db:migrate:dev": "pnpm --filter @_/db db:migrate:dev",
+    "db:migrate:deploy": "pnpm --filter @_/db db:migrate:deploy",
+    "db:push": "pnpm --filter @_/db db:push",
+    "db:studio": "pnpm --filter @_/db db:studio",
     "seed-user": "dotenv -e .env tsx ./scripts/seed-user.ts",
     "settings": "settings",
     "gen": "turbo gen",
-    "init": "turbo gen init"
+    "init": "turbo gen init",
+    "services:up": "docker compose up -d",
+    "services:down": "docker compose down",
+    "services:logs": "docker compose logs -f"
   },
   "devDependencies": {
     "@_/cfg.ts": "workspace:",
+    "@_/features": "workspace:",
     "@_/tools.settings": "workspace:",
-    "@_/infra.auth": "workspace:",
     "@biomejs/biome": "^2.3.7",
     "@trpc/server": "catalog:",
     "@turbo/gen": "^2.5.0",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
+    "dotenv-cli": "^8.0.0",
     "eslint": "catalog:",
     "typescript": "catalog:"
   },
@@ -42,7 +46,8 @@
     "overrides": {
       "lightningcss": "1.30.1",
       "@types/react": "catalog:native",
-      "@types/react-dom": "catalog:native"
+      "@types/react-dom": "catalog:native",
+      "dotenv-cli": "link:../../../../../.local/share/pnpm/global/5/node_modules/dotenv-cli"
     },
     "onlyBuiltDependencies": [
       "@prisma/client",

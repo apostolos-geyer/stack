@@ -307,7 +307,7 @@ When switching database providers, these steps must be executed in the correct o
 
 2. **Generate Prisma Client** - Generate client first (required by Better Auth)
    ```bash
-   pnpm --filter @_/infra.db prisma generate
+   pnpm --filter @_/db prisma generate
    ```
 
 3. **Run Better Auth CLI** - Add auth models to schema
@@ -317,12 +317,12 @@ When switching database providers, these steps must be executed in the correct o
 
 4. **Create migration** - Apply schema changes to database
    ```bash
-   pnpm --filter @_/infra.db prisma migrate dev --name init
+   pnpm --filter @_/db prisma migrate dev --name init
    ```
 
 5. **Regenerate Prisma Client** - Regenerate with auth models
    ```bash
-   pnpm --filter @_/infra.db prisma generate
+   pnpm --filter @_/db prisma generate
    ```
 
 **Why this order matters:**

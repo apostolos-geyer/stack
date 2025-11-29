@@ -79,11 +79,11 @@ Each provider supports different local development methods:
 
 #### Files Modified
 
-- `/packages/infra.db/src/client.ts` - Prisma client with adapter
-- `/packages/infra.db/prisma.config.ts` - Prisma configuration
-- `/packages/infra.db/prisma/schema.prisma` - Database schema
-- `/packages/infra.auth/src/auth.ts` - Better-auth adapter configuration
-- `/packages/infra.db/package.json` - Dependencies
+- `/packages/db/src/client.ts` - Prisma client with adapter
+- `/packages/db/prisma.config.ts` - Prisma configuration
+- `/packages/db/prisma/schema.prisma` - Database schema
+- `/packages/features/src/auth/auth.ts` - Better-auth adapter configuration
+- `/packages/db/package.json` - Dependencies
 
 #### Examples
 
@@ -115,8 +115,8 @@ After switching providers:
 2. Start your database:
    - Docker: `docker-compose up -d`
    - Supabase CLI: `supabase start`
-   - Prisma Dev: `pnpm --filter @_/infra.db db:migrate:dev`
-3. Run migrations: `pnpm --filter @_/infra.db db:migrate:dev --name init`
+   - Prisma Dev: `pnpm --filter @_/db db:migrate:dev`
+3. Run migrations: `pnpm --filter @_/db db:migrate:dev --name init`
 4. Start your app: `pnpm dev`
 
 #### Error Handling
@@ -292,7 +292,7 @@ pnpm settings env:links [options]
 - Discover all .env.* files in repo root
 - View current symlink status for all packages
 - Checkbox UI for package selection
-- Default targets pre-selected (apps/web, packages/infra.db, packages/infra.auth)
+- Default targets pre-selected (apps/web, packages/db, packages/features)
 - Automatic replacement of existing files/symlinks
 - Validation of source file and target packages
 
@@ -316,8 +316,8 @@ pnpm settings env:links [options]
 
 These packages are pre-selected by default:
 - `apps/web`
-- `packages/infra.db`
-- `packages/infra.auth`
+- `packages/db`
+- `packages/features`
 
 #### Files Created
 
@@ -336,7 +336,7 @@ pnpm settings env:links --source .env.local
 # Non-interactive mode
 pnpm settings env:links \
   --source .env.local \
-  --targets apps/web,packages/infra.db,packages/infra.auth
+  --targets apps/web,packages/db,packages/features
 ```
 
 #### Example Session
@@ -360,8 +360,8 @@ Found 8 package(s)
 Current symlink status:
   apps/web: no .env file
   apps/native: no .env file
-  packages/infra.db: local file (not symlink)
-  packages/infra.auth: linked -> ../../.env.local
+  packages/db: local file (not symlink)
+  packages/features: linked -> ../../.env.local
   packages/api.trpc: no .env file
   packages/api.http: no .env file
   packages/lib.server: no .env file
@@ -370,8 +370,8 @@ Current symlink status:
 Select packages for symlink creation:
   [x] apps/web
   [ ] apps/native
-  [x] packages/infra.db
-  [x] packages/infra.auth
+  [x] packages/db
+  [x] packages/features
   [ ] packages/api.trpc
   [ ] packages/api.http
   [ ] packages/lib.server
@@ -381,8 +381,8 @@ Select packages for symlink creation:
 
 Will create symlinks:
   apps/web/.env -> .env.local
-  packages/infra.db/.env -> .env.local
-  packages/infra.auth/.env -> .env.local
+  packages/db/.env -> .env.local
+  packages/features/.env -> .env.local
 
 Create these symlinks? Yes
 
@@ -390,8 +390,8 @@ Results
 
 Created 3 symlink(s):
   ✓ apps/web/.env
-  ✓ packages/infra.db/.env
-  ✓ packages/infra.auth/.env
+  ✓ packages/db/.env
+  ✓ packages/features/.env
 
 Symlink management complete!
 
@@ -500,10 +500,10 @@ echo "DATABASE_URL=postgresql://postgres:postgres@localhost:5432/postgres" >> .e
 docker-compose up -d
 
 # 4. Create symlinks
-pnpm settings env:links --source .env.local --targets apps/web,packages/infra.db
+pnpm settings env:links --source .env.local --targets apps/web,packages/db
 
 # 5. Run migrations
-pnpm --filter @_/infra.db db:migrate:dev --name init
+pnpm --filter @_/db db:migrate:dev --name init
 
 # 6. Start app
 pnpm dev
@@ -566,7 +566,7 @@ pnpm settings db:switch --provider neon --yes
 
 ### Symlink Management
 
-1. **Use default targets** - apps/web, infra.db, infra.auth are sufficient
+1. **Use default targets** - apps/web, db, features are sufficient
 2. **Verify after creation** - Check symlinks with `ls -la`
 3. **Single source** - Use one .env file per environment
 4. **Git ignore** - Add package .env files to .gitignore
@@ -581,7 +581,7 @@ pnpm settings db:switch --provider neon --yes
 #### Git Not Clean
 ```
 Error: The following files have uncommitted changes:
-  - packages/infra.db/package.json
+  - packages/db/package.json
 
 Please commit these files before proceeding.
 ```

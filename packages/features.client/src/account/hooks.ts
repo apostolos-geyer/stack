@@ -13,6 +13,9 @@ import type {
   DeleteAccountData,
 } from "./schemas";
 
+// Avatar upload
+export { useAvatarUpload, type UseAvatarUploadOptions } from "./useAvatarUpload";
+
 // =============================================================================
 // Types
 // =============================================================================

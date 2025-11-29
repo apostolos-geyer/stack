@@ -1,7 +1,7 @@
 "use server";
 
 import { cache } from "react";
-import { auth } from "@_/infra.auth";
+import { auth } from "@_/features/auth";
 import { headers } from "next/headers";
 
 /**

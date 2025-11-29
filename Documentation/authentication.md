@@ -26,7 +26,7 @@ generate one:
 ## client
 
 ```typescript
-import { signIn, signUp, signOut, useSession } from "@_/infra.auth/client"
+import { signIn, signUp, signOut, useSession } from "@_/features/auth/client"
 ```
 
 ### example
@@ -34,7 +34,7 @@ import { signIn, signUp, signOut, useSession } from "@_/infra.auth/client"
 ```typescript
 "use client"
 
-import { useSession, signOut } from "@_/infra.auth/client"
+import { useSession, signOut } from "@_/features/auth/client"
 
 export function UserMenu() {
   const { data: session, isPending } = useSession()
@@ -57,7 +57,7 @@ lives at `app/api/auth/[...all]/route.ts`:
 
 ```typescript
 import { toNextJsHandler } from "better-auth/next-js"
-import { auth } from "@_/infra.auth"
+import { auth } from "@_/features/auth"
 
 export const { GET, POST } = toNextJsHandler(auth)
 ```

@@ -69,7 +69,7 @@ export const create = ({ basePath, message }) =>
 ### auth
 
 ```typescript
-import { auth } from '@_/infra.auth'
+import { auth } from '@_/features/auth'
 ```
 
 ## commands

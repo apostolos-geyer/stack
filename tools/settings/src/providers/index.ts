@@ -149,7 +149,7 @@ export interface ProviderConfig {
     dockerComposeYml?: string
   }
 
-  /** README content for packages/infra.db/README.md */
+  /** README content for packages/db/README.md */
   readme: {
     /** Quick start instructions */
     quickstart: string

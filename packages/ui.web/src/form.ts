@@ -1,4 +1,4 @@
-import { createHooks } from "@_/lib.client/form"
+import { createHooks } from "@_/features.client/lib/form"
 
 import { TextField } from "./form-fields/text-field"
 import { EmailField } from "./form-fields/email-field"
@@ -21,7 +21,7 @@ export const { useAppForm, withForm } = createHooks({
 })
 
 // Re-export context hooks for escape hatch usage
-export { useFieldContext, useFormContext } from "@_/lib.client/form"
+export { useFieldContext, useFormContext } from "@_/features.client/lib/form"
 
 export type { TextFieldProps } from "./form-fields/text-field"
 export type { EmailFieldProps } from "./form-fields/email-field"

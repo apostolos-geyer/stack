@@ -18,7 +18,7 @@ Run a single package:
 ```bash
 pnpm --filter web dev
 pnpm --filter native dev
-pnpm --filter @_/infra.db db:migrate:dev --name init
+pnpm --filter @_/db db:migrate:dev --name init
 ```
 
 ## Architecture
@@ -30,12 +30,12 @@ Turborepo monorepo with pnpm workspaces. All internal packages use `@_/` prefix.
 - `apps/native` - Expo 54 app with NativeWind
 
 ### Core Packages
-- `@_/infra.db` - Prisma 7 with libsql adapter, exports `prisma` client
-- `@_/infra.auth` - Better-auth with Prisma adapter, Stripe integration, Expo support
+- `@_/db` - Prisma 7 with libsql adapter, exports `prisma` client
+- `@_/features/auth` - Better-auth with Prisma adapter, Stripe integration, Expo support
 - `@_/api.trpc` - tRPC router with `Procedure.public` and `Procedure.protected`
 - `@_/api.http` - Hono webhook factory pattern
-- `@_/lib.server` - Server context (`InnerContext`, `AuthenticatedContext`)
-- `@_/lib.client` - React Query, TanStack Form exports, auth form controllers
+- `@_/features/context` - Server context (`InnerContext`, `AuthenticatedContext`)
+- `@_/features.client/lib` - React Query, TanStack Form exports, auth form controllers
 - `@_/lib.email` - Resend email with React Email templates
 
 ### UI Packages
@@ -67,7 +67,7 @@ export const appRouter = router({
 
 ```typescript
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { useTRPC } from '@_/lib.client';
+import { useTRPC } from '@_/features.client/lib';
 
 function Component() {
   const trpc = useTRPC();
@@ -167,7 +167,7 @@ export function createLoginFeatures() {
 
 Use with the `Provide` HOC:
 ```typescript
-import { Provide } from '@_/lib.client';
+import { Provide } from '@_/features.client/lib';
 import { createAuthFeatures } from '@_/features.client/auth';
 import { createLoginFeatures, useLoginFeatures } from '@_/features.client/auth/login';
 
@@ -181,8 +181,8 @@ const SignInPage = Provide(
 ```
 
 ### Auth Integration
-Auth configured in `@_/infra.auth/auth.ts`. Dual client pattern:
-- Web: `import { authClient } from "@_/infra.auth/client"`
+Auth configured in `@_/features/auth/auth.ts`. Dual client pattern:
+- Web: `import { authClient } from "@_/features/auth/client"`
 - Native: Auto-resolves to `client.native.ts` with expo-secure-store
 
 ### Environment Variables
@@ -195,9 +195,9 @@ Server env via `@_/platform/server`, client env via `@_/platform/client`. Valida
 | `api.trpc` | tRPC router | Adding queries/mutations |
 | `api.http` | Hono webhooks | Adding webhook handlers |
 | `infra.auth` | Auth config | Changing auth providers/plugins |
-| `infra.db` | Prisma client | Schema changes (prisma/schema.prisma) |
+| `db` | Prisma client | Schema changes (prisma/schema.prisma) |
 | `features.client` | Client feature providers | Adding new features, mutations, queries |
-| `features.server` | Server services/context | Adding business logic, services |
+| `features.core` | Server services/context | Adding business logic, services |
 | `lib.server` | Server utilities | Framework-agnostic server helpers |
 | `lib.client` | Client utilities | Hooks, Provide HOC, tRPC context |
 | `lib.email` | Email templates | Adding email templates |

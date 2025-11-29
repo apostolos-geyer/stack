@@ -400,7 +400,7 @@ export async function dbSwitch(options: DbSwitchOptions): Promise<void> {
       log.info(`Removing old dependencies: ${provider.dependencies.remove.join(', ')}`)
       const removeExitCode = await execStreaming('pnpm', [
         '--filter',
-        '@_/infra.db',
+        '@_/db',
         'remove',
         ...provider.dependencies.remove,
       ])
@@ -418,7 +418,7 @@ export async function dbSwitch(options: DbSwitchOptions): Promise<void> {
       log.info(`Adding dependencies: ${depsToAdd.join(', ')}`)
       const addExitCode = await execStreaming('pnpm', [
         '--filter',
-        '@_/infra.db',
+        '@_/db',
         'add',
         ...depsToAdd,
       ])
@@ -434,7 +434,7 @@ export async function dbSwitch(options: DbSwitchOptions): Promise<void> {
     }
 
     log.info('Running prisma generate...')
-    const genExitCode = await execStreaming('pnpm', ['--filter', '@_/infra.db', 'db:generate'])
+    const genExitCode = await execStreaming('pnpm', ['--filter', '@_/db', 'db:generate'])
     if (genExitCode !== 0) {
       throw new Error(`prisma generate failed with exit code ${genExitCode}`)
     }
@@ -494,15 +494,15 @@ export async function dbSwitch(options: DbSwitchOptions): Promise<void> {
     log.info('Running initial migration...')
     const migrateExitCode = await execStreaming('pnpm', [
       '--filter',
-      '@_/infra.db',
+      '@_/db',
       'db:migrate:dev',
       '--name',
       'init',
     ])
     if (migrateExitCode !== 0) {
       log.warn('Migration failed - you may need to start your database first')
-      log.info('Run: pnpm --filter @_/infra.db db:start')
-      log.info('Then: pnpm --filter @_/infra.db db:migrate:dev --name init')
+      log.info('Run: pnpm --filter @_/db db:start')
+      log.info('Then: pnpm --filter @_/db db:migrate:dev --name init')
     } else {
       log.success('Initial migration complete')
     }
@@ -522,13 +522,13 @@ export async function dbSwitch(options: DbSwitchOptions): Promise<void> {
 
   // Only show "start database" if migration failed (database wasn't running)
   if (localDevOption.type === 'docker') {
-    log.info(`${stepNum}. Start the database: pnpm --filter @_/infra.db db:start`)
+    log.info(`${stepNum}. Start the database: pnpm --filter @_/db db:start`)
     stepNum++
   } else if (localDevOption.type === 'supabase-local') {
-    log.info(`${stepNum}. Start Supabase: pnpm --filter @_/infra.db db:start`)
+    log.info(`${stepNum}. Start Supabase: pnpm --filter @_/db db:start`)
     stepNum++
   } else if (localDevOption.type === 'prisma-dev') {
-    log.info(`${stepNum}. Start Prisma Dev: pnpm --filter @_/infra.db dev`)
+    log.info(`${stepNum}. Start Prisma Dev: pnpm --filter @_/db dev`)
     stepNum++
   } else if (localDevOption.type === 'remote') {
     log.info(`${stepNum}. Update .env with your remote connection strings`)
@@ -537,7 +537,7 @@ export async function dbSwitch(options: DbSwitchOptions): Promise<void> {
 
   // If user kept old migrations, they need to handle migrations manually
   if (!shouldRunMigration) {
-    log.info(`${stepNum}. Run migrations: pnpm --filter @_/infra.db db:migrate:dev --name init`)
+    log.info(`${stepNum}. Run migrations: pnpm --filter @_/db db:migrate:dev --name init`)
     stepNum++
   }
 
@@ -636,7 +636,7 @@ function generateReadmeContent(
     .map(([name, cmd]) => `pnpm ${name.replace(/^db:/, '')}  # ${cmd}`)
     .join('\n')
 
-  return `# Database Package (@_/infra.db)
+  return `# Database Package (@_/db)
 
 This package uses **${provider.displayName}** with Prisma 7.
 

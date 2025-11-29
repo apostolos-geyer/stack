@@ -3,7 +3,7 @@
 import * as React from "react"
 import { EyeIcon, EyeOffIcon } from "lucide-react"
 
-import { useFieldContext } from "@_/lib.client/form"
+import { useFieldContext } from "@_/features.client/lib/form"
 import { cn } from "@_/ui.utils"
 import {
   Field,

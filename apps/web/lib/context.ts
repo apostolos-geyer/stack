@@ -1,5 +1,5 @@
 'use server';
-import { type ContextFactory, createInnerContext } from '@_/lib.server';
+import { type ContextFactory, createInnerContext } from '@_/features/context';
 import { cache } from 'react';
 
 import { getSession } from './dal';

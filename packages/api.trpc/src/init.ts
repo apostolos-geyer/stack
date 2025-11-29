@@ -1,9 +1,6 @@
-console.log("[TRACE] @_/api.trpc/init - START", Date.now());
 import { initTRPC, TRPCError } from "@trpc/server";
 import superjson from "superjson";
-console.log("[TRACE] @_/api.trpc/init - before lib.server import", Date.now());
-import type { InnerContext, AuthenticatedContext } from "@_/lib.server";
-console.log("[TRACE] @_/api.trpc/init - after lib.server import", Date.now());
+import type { InnerContext, AuthenticatedContext } from "@_/features/context";
 
 // Re-export context types for convenience
 export type { InnerContext as Context, AuthenticatedContext };
