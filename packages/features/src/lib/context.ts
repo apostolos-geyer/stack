@@ -1,11 +1,6 @@
-import {
-  type Auth,
-  type AuthSession,
-  type AuthUser,
-  auth,
-} from '../auth';
+import type { PrismaClient } from '@_/db';
 
-import { prisma as db, type PrismaClient } from '@_/db';
+import { type Auth, type AuthSession, type AuthUser, auth } from '../auth';
 
 export type ConstContext = {
   db: PrismaClient;
@@ -36,7 +31,7 @@ export type AuthenticatedInnerContext = ConstContext &
 // compat
 export type AuthenticatedContext = AuthenticatedInnerContext;
 
-export type ContextFactory<Options extends {} = {}> = (
+export type ContextFactory<Options extends {} = object> = (
   o: Options,
 ) => Promise<InnerContext> | InnerContext;
 
@@ -50,13 +45,23 @@ export type CreateInnerContextOptions = {
  * Factory to create inner context
  * Called by outer context creators (HTTP handlers, test setup, etc.)
  */
-export const createInnerContext: ContextFactory<CreateInnerContextOptions> = ({
-  $override,
-  ...ctx
-}) =>
+export const createInnerContext: ContextFactory<
+  CreateInnerContextOptions
+> = async ({ $override, ...ctx }) =>
   ({
-    db,
+    db: await _getDb(),
     auth,
     ...ctx,
     ...$override,
   }) as const satisfies InnerContext;
+
+/**
+ * Reqiured dynamic import because Prisma uses SharedArrayBuffer
+ * which is unavailable in native.
+ *
+ * In general we should only be using this module on the server anyways.
+ */
+const _getDb = async () => {
+  const { prisma } = await import('@_/db');
+  return prisma;
+};

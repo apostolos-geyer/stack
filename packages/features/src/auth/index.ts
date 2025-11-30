@@ -1,1 +1,1 @@
-export { auth, type Auth, type AuthSession, type AuthUser } from "./auth";
+export { type Auth, type AuthSession, type AuthUser, auth } from './auth';

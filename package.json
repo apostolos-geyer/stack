@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
+    "fuck": "rm -rf **/*/node_modules pnpm-lock.yaml && pnpm i",
     "build": "turbo build",
     "dev": "turbo dev",
     "lint": "turbo lint",
