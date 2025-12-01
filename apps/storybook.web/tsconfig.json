@@ -1,0 +1,12 @@
+{
+  "extends": "@_/cfg.ts/react-library.json",
+  "compilerOptions": {
+    "outDir": "dist",
+    "rootDir": ".",
+    "paths": {
+      "@_/*": ["../../packages/*"]
+    }
+  },
+  "include": [".storybook/**/*", "src/**/*"],
+  "exclude": ["node_modules", "dist", "storybook-static"]
+}
