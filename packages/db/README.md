@@ -8,7 +8,7 @@ This package uses **PostgreSQL (Unmanaged)** with Prisma 7.
 - Docker Desktop must be running
 
 ### Local Development
-1. Start PostgreSQL: `pnpm db:start`
+1. Start services (from repo root): `pnpm services:up`
 2. Run migrations: `pnpm db:migrate:dev --name init`
 3. Open Prisma Studio: `pnpm db:studio`
 
@@ -20,9 +20,9 @@ Access Adminer at http://localhost:8080 to browse, create, and edit database ent
 - Password: postgres
 - Database: dev
 
-### Stopping the Database
+### Stopping Services
 ```bash
-pnpm db:stop
+pnpm services:down  # from repo root
 ```
 
 The database data is persisted in a Docker volume.
@@ -59,20 +59,20 @@ pnpm db:studio      # Open Prisma Studio
 
 **Port 5432 already in use**
 - Stop other PostgreSQL instances
-- Or change the port in docker-compose.yml
+- Or change the port in the repo-level docker-compose.yml
 
 **Port 8080 already in use (Adminer)**
 - Stop other services using port 8080
-- Or change the Adminer port in docker-compose.yml
+- Or change the Adminer port in the repo-level docker-compose.yml
 
 **Connection refused**
 - Ensure Docker Desktop is running
-- Start the container: `pnpm db:start`
+- Start services from repo root: `pnpm services:up`
 - Check container status: `docker compose ps`
 
 **Reset database**
 ```bash
-pnpm db:stop
-docker volume rm db_postgres_data
-pnpm db:start
+pnpm services:down
+docker volume rm stack_postgres_data
+pnpm services:up
 ```

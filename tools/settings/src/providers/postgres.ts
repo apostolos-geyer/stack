@@ -32,11 +32,8 @@ export const postgres: ProviderConfig = {
       envVars: {
         // DATABASE_URL is auto-populated by db-switch.ts (matches docker-compose.yml)
       },
-      packageJsonScripts: {
-        dev: "docker compose --profile postgres up -d && prisma studio",
-        "db:start": "docker compose --profile postgres up -d",
-        "db:stop": "docker compose --profile postgres down",
-      },
+      // Infrastructure scripts are at root level (pnpm services:up)
+      // db package only has Prisma commands
       systemDeps: [SYSTEM_DEPS.docker],
     },
   ],
@@ -55,7 +52,7 @@ export const postgres: ProviderConfig = {
   templates: {
     clientTs: PG_CLIENT_TS,
     prismaConfigTs: PRISMA_CONFIG_TS,
-    // Uses repo-level docker-compose.yml with --profile postgres
+    // Uses repo-level docker-compose.yml (pnpm services:up)
   },
   readme: {
     quickstart: `## Quick Start
@@ -64,7 +61,7 @@ export const postgres: ProviderConfig = {
 - Docker Desktop must be running
 
 ### Local Development
-1. Start PostgreSQL: \`pnpm db:start\`
+1. Start services (from repo root): \`pnpm services:up\`
 2. Run migrations: \`pnpm db:migrate:dev --name init\`
 3. Open Prisma Studio: \`pnpm db:studio\`
 
@@ -76,9 +73,9 @@ Access Adminer at http://localhost:8080 to browse, create, and edit database ent
 - Password: postgres
 - Database: dev
 
-### Stopping the Database
+### Stopping Services
 \`\`\`bash
-pnpm db:stop
+pnpm services:down  # from repo root
 \`\`\`
 
 The database data is persisted in a Docker volume.`,
@@ -97,14 +94,14 @@ The database data is persisted in a Docker volume.`,
 
 **Connection refused**
 - Ensure Docker Desktop is running
-- Start the container: \`pnpm db:start\`
-- Check container status: \`docker compose --profile postgres ps\`
+- Start services from repo root: \`pnpm services:up\`
+- Check container status: \`docker compose ps\`
 
 **Reset database**
 \`\`\`bash
-pnpm db:stop
+pnpm services:down
 docker volume rm stack_postgres_data
-pnpm db:start
+pnpm services:up
 \`\`\``,
   },
 
