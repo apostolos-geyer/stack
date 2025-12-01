@@ -1,6 +1,6 @@
-import { initTRPC, TRPCError } from "@trpc/server";
-import superjson from "superjson";
-import type { InnerContext, AuthenticatedContext } from "@_/features/context";
+import type { AuthenticatedContext, InnerContext } from '@_/features/context';
+import { initTRPC, TRPCError } from '@trpc/server';
+import superjson from 'superjson';
 
 // Re-export context types for convenience
 export type { InnerContext as Context, AuthenticatedContext };
@@ -21,7 +21,7 @@ export const { router, createCallerFactory, middleware } = t;
  */
 const enforceAuth = middleware(async ({ ctx, next }) => {
   if (!ctx.user || !ctx.session) {
-    throw new TRPCError({ code: "UNAUTHORIZED" });
+    throw new TRPCError({ code: 'UNAUTHORIZED' });
   }
   return next({
     ctx: {

@@ -1,6 +1,6 @@
-import { z } from 'zod';
-import { router, Procedure } from '../init';
 import { UploadService } from '@_/features/upload';
+import { z } from 'zod';
+import { Procedure, router } from '../init';
 
 export const uploadRouter = router({
   /**
@@ -12,7 +12,7 @@ export const uploadRouter = router({
       z.object({
         filename: z.string().min(1).max(255),
         contentType: z.string(),
-      })
+      }),
     )
     .mutation(async ({ ctx, input }) => {
       return UploadService.getPresignedUrl({

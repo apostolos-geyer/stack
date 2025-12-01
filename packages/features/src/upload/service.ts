@@ -1,12 +1,14 @@
 import {
   createPresignedUpload as createPresigned,
-  getPublicUrl,
   deleteFile,
+  getPublicUrl,
 } from '@_/lib.storage';
 import type { PresignedUploadInput, PresignedUploadResult } from './types';
 
 export const UploadService = {
-  async getPresignedUrl(input: PresignedUploadInput): Promise<PresignedUploadResult> {
+  async getPresignedUrl(
+    input: PresignedUploadInput,
+  ): Promise<PresignedUploadResult> {
     const result = await createPresigned({
       filename: input.filename,
       contentType: input.contentType,

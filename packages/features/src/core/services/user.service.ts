@@ -1,5 +1,5 @@
-import type { User } from "@_/db";
-import type { InnerContext, AuthenticatedContext } from "../../lib/context";
+import type { User } from '@_/db';
+import type { AuthenticatedContext, InnerContext } from '../../lib/context';
 
 /**
  * User service - all user-related business logic
@@ -32,7 +32,7 @@ export const UserService = {
       where: { id: ctx.user.id },
     });
     if (!user) {
-      throw new Error("User not found");
+      throw new Error('User not found');
     }
     return user;
   },
@@ -43,7 +43,7 @@ export const UserService = {
    */
   async updateProfile(
     ctx: AuthenticatedContext,
-    data: { name?: string; image?: string }
+    data: { name?: string; image?: string },
   ): Promise<User> {
     return ctx.db.user.update({
       where: { id: ctx.user.id },
