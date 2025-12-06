@@ -158,8 +158,8 @@ describe('providers', () => {
       const provider = getProvider('postgres')!
       expect(provider.templates.clientTs).toContain('PrismaPg')
       expect(provider.prismaProvider).toBe('postgresql')
-      // Postgres has docker-compose.yml template
-      expect(provider.templates.dockerComposeYml).toBeDefined()
+      // Postgres uses repo-level docker-compose.yml (no per-package compose)
+      expect(provider.templates.dockerComposeYml).toBeUndefined()
     })
 
   })

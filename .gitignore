@@ -507,3 +507,5 @@ buck-out/
 
 *storybook.log
 storybook-static
+
+!.env.example

@@ -11,19 +11,22 @@
   },
   "scripts": {
     "db:migrate": "prisma migrate dev --skip-generate",
+    "db:seed": "prisma db seed",
     "db:generate": "prisma generate",
     "db:migrate:dev": "prisma migrate dev",
-    "db:migrate:deploy": "prisma migrate deploy",
     "db:studio": "prisma studio",
     "db:push": "prisma db push",
-    "db:seed": "prisma db seed",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "db:migrate:deploy": "prisma migrate deploy",
+    "dev": "prisma studio",
+    "db:start": "true",
+    "db:stop": "true"
   },
   "dependencies": {
     "@_/platform": "workspace:*",
-    "@prisma/adapter-pg": "catalog:",
+    "@prisma/adapter-pg": "^7.0.1",
     "@prisma/client": "^7.0.0",
-    "pg": "catalog:"
+    "pg": "^8.16.3"
   },
   "devDependencies": {
     "prisma": "^7.0.0",

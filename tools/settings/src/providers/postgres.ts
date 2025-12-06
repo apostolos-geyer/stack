@@ -1,6 +1,6 @@
 import type { ProviderConfig, LocalDevOption, SetupContext, SetupResult } from "./index.ts";
 import { SYSTEM_DEPS } from "../utils/system-deps.ts";
-import { PG_CLIENT_TS, PRISMA_CONFIG_TS } from "./templates.ts";
+import { PG_CLIENT_TS, PRISMA_CONFIG_TS, NOOP_SCRIPT } from "./templates.ts";
 
 /**
  * Unmanaged PostgreSQL provider configuration
@@ -32,8 +32,13 @@ export const postgres: ProviderConfig = {
       envVars: {
         // DATABASE_URL is auto-populated by db-switch.ts (matches docker-compose.yml)
       },
-      // Infrastructure scripts are at root level (pnpm services:up)
-      // db package only has Prisma commands
+      packageJsonScripts: {
+        // Infrastructure managed at root level (pnpm services:up)
+        // db package only has Prisma commands
+        dev: "prisma studio",
+        "db:start": NOOP_SCRIPT,
+        "db:stop": NOOP_SCRIPT,
+      },
       systemDeps: [SYSTEM_DEPS.docker],
     },
   ],
